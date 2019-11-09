@@ -1,0 +1,49 @@
+buildscript {
+  ext.versions = [
+      'kotlin': '1.3.50'
+  ]
+
+  ext.deps = [
+      'kotlinStdLib': "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${versions.kotlin}",
+      'junit': 'junit:junit:4.13-rc-1',
+      'truth': 'com.google.truth:truth:1.0',
+  ]
+
+  dependencies {
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
+    classpath 'org.jlleitschuh.gradle:ktlint-gradle:9.1.0'
+  }
+
+  repositories {
+    mavenCentral()
+    jcenter()
+    gradlePluginPortal()
+  }
+}
+
+subprojects {
+  repositories {
+    mavenCentral()
+    jcenter()
+  }
+
+  apply plugin: 'org.jlleitschuh.gradle.ktlint'
+  ktlint {
+    version = '0.35.0'
+    disabledRules = [
+        'filename',
+    ]
+  }
+
+  plugins.withId('org.jetbrains.kotlin.jvm') {
+
+    compileKotlin {
+      kotlinOptions {
+        jvmTarget = "1.8"
+        freeCompilerArgs = [
+            "-progressive",
+        ]
+      }
+    }
+  }
+}

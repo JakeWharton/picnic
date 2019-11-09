@@ -1,14 +1,20 @@
 apply plugin: 'java-library'
-apply plugin: 'org.jetbrains.kotlin.jvm'
-
 sourceCompatibility = JavaVersion.VERSION_1_6
 targetCompatibility = JavaVersion.VERSION_1_6
 
+apply plugin: 'org.jetbrains.kotlin.jvm'
+compileKotlin {
+  kotlinOptions {
+    jvmTarget = '1.8'
+    freeCompilerArgs = [
+        '-progressive',
+    ]
+  }
+}
+
 dependencies {
-  implementation deps.kotlin.stdlibJdk8
+  api deps.kotlinStdLib
 
   testImplementation deps.junit
   testImplementation deps.truth
 }
-
-apply from: rootProject.file('gradle/gradle-mvn-push.gradle')

@@ -1,0 +1,11 @@
+language: java
+
+jdk:
+  - openjdk11
+
+branches:
+  except:
+    - gh-pages
+
+notifications:
+  email: false

@@ -12,6 +12,7 @@ buildscript {
   dependencies {
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
     classpath 'org.jlleitschuh.gradle:ktlint-gradle:9.1.0'
+    classpath 'org.jetbrains.dokka:dokka-gradle-plugin:0.10.0'
   }
 
   repositories {
@@ -22,6 +23,9 @@ buildscript {
 }
 
 subprojects {
+  group('com.jakewharton.picnic')
+  version('0.1.0-SNAPSHOT')
+
   repositories {
     mavenCentral()
     jcenter()
@@ -36,7 +40,6 @@ subprojects {
   }
 
   plugins.withId('org.jetbrains.kotlin.jvm') {
-
     compileKotlin {
       kotlinOptions {
         jvmTarget = "1.8"

@@ -18,3 +18,25 @@ dependencies {
   testImplementation deps.junit
   testImplementation deps.truth
 }
+
+apply plugin: 'org.jetbrains.dokka'
+def dokkaDir = "$buildDir/dokka"
+dokka {
+  outputFormat = 'html'
+  outputDirectory = dokkaDir
+}
+def javadocJarTaskProvider = tasks.register('javadocJar', Jar) { task ->
+  task.archiveClassifier.set('javadoc')
+  task.from(dokkaDir)
+  task.dependsOn('dokka')
+}
+
+def sourcesJarTaskProvider = tasks.register('sourcesJar', Jar) { task ->
+  task.archiveClassifier.set('sources')
+  task.from(sourceSets.main.allSource)
+}
+
+artifacts {
+  archives javadocJarTaskProvider
+  archives sourcesJarTaskProvider
+}

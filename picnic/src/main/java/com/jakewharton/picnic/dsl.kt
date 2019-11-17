@@ -10,10 +10,10 @@ annotation class PicnicDsl
 fun table(content: TableDsl.() -> Unit) = TableBuilder().apply(content).build()
 
 @PicnicDsl
-interface TableDsl : SectionDsl {
-  fun header(content: SectionDsl.() -> Unit)
-  fun body(content: SectionDsl.() -> Unit)
-  fun footer(content: SectionDsl.() -> Unit)
+interface TableDsl : TableSectionDsl {
+  fun header(content: TableSectionDsl.() -> Unit)
+  fun body(content: TableSectionDsl.() -> Unit)
+  fun footer(content: TableSectionDsl.() -> Unit)
   fun style(content: TableStyleDsl.() -> Unit)
 }
 
@@ -23,7 +23,7 @@ interface TableStyleDsl {
 }
 
 @PicnicDsl
-interface SectionDsl {
+interface TableSectionDsl {
   fun row(vararg cells: Any?) {
     row {
       cells.forEach { cell(it) }
@@ -86,21 +86,21 @@ interface CellStyleDsl {
 }
 
 private class TableBuilder : TableDsl {
-  private val headerBuilder = SectionBuilder(::Header)
-  private val bodyBuilder = SectionBuilder(::Body)
-  private val footerBuilder = SectionBuilder(::Footer)
+  private val headerBuilder = TableSectionBuilder()
+  private val bodyBuilder = TableSectionBuilder()
+  private val footerBuilder = TableSectionBuilder()
   private val cellStyleBuilder = CellStyleBuilder()
   private val tableStyleBuilder = TableStyleBuilder()
 
-  override fun header(content: SectionDsl.() -> Unit) {
+  override fun header(content: TableSectionDsl.() -> Unit) {
     headerBuilder.apply(content)
   }
 
-  override fun body(content: SectionDsl.() -> Unit) {
+  override fun body(content: TableSectionDsl.() -> Unit) {
     bodyBuilder.apply(content)
   }
 
-  override fun footer(content: SectionDsl.() -> Unit) {
+  override fun footer(content: TableSectionDsl.() -> Unit) {
     footerBuilder.apply(content)
   }
 
@@ -124,9 +124,7 @@ private class TableBuilder : TableDsl {
       tableStyleBuilder.buildOrNull())
 }
 
-private class SectionBuilder<T : Any>(
-  private val sectionFactory: (List<Row>, CellStyle?) -> T
-) : SectionDsl {
+private class TableSectionBuilder : TableSectionDsl {
   private val rows = mutableListOf<Row>()
   private val cellStyleBuilder = CellStyleBuilder()
 
@@ -139,7 +137,7 @@ private class SectionBuilder<T : Any>(
   }
 
   fun buildOrNull() = if (rows.isEmpty()) null else build()
-  fun build() = sectionFactory(rows.toList(), cellStyleBuilder.buildOrNull())
+  fun build() = TableSection(rows.toList(), cellStyleBuilder.buildOrNull())
 }
 
 private class RowBuilder : RowDsl {

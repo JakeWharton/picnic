@@ -1,9 +1,9 @@
 package com.jakewharton.picnic
 
 data class Table(
-  val header: Header? = null,
-  val body: Body,
-  val footer: Footer? = null,
+  val header: TableSection? = null,
+  val body: TableSection,
+  val footer: TableSection? = null,
   val cellStyle: CellStyle? = null,
   val tableStyle: TableStyle? = null
 ) {
@@ -99,25 +99,10 @@ enum class BorderStyle {
   Hidden, Solid
 }
 
-interface TableSection {
-  val rows: List<Row>
-  val cellStyle: CellStyle?
-}
-
-data class Header(
-  override val rows: List<Row>,
-  override val cellStyle: CellStyle? = null
-) : TableSection
-
-data class Body(
-  override val rows: List<Row>,
-  override val cellStyle: CellStyle? = null
-) : TableSection
-
-data class Footer(
-  override val rows: List<Row>,
-  override val cellStyle: CellStyle? = null
-) : TableSection
+data class TableSection(
+  val rows: List<Row>,
+  val cellStyle: CellStyle? = null
+)
 
 data class Row(val cells: List<Cell>, val cellStyle: CellStyle? = null)
 

@@ -5,7 +5,7 @@ package com.jakewharton.picnic
 import kotlin.DeprecationLevel.ERROR
 
 @DslMarker
-annotation class PicnicDsl
+private annotation class PicnicDsl
 
 fun table(content: TableDsl.() -> Unit) = TableBuilder().apply(content).build()
 

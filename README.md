@@ -244,7 +244,10 @@ table {
 Download
 --------
 
-Coming soon.
+Artifacts are available in Maven Central at `com.jakewharton.picnic:picnic:0.1.0`.
+
+In-development snapshots are available from
+[Sonatype's snapshot repository](https://oss.sonatype.org/content/repositories/snapshots/).
 
 
 

@@ -17,6 +17,9 @@ jobs:
       - store_artifacts:
           path: picnic/build/libs
           when: always
+      - run:
+          name: Publish Snapshot
+          command: ./gradlew publishSnapshot
 
 workflows:
   version: 2

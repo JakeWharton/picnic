@@ -1,6 +1,9 @@
 apply plugin: 'java-library'
-sourceCompatibility = JavaVersion.VERSION_1_6
-targetCompatibility = JavaVersion.VERSION_1_6
+java {
+  sourceCompatibility = JavaVersion.VERSION_1_6
+  targetCompatibility = JavaVersion.VERSION_1_6
+  withSourcesJar()
+}
 
 apply plugin: 'org.jetbrains.kotlin.jvm'
 compileKotlin {
@@ -31,12 +34,66 @@ def javadocJarTaskProvider = tasks.register('javadocJar', Jar) { task ->
   task.dependsOn('dokka')
 }
 
-def sourcesJarTaskProvider = tasks.register('sourcesJar', Jar) { task ->
-  task.archiveClassifier.set('sources')
-  task.from(sourceSets.main.allSource)
+def isReleaseBuild = !version.endsWith('-SNAPSHOT')
+
+apply plugin: 'maven-publish'
+
+publishing {
+  publications {
+    release(MavenPublication) {
+      from components.java
+
+      // TODO how to provide this asynchronously?
+      // TODO how to provide this through the component?
+      artifact javadocJarTaskProvider.get()
+
+      pom {
+        name = 'Picnic'
+        description = 'An API for constructing HTML-like tables which can be rendered to text'
+        url = 'https://github.com/JakeWharton/picnic'
+        licenses {
+          license {
+            name = 'The Apache License, Version 2.0'
+            url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+          }
+        }
+        developers {
+          developer {
+            id = 'jakewharton'
+            name = 'Jake Wharton'
+          }
+        }
+        scm {
+          connection = 'scm:git:git://github.com/JakeWharton/picnic.git'
+          developerConnection = 'scm:git:ssh://git@github.com/JakeWharton/picnic.git'
+          url = 'https://github.com/JakeWharton/picnic'
+        }
+      }
+    }
+  }
+  repositories {
+    maven {
+      url = isReleaseBuild
+          ? 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
+          : 'https://oss.sonatype.org/content/repositories/snapshots/'
+      credentials {
+        username = project.hasProperty('SONATYPE_NEXUS_USERNAME') ? SONATYPE_NEXUS_USERNAME : ''
+        password = project.hasProperty('SONATYPE_NEXUS_PASSWORD') ? SONATYPE_NEXUS_PASSWORD : ''
+      }
+    }
+  }
 }
 
-artifacts {
-  archives javadocJarTaskProvider
-  archives sourcesJarTaskProvider
+if (isReleaseBuild) {
+  apply plugin: 'signing'
+  signing {
+    required { gradle.taskGraph.hasTask("publish") }
+    sign publishing.publications
+  }
+}
+
+tasks.register('publishSnapshot').configure { task ->
+  if (!isReleaseBuild) {
+    task.dependsOn(tasks.getByName('publish'))
+  }
 }

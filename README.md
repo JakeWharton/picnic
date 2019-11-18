@@ -263,10 +263,10 @@ table {
   header {
     cellStyle {
       border = true
+      alignment = BottomLeft
     }
     row {
       cell("APK") {
-        alignment = BottomLeft
         rowSpan = 2
       }
       cell("compressed") {

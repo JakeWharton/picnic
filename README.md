@@ -30,6 +30,8 @@ Very underwhelming! Picnic tables start completely unstyled by design.
 
 Jump to a [real-world example](#real-world-example) or continue reading for individual features.
 
+_(Note: these examples do not render correctly on mobile)_
+
 ### Border
 
 ```kotlin

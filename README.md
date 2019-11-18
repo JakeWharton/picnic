@@ -26,7 +26,9 @@ HelloWorld
 Hola Mundo
 ```
 
-Very underwhelming! Picnic tables start completely unstyled.
+Very underwhelming! Picnic tables start completely unstyled by design.
+
+Jump to a [real-world example](#real-world-example) or continue reading for individual features.
 
 ### Border
 
@@ -244,7 +246,7 @@ table {
 
 Here is a more advanced, real-world example from the
 [Diffuse](https://github.com/JakeWharton/diffuse/) tool. It features row and column spans, headers
-and footers, borders, table border style, and text alignment.
+and footers, borders, table border style, padding, and text alignment.
 
 ```kotlin
 table {

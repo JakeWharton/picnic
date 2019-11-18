@@ -25,7 +25,7 @@ internal class SimpleLayout(private val cell: PositionedCell) : TextLayout {
   override fun measureWidth(): Int {
     return leftPadding +
         (cell.canonicalStyle?.paddingRight ?: 0) +
-        (cell.cell.content.split('\n').map { it.length }.max() ?: 0)
+        (cell.cell.content.split('\n').maxBy { it.length }?.length ?: 0)
   }
 
   override fun measureHeight(): Int {

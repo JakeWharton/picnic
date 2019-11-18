@@ -1,0 +1,25 @@
+version: 2
+
+jobs:
+  build:
+    environment:
+      _JAVA_OPTIONS: "-Xmx3g"
+      GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2"
+    docker:
+      - image: circleci/openjdk:11.0.3-jdk-stretch
+    steps:
+      - checkout
+      - run:
+          name: Build
+          command: ./gradlew build
+      - store_test_results:
+          path: picnic/build/test-results/test
+      - store_artifacts:
+          path: picnic/build/libs
+          when: always
+
+workflows:
+  version: 2
+  workflow:
+    jobs:
+    - build

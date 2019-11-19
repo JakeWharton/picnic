@@ -24,6 +24,7 @@ interface TableStyleDsl {
 
 @PicnicDsl
 interface TableSectionDsl {
+  @JvmDefault
   fun row(vararg cells: Any?) {
     row {
       cells.forEach { cell(it) }
@@ -62,6 +63,7 @@ interface CellStyleDsl {
 
   var alignment: TextAlignment?
 
+  @JvmDefault
   var border: Boolean
     @JvmSynthetic
     @Deprecated("Use individual getters", level = ERROR)
@@ -73,6 +75,7 @@ interface CellStyleDsl {
       borderBottom = value
     }
 
+  @JvmDefault
   var padding: Int
     @JvmSynthetic
     @Deprecated("Use individual getters", level = ERROR)

@@ -11,6 +11,7 @@ compileKotlin {
     jvmTarget = '1.8'
     freeCompilerArgs = [
         '-progressive',
+        '-Xjvm-default=enable',
     ]
   }
 }

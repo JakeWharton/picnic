@@ -35,6 +35,7 @@ interface TextCanvas {
   operator fun set(row: Int, column: Int, char: Char)
   operator fun get(row: Int, column: Int): Char
 
+  @JvmDefault
   fun clip(left: Int, right: Int, top: Int, bottom: Int): TextCanvas {
     return ClippedTextCanvas(this, left, right, top, bottom)
   }

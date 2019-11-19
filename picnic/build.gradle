@@ -29,7 +29,7 @@ dokka {
   outputFormat = 'html'
   outputDirectory = dokkaDir
 }
-def javadocJarTaskProvider = tasks.register('javadocJar', Jar) { task ->
+def dokkaJarTaskProvider = tasks.register('dokkaJar', Jar) { task ->
   task.archiveClassifier.set('javadoc')
   task.from(dokkaDir)
   task.dependsOn('dokka')
@@ -46,7 +46,7 @@ publishing {
 
       // TODO how to provide this asynchronously?
       // TODO how to provide this through the component?
-      artifact javadocJarTaskProvider.get()
+      artifact dokkaJarTaskProvider.get()
 
       pom {
         name = 'Picnic'

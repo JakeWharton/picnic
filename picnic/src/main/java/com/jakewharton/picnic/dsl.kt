@@ -7,7 +7,7 @@ import kotlin.DeprecationLevel.ERROR
 @DslMarker
 private annotation class PicnicDsl
 
-fun table(content: TableDsl.() -> Unit) = TableBuilder().apply(content).build()
+fun table(content: TableDsl.() -> Unit) = TableDslImpl().apply(content).create()
 
 @PicnicDsl
 interface TableDsl : TableSectionDsl {
@@ -88,97 +88,97 @@ interface CellStyleDsl {
     }
 }
 
-private class TableBuilder : TableDsl {
-  private val headerBuilder = TableSectionBuilder()
-  private val bodyBuilder = TableSectionBuilder()
-  private val footerBuilder = TableSectionBuilder()
-  private val cellStyleBuilder = CellStyleBuilder()
-  private val tableStyleBuilder = TableStyleBuilder()
+private class TableDslImpl : TableDsl {
+  private val headerImpl = TableSectionDslImpl()
+  private val bodyImpl = TableSectionDslImpl()
+  private val footerImpl = TableSectionDslImpl()
+  private val cellStyleImpl = CellStyleDslImpl()
+  private val tableStyleImpl = TableStyleDslImpl()
 
   override fun header(content: TableSectionDsl.() -> Unit) {
-    headerBuilder.apply(content)
+    headerImpl.apply(content)
   }
 
   override fun body(content: TableSectionDsl.() -> Unit) {
-    bodyBuilder.apply(content)
+    bodyImpl.apply(content)
   }
 
   override fun footer(content: TableSectionDsl.() -> Unit) {
-    footerBuilder.apply(content)
+    footerImpl.apply(content)
   }
 
   override fun row(content: RowDsl.() -> Unit) {
-    bodyBuilder.row(content)
+    bodyImpl.row(content)
   }
 
   override fun cellStyle(content: CellStyleDsl.() -> Unit) {
-    cellStyleBuilder.apply(content)
+    cellStyleImpl.apply(content)
   }
 
   override fun style(content: TableStyleDsl.() -> Unit) {
-    tableStyleBuilder.apply(content)
+    tableStyleImpl.apply(content)
   }
 
-  fun build() = Table(
-      headerBuilder.buildOrNull(),
-      bodyBuilder.build(),
-      footerBuilder.buildOrNull(),
-      cellStyleBuilder.buildOrNull(),
-      tableStyleBuilder.buildOrNull())
+  fun create() = Table(
+      headerImpl.createOrNull(),
+      bodyImpl.create(),
+      footerImpl.createOrNull(),
+      cellStyleImpl.createOrNull(),
+      tableStyleImpl.createOrNull())
 }
 
-private class TableSectionBuilder : TableSectionDsl {
+private class TableSectionDslImpl : TableSectionDsl {
   private val rows = mutableListOf<Row>()
-  private val cellStyleBuilder = CellStyleBuilder()
+  private val cellStyleImpl = CellStyleDslImpl()
 
   override fun row(content: RowDsl.() -> Unit) {
-    rows += RowBuilder().apply(content).build()
+    rows += RowDslImpl().apply(content).create()
   }
 
   override fun cellStyle(content: CellStyleDsl.() -> Unit) {
-    cellStyleBuilder.apply(content)
+    cellStyleImpl.apply(content)
   }
 
-  fun buildOrNull() = if (rows.isEmpty()) null else build()
-  fun build() = TableSection(rows.toList(), cellStyleBuilder.buildOrNull())
+  fun createOrNull() = if (rows.isEmpty()) null else create()
+  fun create() = TableSection(rows.toList(), cellStyleImpl.createOrNull())
 }
 
-private class RowBuilder : RowDsl {
+private class RowDslImpl : RowDsl {
   private val cells = mutableListOf<Cell>()
-  private val cellStyleBuilder = CellStyleBuilder()
+  private val cellStyleImpl = CellStyleDslImpl()
 
   override fun cell(content: Any?, style: CellDsl.() -> Unit) {
-    cells += CellBuilder(content).apply(style).build()
+    cells += CellDslImpl(content).apply(style).create()
   }
 
   override fun cellStyle(content: CellStyleDsl.() -> Unit) {
-    cellStyleBuilder.apply(content)
+    cellStyleImpl.apply(content)
   }
 
-  fun build() = Row(cells.toList(), cellStyleBuilder.buildOrNull())
+  fun create() = Row(cells.toList(), cellStyleImpl.createOrNull())
 }
 
-private class CellBuilder private constructor(
+private class CellDslImpl private constructor(
   private val content: Any?,
-  private val cellStyleBuilder: CellStyleBuilder
-) : CellDsl, CellStyleDsl by cellStyleBuilder {
+  private val cellStyleImpl: CellStyleDslImpl
+) : CellDsl, CellStyleDsl by cellStyleImpl {
 
-  constructor(content: Any?) : this(content, CellStyleBuilder())
+  constructor(content: Any?) : this(content, CellStyleDslImpl())
 
   override var columnSpan: Int = 1
   override var rowSpan: Int = 1
 
-  fun build(): Cell {
+  fun create(): Cell {
     return Cell(
         content = content?.toString() ?: "",
         columnSpan = columnSpan,
         rowSpan = rowSpan,
-        style = cellStyleBuilder.buildOrNull()
+        style = cellStyleImpl.createOrNull()
     )
   }
 }
 
-private class CellStyleBuilder : CellStyleDsl {
+private class CellStyleDslImpl : CellStyleDsl {
   override var paddingLeft: Int? = null
   override var paddingRight: Int? = null
   override var paddingTop: Int? = null
@@ -189,7 +189,7 @@ private class CellStyleBuilder : CellStyleDsl {
   override var borderBottom: Boolean? = null
   override var alignment: TextAlignment? = null
 
-  fun buildOrNull(): CellStyle? {
+  fun createOrNull(): CellStyle? {
     if (paddingLeft != null ||
         paddingRight != null ||
         paddingTop != null ||
@@ -216,10 +216,10 @@ private class CellStyleBuilder : CellStyleDsl {
   }
 }
 
-private class TableStyleBuilder : TableStyleDsl {
+private class TableStyleDslImpl : TableStyleDsl {
   override var borderStyle: BorderStyle? = null
 
-  fun buildOrNull(): TableStyle? {
+  fun createOrNull(): TableStyle? {
     if (borderStyle != null) {
       return TableStyle(borderStyle)
     }

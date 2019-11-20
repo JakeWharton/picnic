@@ -35,6 +35,14 @@ def dokkaJarTaskProvider = tasks.register('dokkaJar', Jar) { task ->
   task.dependsOn('dokka')
 }
 
+def javadocJarTaskProvider = tasks.register('javadocJar', org.jetbrains.dokka.gradle.DokkaTask) { task ->
+  task.outputFormat = 'javadoc'
+  task.outputDirectory = "$buildDir/javadoc"
+}
+tasks.named('assemble').configure {
+  it.dependsOn(javadocJarTaskProvider)
+}
+
 def isReleaseBuild = !version.endsWith('-SNAPSHOT')
 
 apply plugin: 'maven-publish'

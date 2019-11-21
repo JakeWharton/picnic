@@ -2,12 +2,12 @@ package com.jakewharton.picnic
 
 import java.util.Objects.hash
 
-class Table(
-  val header: TableSection? = null,
+class Table private constructor(
+  val header: TableSection?,
   val body: TableSection,
-  val footer: TableSection? = null,
-  val cellStyle: CellStyle? = null,
-  val tableStyle: TableStyle? = null
+  val footer: TableSection?,
+  val cellStyle: CellStyle?,
+  val tableStyle: TableStyle?
 ) {
   override fun toString() = renderText()
   override fun hashCode() = hash(header, body, footer, cellStyle, tableStyle)
@@ -137,7 +137,7 @@ class Table(
 
     fun build() = Table(
         header,
-        checkNotNull(body) { "At least one body row required " },
+        checkNotNull(body) { "Body section is required" },
         footer,
         cellStyle,
         tableStyle
@@ -145,8 +145,13 @@ class Table(
   }
 }
 
-class TableStyle(
-  val borderStyle: BorderStyle? = null
+@JvmSynthetic // Hide from Java callers who should use Builder.
+fun Table(initializer: Table.Builder.() -> Unit): Table {
+  return Table.Builder().apply(initializer).build()
+}
+
+class TableStyle private constructor(
+  val borderStyle: BorderStyle?
 ) {
   override fun toString() = "TableStyle(borderStyle=$borderStyle)"
   override fun hashCode() = borderStyle.hashCode()
@@ -165,13 +170,18 @@ class TableStyle(
   }
 }
 
+@JvmSynthetic // Hide from Java callers who should use Builder.
+fun TableStyle(initializer: TableStyle.Builder.() -> Unit): TableStyle {
+  return TableStyle.Builder().apply(initializer).build()
+}
+
 enum class BorderStyle {
   Hidden, Solid
 }
 
-class TableSection(
+class TableSection private constructor(
   val rows: List<Row>,
-  val cellStyle: CellStyle? = null
+  val cellStyle: CellStyle?
 ) {
   override fun toString() = "TableSection(rows=$rows, cellStyle=$cellStyle)"
   override fun hashCode() = hash(rows, cellStyle)
@@ -191,9 +201,9 @@ class TableSection(
       this.rows.add(row)
     }
 
-    fun addRow(vararg cells: Cell) = addRow(Row(cells.toList()))
+    fun addRow(vararg cells: Cell) = addRow(Row { this.cells.addAll(cells) })
 
-    fun addRow(vararg cells: String) = addRow(Row(cells.map { Cell(it) }))
+    fun addRow(vararg cells: String) = addRow(Row { this.cells.addAll(cells.map { Cell(it) }) })
 
     @set:JvmSynthetic // Hide 'void' setter from Java.
     var cellStyle: CellStyle? = null
@@ -206,9 +216,14 @@ class TableSection(
   }
 }
 
-class Row(
+@JvmSynthetic // Hide from Java callers who should use Builder.
+fun TableSection(initializer: TableSection.Builder.() -> Unit): TableSection {
+  return TableSection.Builder().apply(initializer).build()
+}
+
+class Row private constructor(
   val cells: List<Cell>,
-  val cellStyle: CellStyle? = null
+  val cellStyle: CellStyle?
 ) {
   override fun toString() = "Row(cells=$cells, cellStyle=$cellStyle)"
   override fun hashCode() = hash(cells, cellStyle)
@@ -243,11 +258,16 @@ class Row(
   }
 }
 
-class Cell(
+@JvmSynthetic // Hide from Java callers who should use Builder.
+fun Row(initializer: Row.Builder.() -> Unit): Row {
+  return Row.Builder().apply(initializer).build()
+}
+
+class Cell private constructor(
   val content: String,
-  val columnSpan: Int = 1,
-  val rowSpan: Int = 1,
-  val style: CellStyle? = null
+  val columnSpan: Int,
+  val rowSpan: Int,
+  val style: CellStyle?
 ) {
   override fun toString() =
     "Cell(content=$content, columnSpan=$columnSpan, rowSpan=$rowSpan, style=$style)"
@@ -285,16 +305,21 @@ class Cell(
   }
 }
 
-class CellStyle(
-  val paddingLeft: Int? = null,
-  val paddingRight: Int? = null,
-  val paddingTop: Int? = null,
-  val paddingBottom: Int? = null,
-  val borderLeft: Boolean? = null,
-  val borderRight: Boolean? = null,
-  val borderTop: Boolean? = null,
-  val borderBottom: Boolean? = null,
-  val alignment: TextAlignment? = null
+@JvmSynthetic // Hide from Java callers who should use Builder.
+fun Cell(content: Any?, initializer: Cell.Builder.() -> Unit = {}): Cell {
+  return Cell.Builder(content).apply(initializer).build()
+}
+
+class CellStyle private constructor(
+  val paddingLeft: Int?,
+  val paddingRight: Int?,
+  val paddingTop: Int?,
+  val paddingBottom: Int?,
+  val borderLeft: Boolean?,
+  val borderRight: Boolean?,
+  val borderTop: Boolean?,
+  val borderBottom: Boolean?,
+  val alignment: TextAlignment?
 ) {
   override fun toString() =
     "CellStyle(padding(l=$paddingLeft,r=$paddingRight,t=$paddingTop,b=$paddingBottom), " +
@@ -403,6 +428,11 @@ class CellStyle(
   }
 }
 
+@JvmSynthetic // Hide from Java callers who should use Builder.
+fun CellStyle(initializer: CellStyle.Builder.() -> Unit): CellStyle {
+  return CellStyle.Builder().apply(initializer).build()
+}
+
 private operator fun CellStyle?.plus(override: CellStyle?): CellStyle? {
   if (this == null) {
     return override
@@ -410,17 +440,17 @@ private operator fun CellStyle?.plus(override: CellStyle?): CellStyle? {
   if (override == null) {
     return this
   }
-  return CellStyle(
-      paddingLeft = override.paddingLeft ?: paddingLeft,
-      paddingRight = override.paddingRight ?: paddingRight,
-      paddingTop = override.paddingTop ?: paddingTop,
-      paddingBottom = override.paddingBottom ?: paddingBottom,
-      borderLeft = override.borderLeft ?: borderLeft,
-      borderRight = override.borderRight ?: borderRight,
-      borderTop = override.borderTop ?: borderTop,
-      borderBottom = override.borderBottom ?: borderBottom,
-      alignment = override.alignment ?: alignment
-  )
+  return CellStyle {
+    paddingLeft = override.paddingLeft ?: this@plus.paddingLeft
+    paddingRight = override.paddingRight ?: this@plus.paddingRight
+    paddingTop = override.paddingTop ?: this@plus.paddingTop
+    paddingBottom = override.paddingBottom ?: this@plus.paddingBottom
+    borderLeft = override.borderLeft ?: this@plus.borderLeft
+    borderRight = override.borderRight ?: this@plus.borderRight
+    borderTop = override.borderTop ?: this@plus.borderTop
+    borderBottom = override.borderBottom ?: this@plus.borderBottom
+    alignment = override.alignment ?: this@plus.alignment
+  }
 }
 
 enum class TextAlignment {

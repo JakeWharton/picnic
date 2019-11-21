@@ -119,43 +119,44 @@ private class TableDslImpl : TableDsl {
     tableStyleImpl.apply(content)
   }
 
-  fun create() = Table(
-      headerImpl.createOrNull(),
-      bodyImpl.create(),
-      footerImpl.createOrNull(),
-      cellStyleImpl.createOrNull(),
-      tableStyleImpl.createOrNull())
+  fun create() = Table {
+    header = headerImpl.createOrNull()
+    body = bodyImpl.create()
+    footer = footerImpl.createOrNull()
+    cellStyle = cellStyleImpl.createOrNull()
+    tableStyle = tableStyleImpl.createOrNull()
+  }
 }
 
 private class TableSectionDslImpl : TableSectionDsl {
-  private val rows = mutableListOf<Row>()
+  private val builder = TableSection.Builder()
   private val cellStyleImpl = CellStyleDslImpl()
 
   override fun row(content: RowDsl.() -> Unit) {
-    rows += RowDslImpl().apply(content).create()
+    builder.addRow(RowDslImpl().apply(content).create())
   }
 
   override fun cellStyle(content: CellStyleDsl.() -> Unit) {
     cellStyleImpl.apply(content)
   }
 
-  fun createOrNull() = if (rows.isEmpty()) null else create()
-  fun create() = TableSection(rows.toList(), cellStyleImpl.createOrNull())
+  fun createOrNull() = if (builder.rows.isEmpty()) null else create()
+  fun create() = builder.setCellStyle(cellStyleImpl.createOrNull()).build()
 }
 
 private class RowDslImpl : RowDsl {
-  private val cells = mutableListOf<Cell>()
+  private val builder = Row.Builder()
   private val cellStyleImpl = CellStyleDslImpl()
 
   override fun cell(content: Any?, style: CellDsl.() -> Unit) {
-    cells += CellDslImpl(content).apply(style).create()
+    builder.addCell(CellDslImpl(content).apply(style).create())
   }
 
   override fun cellStyle(content: CellStyleDsl.() -> Unit) {
     cellStyleImpl.apply(content)
   }
 
-  fun create() = Row(cells.toList(), cellStyleImpl.createOrNull())
+  fun create() = builder.setCellStyle(cellStyleImpl.createOrNull()).build()
 }
 
 private class CellDslImpl private constructor(
@@ -168,13 +169,10 @@ private class CellDslImpl private constructor(
   override var columnSpan: Int = 1
   override var rowSpan: Int = 1
 
-  fun create(): Cell {
-    return Cell(
-        content = content?.toString() ?: "",
-        columnSpan = columnSpan,
-        rowSpan = rowSpan,
-        style = cellStyleImpl.createOrNull()
-    )
+  fun create() = Cell(content?.toString() ?: "") {
+    columnSpan = this@CellDslImpl.columnSpan
+    rowSpan = this@CellDslImpl.rowSpan
+    style = cellStyleImpl.createOrNull()
   }
 }
 
@@ -200,17 +198,17 @@ private class CellStyleDslImpl : CellStyleDsl {
         borderBottom != null ||
         alignment != null
     ) {
-      return CellStyle(
-          paddingLeft = paddingLeft,
-          paddingRight = paddingRight,
-          paddingTop = paddingTop,
-          paddingBottom = paddingBottom,
-          borderLeft = borderLeft,
-          borderRight = borderRight,
-          borderTop = borderTop,
-          borderBottom = borderBottom,
-          alignment = alignment
-      )
+      return CellStyle {
+        paddingLeft = this@CellStyleDslImpl.paddingLeft
+        paddingRight = this@CellStyleDslImpl.paddingRight
+        paddingTop = this@CellStyleDslImpl.paddingTop
+        paddingBottom = this@CellStyleDslImpl.paddingBottom
+        borderLeft = this@CellStyleDslImpl.borderLeft
+        borderRight = this@CellStyleDslImpl.borderRight
+        borderTop = this@CellStyleDslImpl.borderTop
+        borderBottom = this@CellStyleDslImpl.borderBottom
+        alignment = this@CellStyleDslImpl.alignment
+      }
     }
     return null
   }
@@ -221,7 +219,9 @@ private class TableStyleDslImpl : TableStyleDsl {
 
   fun createOrNull(): TableStyle? {
     if (borderStyle != null) {
-      return TableStyle(borderStyle)
+      return TableStyle {
+        borderStyle = this@TableStyleDslImpl.borderStyle
+      }
     }
     return null
   }

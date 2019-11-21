@@ -1,12 +1,23 @@
 package com.jakewharton.picnic
 
-data class Table(
+import java.util.Objects.hash
+
+class Table(
   val header: TableSection? = null,
   val body: TableSection,
   val footer: TableSection? = null,
   val cellStyle: CellStyle? = null,
   val tableStyle: TableStyle? = null
 ) {
+  override fun toString() = renderText()
+  override fun hashCode() = hash(header, body, footer, cellStyle, tableStyle)
+  override fun equals(other: Any?) = other is Table &&
+      header == other.header &&
+      body == other.body &&
+      footer == other.footer &&
+      cellStyle == other.cellStyle &&
+      tableStyle == other.tableStyle
+
   val rowCount: Int = (header?.rows?.size ?: 0) + body.rows.size + (footer?.rows?.size ?: 0)
   val columnCount: Int
   val positionedCells: List<PositionedCell>
@@ -81,8 +92,6 @@ data class Table(
     "Cell was null"
   }
 
-  override fun toString() = renderText()
-
   data class PositionedCell(
     val rowIndex: Int,
     val columnIndex: Int,
@@ -136,9 +145,14 @@ data class Table(
   }
 }
 
-data class TableStyle(
+class TableStyle(
   val borderStyle: BorderStyle? = null
 ) {
+  override fun toString() = "TableStyle(borderStyle=$borderStyle)"
+  override fun hashCode() = borderStyle.hashCode()
+  override fun equals(other: Any?) = other is TableStyle &&
+      borderStyle == other.borderStyle
+
   class Builder {
     @set:JvmSynthetic // Hide 'void' setter from Java.
     var borderStyle: BorderStyle? = null
@@ -155,10 +169,16 @@ enum class BorderStyle {
   Hidden, Solid
 }
 
-data class TableSection(
+class TableSection(
   val rows: List<Row>,
   val cellStyle: CellStyle? = null
 ) {
+  override fun toString() = "TableSection(rows=$rows, cellStyle=$cellStyle)"
+  override fun hashCode() = hash(rows, cellStyle)
+  override fun equals(other: Any?) = other is TableSection &&
+      rows == other.rows &&
+      cellStyle == other.cellStyle
+
   class Builder {
     @set:JvmSynthetic // Hide 'void' setter from Java.
     var rows: MutableList<Row> = mutableListOf()
@@ -186,10 +206,16 @@ data class TableSection(
   }
 }
 
-data class Row(
+class Row(
   val cells: List<Cell>,
   val cellStyle: CellStyle? = null
 ) {
+  override fun toString() = "Row(cells=$cells, cellStyle=$cellStyle)"
+  override fun hashCode() = hash(cells, cellStyle)
+  override fun equals(other: Any?) = other is Row &&
+      cells == other.cells &&
+      cellStyle == other.cellStyle
+
   class Builder {
     @set:JvmSynthetic // Hide 'void' setter from Java.
     var cells: MutableList<Cell> = mutableListOf()
@@ -217,12 +243,22 @@ data class Row(
   }
 }
 
-data class Cell(
+class Cell(
   val content: String,
   val columnSpan: Int = 1,
   val rowSpan: Int = 1,
   val style: CellStyle? = null
 ) {
+  override fun toString() =
+    "Cell(content=$content, columnSpan=$columnSpan, rowSpan=$rowSpan, style=$style)"
+
+  override fun hashCode() = hash(content, columnSpan, rowSpan, style)
+  override fun equals(other: Any?) = other is Cell &&
+      content == other.content &&
+      columnSpan == other.columnSpan &&
+      rowSpan == other.rowSpan &&
+      style == other.style
+
   class Builder(val content: Any?) {
     @set:JvmSynthetic // Hide 'void' setter from Java.
     var columnSpan: Int = 1
@@ -249,7 +285,7 @@ data class Cell(
   }
 }
 
-data class CellStyle(
+class CellStyle(
   val paddingLeft: Int? = null,
   val paddingRight: Int? = null,
   val paddingTop: Int? = null,
@@ -260,6 +296,27 @@ data class CellStyle(
   val borderBottom: Boolean? = null,
   val alignment: TextAlignment? = null
 ) {
+  override fun toString() =
+    "CellStyle(padding(l=$paddingLeft,r=$paddingRight,t=$paddingTop,b=$paddingBottom), " +
+        "border(l=$borderLeft,r=$borderRight,t=$borderTop,b=$borderBottom), alignment=$alignment)"
+
+  override fun hashCode() = hash(
+      paddingLeft, paddingRight, paddingTop, paddingBottom,
+      borderLeft, borderRight, borderTop, borderBottom,
+      alignment
+  )
+
+  override fun equals(other: Any?) = other is CellStyle &&
+      paddingLeft == other.paddingLeft &&
+      paddingRight == other.paddingRight &&
+      paddingTop == other.paddingTop &&
+      paddingBottom == other.paddingBottom &&
+      borderLeft == other.borderLeft &&
+      borderRight == other.borderRight &&
+      borderTop == other.borderTop &&
+      borderBottom == other.borderBottom &&
+      alignment == other.alignment
+
   class Builder {
     @set:JvmSynthetic // Hide 'void' setter from Java.
     var paddingLeft: Int? = null

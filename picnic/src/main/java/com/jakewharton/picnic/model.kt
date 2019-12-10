@@ -92,12 +92,23 @@ class Table private constructor(
     "Cell was null"
   }
 
-  data class PositionedCell(
+  class PositionedCell(
     val rowIndex: Int,
     val columnIndex: Int,
     val cell: Cell,
     val canonicalStyle: CellStyle?
-  )
+  ) {
+    override fun hashCode() = hash(rowIndex, columnIndex, cell, canonicalStyle)
+    override fun equals(other: Any?) = other is PositionedCell &&
+        rowIndex == other.rowIndex &&
+        columnIndex == other.columnIndex &&
+        cell == other.cell &&
+        canonicalStyle == other.canonicalStyle
+
+    override fun toString() =
+      "PositionedCell(rowIndex=$rowIndex, colIndex=$columnIndex, cell=$cell, " +
+          "canonicalStyle=$canonicalStyle)"
+  }
 
   class Builder {
     @set:JvmSynthetic // Hide 'void' setter from Java.

@@ -24,7 +24,12 @@ fun Table.renderText(
   val rowHeights = IntArray(rowCount) { 1 }
   val rowBorderHeights = IntArray(rowCount + 1)
 
-  positionedCells.forEach { (rowIndex, columnIndex, cell, canonicalStyle) ->
+  positionedCells.forEach { positionedCell ->
+    val rowIndex = positionedCell.rowIndex
+    val columnIndex = positionedCell.columnIndex
+    val cell = positionedCell.cell
+    val canonicalStyle = positionedCell.canonicalStyle
+
     val layout = layouts.getValue(cell)
 
     val columnSpan = cell.columnSpan
@@ -93,7 +98,11 @@ fun Table.renderText(
 
   positionedCells.filter { it.cell.columnSpan > 1 }
       .sortedBy { it.cell.columnSpan }
-      .forEach { (rowIndex, columnIndex, cell) ->
+      .forEach { positionedCell ->
+        val rowIndex = positionedCell.rowIndex
+        val columnIndex = positionedCell.columnIndex
+        val cell = positionedCell.cell
+
         val layout = layouts.getValue(cell)
         val columnSpan = cell.columnSpan
         val contentWidth = layout.measureWidth()
@@ -122,7 +131,11 @@ fun Table.renderText(
 
   positionedCells.filter { it.cell.rowSpan > 1 }
       .sortedBy { it.cell.rowSpan }
-      .forEach { (rowIndex, columnIndex, cell) ->
+      .forEach { positionedCell ->
+        val rowIndex = positionedCell.rowIndex
+        val columnIndex = positionedCell.columnIndex
+        val cell = positionedCell.cell
+
         val layout = layouts.getValue(cell)
         val rowSpan = cell.rowSpan
         val contentHeight = layout.measureHeight()
@@ -272,7 +285,11 @@ fun Table.renderText(
   }
 
   debug { " Cells..." }
-  positionedCells.forEach { (rowIndex, columnIndex, cell) ->
+  positionedCells.forEach { positionedCell ->
+    val rowIndex = positionedCell.rowIndex
+    val columnIndex = positionedCell.columnIndex
+    val cell = positionedCell.cell
+
     val cellLeft = tableLefts[columnIndex] + columnBorderWidths[columnIndex]
     val cellRight = tableLefts[columnIndex + cell.columnSpan]
     val cellTop = tableTops[rowIndex] + rowBorderHeights[rowIndex]

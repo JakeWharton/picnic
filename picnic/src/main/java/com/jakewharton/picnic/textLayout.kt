@@ -18,6 +18,12 @@ interface TextLayout {
   fun draw(canvas: TextCanvas)
 }
 
+/**
+ * Returns number of unicode code points in this string. This may be different from String.length
+ * if the string contains surrogate pairs
+ */
+private val String.unicodeLength : Int get() = codePointCount(0, length)
+
 internal class SimpleLayout(private val cell: PositionedCell) : TextLayout {
   private val leftPadding = cell.canonicalStyle?.paddingLeft ?: 0
   private val topPadding = cell.canonicalStyle?.paddingTop ?: 0
@@ -25,7 +31,7 @@ internal class SimpleLayout(private val cell: PositionedCell) : TextLayout {
   override fun measureWidth(): Int {
     return leftPadding +
         (cell.canonicalStyle?.paddingRight ?: 0) +
-        (cell.cell.content.split('\n').maxBy { it.length }?.length ?: 0)
+        (cell.cell.content.split('\n').maxBy { it.unicodeLength }?.unicodeLength ?: 0)
   }
 
   override fun measureHeight(): Int {
@@ -53,10 +59,12 @@ internal class SimpleLayout(private val cell: PositionedCell) : TextLayout {
 
     var x = left
     var y = top
-    for (char in cell.cell.content) {
-      // TODO invisible chars, codepoints, graphemes, etc.
-      if (char != '\n') {
-        canvas[y, x++] = char
+    //Iterate through codepoints in input string
+    for (index in 0 until cell.cell.content.unicodeLength) {
+      // TODO invisible chars, graphemes, etc.
+      val codePoint = cell.cell.content.codePointAt(index)
+      if (codePoint != '\n'.toInt()) {
+        canvas[y, x++] = codePoint
       } else {
         y++
         x = left

@@ -120,4 +120,23 @@ class CellSizeTest {
       |   1     
       |""".trimMargin())
   }
+
+  @Test fun unicode() {
+    val table = table {
+      row('\u0031') //1 utf-8 bytes
+      row('\u00A3') //2 utf-8 bytes
+      row('\u20AC') //3 utf-8 bytes
+      row('\u5317') //3 utf-8 bytes, full-width
+      row(String(Character.toChars(0x1F603))) //4 utf-8 bytes (2*utf-16), full-width
+    }
+
+    assertThat(table.renderText()).isEqualTo("""
+      |1
+      |£
+      |€
+      |北
+      |😃
+      |""".trimMargin())
+
+  }
 }

@@ -4,36 +4,40 @@ internal class TextSurface(
   override val width: Int,
   override val height: Int
 ) : TextCanvas {
-  private val buffer = StringBuilder(height * (width + 1)).apply {
-    repeat(height) {
-      repeat(width) {
-        append(' ')
-      }
-      append('\n')
-    }
+  private val buffer = IntArray(height * (width + 1)) { index ->
+    val charValue = if (index % (width + 1) == width) '\n' else ' '
+    charValue.toInt()
   }
 
-  override operator fun set(row: Int, column: Int, char: Char) {
+  override operator fun set(row: Int, column: Int, char: Int) {
     require(row in 0 until height) { "Row $row not in range [0, $height)" }
     require(column in 0 until width) { "Column $column not in range [0, $width)" }
     buffer[row * (width + 1) + column] = char
   }
 
-  override fun get(row: Int, column: Int): Char {
+  override fun get(row: Int, column: Int): Int {
     require(row in 0 until height) { "Row $row not in range [0, $height)" }
     require(column in 0 until width) { "Column $column not in range [0, $width)" }
     return buffer[row * (width + 1) + column]
   }
 
-  override fun toString() = buffer.toString()
+  /**
+   * buffer is array of codepoints, convert back to chars
+   */
+  override fun toString() = StringBuilder(buffer.size * 2).apply {
+      buffer.forEach { codePoint ->
+        append(Character.toChars(codePoint))
+      }
+    }.toString()
 }
 
 interface TextCanvas {
   val width: Int
   val height: Int
 
-  operator fun set(row: Int, column: Int, char: Char)
-  operator fun get(row: Int, column: Int): Char
+  operator fun set(row: Int, column: Int, char: Char) = set(row, column, char.toInt())
+  operator fun set(row: Int, column: Int, char: Int)
+  operator fun get(row: Int, column: Int): Int
 
   @JvmDefault
   fun clip(left: Int, right: Int, top: Int, bottom: Int): TextCanvas {
@@ -51,13 +55,13 @@ private class ClippedTextCanvas(
   override val width = right - left
   override val height = bottom - top
 
-  override fun set(row: Int, column: Int, char: Char) {
+  override fun set(row: Int, column: Int, char: Int) {
     require(row in 0 until height) { "Row $row not in range [0, $height)" }
     require(column in 0 until width) { "Column $column not in range [0, $width)" }
     canvas[top + row, left + column] = char
   }
 
-  override fun get(row: Int, column: Int): Char {
+  override fun get(row: Int, column: Int): Int {
     require(row in 0 until height) { "Row $row not in range [0, $height)" }
     require(column in 0 until width) { "Column $column not in range [0, $width)" }
     return canvas[top + row, left + column]

@@ -120,4 +120,44 @@ class CellSizeTest {
       |   1     
       |""".trimMargin())
   }
+
+  @Test fun unicode() {
+    val table = table {
+      // 1 UTF-8 bytes.
+      row('\u0031', 'a')
+      // 2 UTF-8 bytes.
+      row('\u00A3', 'a')
+      // 3 UTF-8 bytes.
+      row('\u20AC', 'a')
+      // 3 UTF-8 bytes, full-width.
+      row('\u5317', 'a')
+      // 4 UTF-8 bytes (2 * UTF-16), full-width.
+      row(String(Character.toChars(0x1F603)), 'a')
+    }
+
+    assertThat(table.renderText()).isEqualTo("""
+      |1a
+      |£a
+      |€a
+      |北a
+      |😃a
+      |""".trimMargin())
+  }
+
+  @Test fun mixedWidth() {
+    // Rows contain mixture of BMP and supplementary codepoints.
+    val table = table {
+      row("a", "a")
+      // 2 UTF-8 bytes.
+      row("😃.😃.😃", 'a')
+      // 2 UTF-8 bytes.
+      row(".😃.😃.", 'a')
+    }
+
+    assertThat(table.renderText()).isEqualTo("""
+      |a    a
+      |😃.😃.😃a
+      |.😃.😃.a
+      |""".trimMargin())
+  }
 }

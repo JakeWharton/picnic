@@ -4,29 +4,30 @@ internal class TextSurface(
   override val width: Int,
   override val height: Int
 ) : TextCanvas {
-  private val buffer = IntArray(height * (width + 1)) { index ->
-    val charValue = if (index % (width + 1) == width) '\n' else ' '
-    charValue.toInt()
+  private val buffer = IntArray(height * width) { _ ->
+    ' '.toInt()
   }
 
   override operator fun set(row: Int, column: Int, char: Int) {
     require(row in 0 until height) { "Row $row not in range [0, $height)" }
     require(column in 0 until width) { "Column $column not in range [0, $width)" }
-    buffer[row * (width + 1) + column] = char
+    buffer[row * width + column] = char
   }
 
   override fun get(row: Int, column: Int): Int {
     require(row in 0 until height) { "Row $row not in range [0, $height)" }
     require(column in 0 until width) { "Column $column not in range [0, $width)" }
-    return buffer[row * (width + 1) + column]
+    return buffer[row * width + column]
   }
 
   /**
    * buffer is array of codepoints, convert back to chars
    */
   override fun toString() = StringBuilder(buffer.size * 2).apply {
-      buffer.forEach { codePoint ->
+      buffer.forEachIndexed { index, codePoint ->
         append(Character.toChars(codePoint))
+
+        if (index % width == width - 1) appendln()
       }
     }.toString()
 }

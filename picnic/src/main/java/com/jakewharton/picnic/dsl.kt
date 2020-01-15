@@ -19,6 +19,7 @@ interface TableDsl : TableSectionDsl {
 
 @PicnicDsl
 interface TableStyleDsl {
+  var border: Boolean?
   var borderStyle: BorderStyle?
 }
 
@@ -215,11 +216,14 @@ private class CellStyleDslImpl : CellStyleDsl {
 }
 
 private class TableStyleDslImpl : TableStyleDsl {
+  override var border: Boolean? = null
   override var borderStyle: BorderStyle? = null
 
   fun createOrNull(): TableStyle? {
-    if (borderStyle != null) {
+    if (border != null ||
+        borderStyle != null) {
       return TableStyle {
+        border = this@TableStyleDslImpl.border
         borderStyle = this@TableStyleDslImpl.borderStyle
       }
     }

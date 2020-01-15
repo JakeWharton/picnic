@@ -52,7 +52,7 @@ fun Table.renderText(
       }
     }
 
-    if (canonicalStyle?.borderLeft == true &&
+    if ((columnIndex == 0 && tableStyle?.border == true || canonicalStyle?.borderLeft == true) &&
         (columnIndex > 0 || tableStyle?.borderStyle != BorderStyle.Hidden)) {
       debug {
         val oldValue = if (columnBorderWidths[columnIndex] == 0) "0 ->" else "already"
@@ -60,7 +60,7 @@ fun Table.renderText(
       }
       columnBorderWidths[columnIndex] = 1
     }
-    if (canonicalStyle?.borderRight == true &&
+    if ((columnIndex + columnSpan == columnCount && tableStyle?.border == true || canonicalStyle?.borderRight == true) &&
         (columnIndex + columnSpan < columnCount || tableStyle?.borderStyle != BorderStyle.Hidden)) {
       debug {
         val oldValue = if (columnBorderWidths[columnIndex + columnSpan] == 0) "0 ->" else "already"
@@ -68,7 +68,7 @@ fun Table.renderText(
       }
       columnBorderWidths[columnIndex + columnSpan] = 1
     }
-    if (canonicalStyle?.borderTop == true &&
+    if ((rowIndex == 0 && tableStyle?.border == true || canonicalStyle?.borderTop == true) &&
         (rowIndex > 0 || tableStyle?.borderStyle != BorderStyle.Hidden)) {
       debug {
         val oldValue = if (rowBorderHeights[rowIndex] == 0) "0 ->" else "already"
@@ -76,7 +76,7 @@ fun Table.renderText(
       }
       rowBorderHeights[rowIndex] = 1
     }
-    if (canonicalStyle?.borderBottom == true &&
+    if ((rowIndex + rowSpan == rowCount && tableStyle?.border == true || canonicalStyle?.borderBottom == true) &&
         (rowIndex + rowSpan < rowCount || tableStyle?.borderStyle != BorderStyle.Hidden)) {
       debug {
         val oldValue = if (rowBorderHeights[rowIndex + rowSpan] == 0) "0 ->" else "already"
@@ -237,16 +237,20 @@ fun Table.renderText(
 
         val cornerTopBorder = previousRowColumnCell !== previousColumnCell &&
             (previousRowColumnCellCanonicalStyle?.borderRight == true ||
-                previousColumnCellCanonicalStyle?.borderLeft == true)
+                previousColumnCellCanonicalStyle?.borderLeft == true ||
+                rowIndex > 0 && (columnIndex == 0 || columnIndex == columnCount) && tableStyle?.border == true)
         val cornerLeftBorder = previousRowColumnCell !== previousRowCell &&
             (previousRowColumnCellCanonicalStyle?.borderBottom == true ||
-                previousRowCellCanonicalStyle?.borderTop == true)
+                previousRowCellCanonicalStyle?.borderTop == true ||
+                columnIndex > 0 && (rowIndex == 0 || rowIndex == rowCount) && tableStyle?.border == true)
         val cornerBottomBorder = previousRowCell !== cell &&
             (previousRowCellCanonicalStyle?.borderRight == true ||
-                cellCanonicalStyle?.borderLeft == true)
+                cellCanonicalStyle?.borderLeft == true ||
+                rowIndex < rowCount && (columnIndex == 0 || columnIndex == columnCount) && tableStyle?.border == true)
         val cornerRightBorder = previousColumnCell !== cell &&
             (previousColumnCellCanonicalStyle?.borderBottom == true ||
-                cellCanonicalStyle?.borderTop == true)
+                cellCanonicalStyle?.borderTop == true ||
+                columnIndex < columnCount && (rowIndex == 0 || rowIndex == rowCount) && tableStyle?.border == true)
         if (cornerTopBorder || cornerLeftBorder || cornerBottomBorder || cornerRightBorder) {
           val borderChar = border.get(
               down = cornerBottomBorder,
@@ -261,7 +265,8 @@ fun Table.renderText(
       if (hasColumnBorder &&
           previousRowCell !== cell &&
           (previousRowCellCanonicalStyle?.borderRight == true ||
-              cellCanonicalStyle?.borderLeft == true)) {
+              cellCanonicalStyle?.borderLeft == true ||
+              (columnIndex == 0 || columnIndex == columnCount) && tableStyle?.border == true)) {
         val rowDrawEndIndex = tableTops[rowIndex + 1] // Safe given cell != null.
         val borderChar = border.vertical
         debug { "  ($rowIndex, $columnIndex) left '$borderChar': (${rowDrawStartIndex + 1}, $columnDrawStartIndex) -> ($rowDrawEndIndex, $columnDrawStartIndex)" }
@@ -273,7 +278,8 @@ fun Table.renderText(
       if (hasRowBorder &&
           previousColumnCell !== cell &&
           (previousColumnCellCanonicalStyle?.borderBottom == true ||
-              cellCanonicalStyle?.borderTop == true)) {
+              cellCanonicalStyle?.borderTop == true ||
+              (rowIndex == 0 || rowIndex == rowCount) && tableStyle?.border == true)) {
         val columnDrawEndIndex = tableLefts[columnIndex + 1] // Safe given cell != null
         val borderChar = border.horizontal
         debug { "  ($rowIndex, $columnIndex) top '$borderChar': ($rowDrawStartIndex, ${columnDrawStartIndex + 1}) -> ($rowDrawStartIndex, $columnDrawEndIndex)" }

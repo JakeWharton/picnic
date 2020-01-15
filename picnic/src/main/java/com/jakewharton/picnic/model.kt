@@ -162,14 +162,23 @@ fun Table(initializer: Table.Builder.() -> Unit): Table {
 }
 
 class TableStyle private constructor(
+  val border: Boolean?,
   val borderStyle: BorderStyle?
 ) {
-  override fun toString() = "TableStyle(borderStyle=$borderStyle)"
-  override fun hashCode() = borderStyle.hashCode()
+  override fun toString() = "TableStyle(border=$border, borderStyle=$borderStyle)"
+  override fun hashCode() = border.hashCode() * 37 + borderStyle.hashCode()
   override fun equals(other: Any?) = other is TableStyle &&
+      border == other.border &&
       borderStyle == other.borderStyle
 
   class Builder {
+    @set:JvmSynthetic // Hide 'void' setter from Java.
+    var border: Boolean? = null
+
+    fun setBorder(border: Boolean?) = apply {
+      this.border = border
+    }
+
     @set:JvmSynthetic // Hide 'void' setter from Java.
     var borderStyle: BorderStyle? = null
 
@@ -177,7 +186,7 @@ class TableStyle private constructor(
       this.borderStyle = borderStyle
     }
 
-    fun build() = TableStyle(borderStyle)
+    fun build() = TableStyle(border, borderStyle)
   }
 }
 

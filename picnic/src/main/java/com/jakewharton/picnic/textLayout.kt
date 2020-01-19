@@ -60,9 +60,8 @@ internal class SimpleLayout(private val cell: PositionedCell) : TextLayout {
     var x = left
     var y = top
     //Iterate through codepoints in input string
-    for (index in 0 until cell.cell.content.unicodeLength) {
+    for (codePoint in cell.cell.content.codePoints()) {
       // TODO invisible chars, graphemes, etc.
-      val codePoint = cell.cell.content.codePointAt(index)
       if (codePoint != '\n'.toInt()) {
         canvas[y, x++] = codePoint
       } else {

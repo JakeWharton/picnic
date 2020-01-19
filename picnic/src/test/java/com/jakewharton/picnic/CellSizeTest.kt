@@ -137,6 +137,22 @@ class CellSizeTest {
       |北
       |😃
       |""".trimMargin())
+  }
+
+  //Rows contain mixture of BMP and supplementary codepoints. This exercises a bug in the initial
+  //codepoint implementation
+  @Test fun mixedWidth() {
+    val table = table {
+      row() //Should be 5 spaces
+      row("😃.😃.😃") //2 utf-8 bytes
+      row(".😃.😃.") //2 utf-8 bytes
+    }
+
+    assertThat(table.renderText()).isEqualTo("""
+      |     
+      |😃.😃.😃
+      |.😃.😃.
+      |""".trimMargin())
 
   }
 }

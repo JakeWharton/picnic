@@ -59,7 +59,7 @@ internal class SimpleLayout(private val cell: PositionedCell) : TextLayout {
 
     var x = left
     var y = top
-    for (codePoint in cell.cell.content.codePoints()) {
+    for (codePoint in cell.cell.content.codePoints) {
       // TODO invisible chars, graphemes, etc.
       if (codePoint != '\n'.toInt()) {
         canvas[y, x++] = codePoint
@@ -68,5 +68,14 @@ internal class SimpleLayout(private val cell: PositionedCell) : TextLayout {
         x = left
       }
     }
+  }
+}
+
+private val String.codePoints get() = sequence {
+  var i = 0
+  while (i < length) {
+    val codePoint = codePointAt(i)
+    yield(codePoint)
+    i += Character.charCount(codePoint)
   }
 }

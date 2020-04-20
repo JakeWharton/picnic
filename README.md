@@ -313,7 +313,7 @@ table {
 Download
 --------
 
-Artifacts are available in Maven Central at `com.jakewharton.picnic:picnic:0.3.0`.
+Artifacts are available in Maven Central at `com.jakewharton.picnic:picnic:0.3.1`.
 
 In-development snapshots are available from
 [Sonatype's snapshot repository](https://oss.sonatype.org/content/repositories/snapshots/).

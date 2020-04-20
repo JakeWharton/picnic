@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+Version 0.3.1 *(2020-04-20)*
+----------------------------
+
+ * Fix: Use own implementation of codepoint iteration which enables running on Android.
+
+
 Version 0.3.0 *(2020-02-07)*
 ----------------------------
 

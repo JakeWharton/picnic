@@ -1,26 +1,26 @@
 package com.jakewharton.picnic
 
-class TextBorder(private val value: String) {
+class TextBorder(private val characters: String) {
   init {
-    require(value.length == 16) { "Border string must contain exactly 16 characters" }
+    require(characters.length == 16) { "Border string must contain exactly 16 characters" }
   }
 
-  val empty get() = value[0]
-  val down get() = value[1]
-  val up get() = value[2]
-  val vertical get() = value[3]
-  val right get() = value[4]
-  val downAndRight get() = value[5]
-  val upAndRight get() = value[6]
-  val verticalAndRight get() = value[7]
-  val left get() = value[8]
-  val downAndLeft get() = value[9]
-  val upAndLeft get() = value[10]
-  val verticalAndLeft get() = value[11]
-  val horizontal get() = value[12]
-  val downAndHorizontal get() = value[13]
-  val upAndHorizontal get() = value[14]
-  val verticalAndHorizontal get() = value[15]
+  val empty get() = characters[0]
+  val down get() = characters[1]
+  val up get() = characters[2]
+  val vertical get() = characters[3]
+  val right get() = characters[4]
+  val downAndRight get() = characters[5]
+  val upAndRight get() = characters[6]
+  val verticalAndRight get() = characters[7]
+  val left get() = characters[8]
+  val downAndLeft get() = characters[9]
+  val upAndLeft get() = characters[10]
+  val verticalAndLeft get() = characters[11]
+  val horizontal get() = characters[12]
+  val downAndHorizontal get() = characters[13]
+  val upAndHorizontal get() = characters[14]
+  val verticalAndHorizontal get() = characters[15]
 
   fun get(
     down: Boolean = false,
@@ -28,7 +28,7 @@ class TextBorder(private val value: String) {
     right: Boolean = false,
     left: Boolean = false
   ): Char {
-    return value[
+    return characters[
         (if (down) 1 else 0) or
         (if (up) 2 else 0) or
         (if (right) 4 else 0) or

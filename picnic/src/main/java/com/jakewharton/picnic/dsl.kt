@@ -41,6 +41,11 @@ interface TableSectionDsl {
 interface RowDsl {
   fun cell(content: Any?, style: CellDsl.() -> Unit = {})
 
+  @JvmDefault
+  fun cells(vararg content: Any?, style: CellDsl.() -> Unit = {}) {
+    content.forEach { cell(it, style) }
+  }
+
   fun cellStyle(content: CellStyleDsl.() -> Unit)
 }
 

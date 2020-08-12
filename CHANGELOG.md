@@ -1,6 +1,13 @@
 Change Log
 ==========
 
+Version 0.4.0 *(2020-08-12)*
+----------------------------
+
+ * New: `cells()` function adds multiple cells at once to a row.
+ * `TextBorder` property name changed to `characters`.
+
+
 Version 0.3.1 *(2020-04-20)*
 ----------------------------
 

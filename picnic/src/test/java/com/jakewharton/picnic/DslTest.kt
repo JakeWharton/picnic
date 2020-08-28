@@ -14,10 +14,12 @@ class DslTest {
       }
     }
 
-    assertThat(table.renderText()).isEqualTo("""
+    assertThat(table.renderText()).isEqualTo(
+      """
       |  c
       | bc
       |abc
-      |""".trimMargin())
+      |""".trimMargin()
+    )
   }
 }

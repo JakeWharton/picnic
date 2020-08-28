@@ -50,11 +50,13 @@ class CellAlignmentTest {
       }
     }
 
-    assertThat(table.renderText()).isEqualTo("""
+    assertThat(table.renderText()).isEqualTo(
+      """
       |TLTCTR
       |MLMCMR
       |BLBCBR
-      |""".trimMargin())
+      |""".trimMargin()
+    )
   }
 
   @Test fun alignmentsAndSizes() {
@@ -103,7 +105,8 @@ class CellAlignmentTest {
       }
     }
 
-    assertThat(table.renderText()).isEqualTo("""
+    assertThat(table.renderText()).isEqualTo(
+      """
       |            ┌───┬───┬───┬───┬────┬────┬────┬────┬────┬────┬────┬────┬─────┬─────┬─────┬─────┐
       |padding >   │l0 │l0 │l0 │l0 │l0  │l0  │l0  │l0  │l1  │l1  │l1  │l1  │l1   │l1   │l1   │l1   │
       |            │r0 │r0 │r0 │r0 │r1  │r1  │r1  │r1  │r0  │r0  │r0  │r0  │r1   │r1   │r1   │r1   │
@@ -353,7 +356,8 @@ class CellAlignmentTest {
       |            │XXX│XXX│XXX│XXX│XXX │XXX │XXX │XXX │ XXX│ XXX│ XXX│ XXX│ XXX │ XXX │ XXX │ XXX │
       |            │XXX│   │XXX│   │XXX │    │XXX │    │ XXX│    │ XXX│    │ XXX │     │ XXX │     │
       |            └───┴───┴───┴───┴────┴────┴────┴────┴────┴────┴────┴────┴─────┴─────┴─────┴─────┘
-      |""".trimMargin())
+      |""".trimMargin()
+    )
   }
 
   @Test fun stylePropagation() {
@@ -385,7 +389,8 @@ class CellAlignmentTest {
       }
     }
 
-    assertThat(table.renderText()).isEqualTo("""
+    assertThat(table.renderText()).isEqualTo(
+      """
       |0123456
       |1 TR   
       |2      
@@ -396,6 +401,7 @@ class CellAlignmentTest {
       |7TL    
       |8      
       |9      
-      |""".trimMargin())
+      |""".trimMargin()
+    )
   }
 }

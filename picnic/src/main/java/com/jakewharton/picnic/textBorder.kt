@@ -26,10 +26,10 @@ class TextBorder(private val characters: String) {
     down: Boolean = false,
     up: Boolean = false,
     right: Boolean = false,
-    left: Boolean = false
+    left: Boolean = false,
   ): Char {
     return characters[
-        (if (down) 1 else 0) or
+      (if (down) 1 else 0) or
         (if (up) 2 else 0) or
         (if (right) 4 else 0) or
         (if (left) 8 else 0)

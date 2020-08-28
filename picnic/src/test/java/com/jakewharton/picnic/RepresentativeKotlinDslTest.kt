@@ -55,7 +55,8 @@ class RepresentativeKotlinDslTest {
         row("total", "1.3 MiB", "1.3 MiB", "-39 B", "2.2 MiB", "2.2 MiB", "-112 B")
       }
     }
-    assertThat(table.toString()).isEqualTo("""
+    assertThat(table.toString()).isEqualTo(
+      """
       |          │          compressed           │          uncompressed          
       |          ├───────────┬───────────┬───────┼───────────┬───────────┬────────
       | APK      │ old       │ new       │ diff  │ old       │ new       │ diff   
@@ -68,6 +69,7 @@ class RepresentativeKotlinDslTest {
       |    other │  37.1 KiB │  37.1 KiB │   0 B │  36.3 KiB │  36.3 KiB │    0 B 
       |──────────┼───────────┼───────────┼───────┼───────────┼───────────┼────────
       |    total │   1.3 MiB │   1.3 MiB │ -39 B │   2.2 MiB │   2.2 MiB │ -112 B 
-      |""".trimMargin())
+      |""".trimMargin()
+    )
   }
 }

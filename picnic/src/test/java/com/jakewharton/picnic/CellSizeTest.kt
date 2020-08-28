@@ -11,7 +11,8 @@ class CellSizeTest {
       row("1", "1\n2\n3", "1\n2")
     }
 
-    assertThat(table.renderText()).isEqualTo("""
+    assertThat(table.renderText()).isEqualTo(
+      """
       |111
       |22 
       |3  
@@ -21,7 +22,8 @@ class CellSizeTest {
       |111
       | 22
       | 3 
-      |""".trimMargin())
+      |""".trimMargin()
+    )
   }
 
   @Test fun heightWithVerticalPadding() {
@@ -48,13 +50,15 @@ class CellSizeTest {
       }
     }
 
-    assertThat(table.renderText()).isEqualTo("""
+    assertThat(table.renderText()).isEqualTo(
+      """
       |1 3
       | 2 
       |1  
       | 23
       |   
-      |""".trimMargin())
+      |""".trimMargin()
+    )
   }
 
   @Test fun width() {
@@ -64,11 +68,13 @@ class CellSizeTest {
       row("1", "123", "12")
     }
 
-    assertThat(table.renderText()).isEqualTo("""
+    assertThat(table.renderText()).isEqualTo(
+      """
       |12312 1  
       |12 1  123
       |1  12312 
-      |""".trimMargin())
+      |""".trimMargin()
+    )
   }
 
   @Test fun widthWithHorizontalPadding() {
@@ -95,10 +101,12 @@ class CellSizeTest {
       }
     }
 
-    assertThat(table.renderText()).isEqualTo("""
+    assertThat(table.renderText()).isEqualTo(
+      """
       |1  23  
       |1 2  3 
-      |""".trimMargin())
+      |""".trimMargin()
+    )
   }
 
   @Test fun widthAndHeight() {
@@ -108,7 +116,8 @@ class CellSizeTest {
       row("1", "123\n12\n1", "12\n1")
     }
 
-    assertThat(table.renderText()).isEqualTo("""
+    assertThat(table.renderText()).isEqualTo(
+      """
       |12312 1  
       |12 1     
       |1        
@@ -118,7 +127,8 @@ class CellSizeTest {
       |1  12312 
       |   12 1  
       |   1     
-      |""".trimMargin())
+      |""".trimMargin()
+    )
   }
 
   @Test fun unicode() {
@@ -135,13 +145,15 @@ class CellSizeTest {
       row(String(Character.toChars(0x1F603)), 'a')
     }
 
-    assertThat(table.renderText()).isEqualTo("""
+    assertThat(table.renderText()).isEqualTo(
+      """
       |1a
       |£a
       |€a
       |北a
       |😃a
-      |""".trimMargin())
+      |""".trimMargin()
+    )
   }
 
   @Test fun mixedWidth() {
@@ -154,10 +166,12 @@ class CellSizeTest {
       row(".😃.😃.", 'a')
     }
 
-    assertThat(table.renderText()).isEqualTo("""
+    assertThat(table.renderText()).isEqualTo(
+      """
       |a    a
       |😃.😃.😃a
       |.😃.😃.a
-      |""".trimMargin())
+      |""".trimMargin()
+    )
   }
 }

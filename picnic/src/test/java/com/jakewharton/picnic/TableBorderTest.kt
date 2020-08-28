@@ -20,7 +20,8 @@ class TableBorderTest {
       }
     }
 
-    assertThat(table.renderText()).isEqualTo("""
+    assertThat(table.renderText()).isEqualTo(
+      """
       |┌─┬─┬─┐
       |│A│B│C│
       |├─┼─┼─┤
@@ -28,7 +29,8 @@ class TableBorderTest {
       |├─┼─┼─┤
       |│G│H│I│
       |└─┴─┴─┘
-      |""".trimMargin())
+      |""".trimMargin()
+    )
   }
 
   @Test fun tableBorderTakesPrecedenceOverCellBorder() {
@@ -46,13 +48,15 @@ class TableBorderTest {
       }
     }
 
-    assertThat(table.renderText()).isEqualTo("""
+    assertThat(table.renderText()).isEqualTo(
+      """
       |┌───┐
       |│ABC│
       |│DEF│
       |│GHI│
       |└───┘
-      |""".trimMargin())
+      |""".trimMargin()
+    )
   }
 
   @Test fun tableBorderHiddenByBorderStyle() {
@@ -68,11 +72,13 @@ class TableBorderTest {
       }
     }
 
-    assertThat(table.renderText()).isEqualTo("""
+    assertThat(table.renderText()).isEqualTo(
+      """
       |ABC
       |DEF
       |GHI
-      |""".trimMargin())
+      |""".trimMargin()
+    )
   }
 
   @Test fun tableBorderWithMiddleBorders() {
@@ -122,7 +128,8 @@ class TableBorderTest {
       }
     }
 
-    assertThat(table.renderText()).isEqualTo("""
+    assertThat(table.renderText()).isEqualTo(
+      """
       |┌─┬──┐
       |│A│BC│
       |├─┼──┤
@@ -131,6 +138,7 @@ class TableBorderTest {
       |├─┼──┤
       |│J│KL│
       |└─┴──┘
-      |""".trimMargin())
+      |""".trimMargin()
+    )
   }
 }

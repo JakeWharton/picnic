@@ -13,7 +13,7 @@ private inline fun debug(message: () -> String) {
 @JvmName("render")
 fun Table.renderText(
   layoutFactory: (PositionedCell) -> TextLayout = ::SimpleLayout,
-  border: TextBorder = TextBorder.DEFAULT
+  border: TextBorder = TextBorder.DEFAULT,
 ): String {
   val layouts = positionedCells.associate { it.cell to layoutFactory(it) }
 
@@ -53,7 +53,8 @@ fun Table.renderText(
     }
 
     if ((columnIndex == 0 && tableStyle?.border == true || canonicalStyle?.borderLeft == true) &&
-        (columnIndex > 0 || tableStyle?.borderStyle != BorderStyle.Hidden)) {
+      (columnIndex > 0 || tableStyle?.borderStyle != BorderStyle.Hidden)
+    ) {
       debug {
         val oldValue = if (columnBorderWidths[columnIndex] == 0) "0 ->" else "already"
         "  ($rowIndex, $columnIndex) Left border $oldValue 1"
@@ -61,7 +62,8 @@ fun Table.renderText(
       columnBorderWidths[columnIndex] = 1
     }
     if ((columnIndex + columnSpan == columnCount && tableStyle?.border == true || canonicalStyle?.borderRight == true) &&
-        (columnIndex + columnSpan < columnCount || tableStyle?.borderStyle != BorderStyle.Hidden)) {
+      (columnIndex + columnSpan < columnCount || tableStyle?.borderStyle != BorderStyle.Hidden)
+    ) {
       debug {
         val oldValue = if (columnBorderWidths[columnIndex + columnSpan] == 0) "0 ->" else "already"
         "  ($rowIndex, $columnIndex) Right border $oldValue 1"
@@ -69,7 +71,8 @@ fun Table.renderText(
       columnBorderWidths[columnIndex + columnSpan] = 1
     }
     if ((rowIndex == 0 && tableStyle?.border == true || canonicalStyle?.borderTop == true) &&
-        (rowIndex > 0 || tableStyle?.borderStyle != BorderStyle.Hidden)) {
+      (rowIndex > 0 || tableStyle?.borderStyle != BorderStyle.Hidden)
+    ) {
       debug {
         val oldValue = if (rowBorderHeights[rowIndex] == 0) "0 ->" else "already"
         "  ($rowIndex, $columnIndex) Top border $oldValue 1"
@@ -77,7 +80,8 @@ fun Table.renderText(
       rowBorderHeights[rowIndex] = 1
     }
     if ((rowIndex + rowSpan == rowCount && tableStyle?.border == true || canonicalStyle?.borderBottom == true) &&
-        (rowIndex + rowSpan < rowCount || tableStyle?.borderStyle != BorderStyle.Hidden)) {
+      (rowIndex + rowSpan < rowCount || tableStyle?.borderStyle != BorderStyle.Hidden)
+    ) {
       debug {
         val oldValue = if (rowBorderHeights[rowIndex + rowSpan] == 0) "0 ->" else "already"
         "  ($rowIndex, $columnIndex) Bottom border $oldValue 1"
@@ -97,70 +101,70 @@ fun Table.renderText(
   debug { " 2/2..." }
 
   positionedCells.filter { it.cell.columnSpan > 1 }
-      .sortedBy { it.cell.columnSpan }
-      .forEach { positionedCell ->
-        val rowIndex = positionedCell.rowIndex
-        val columnIndex = positionedCell.columnIndex
-        val cell = positionedCell.cell
+    .sortedBy { it.cell.columnSpan }
+    .forEach { positionedCell ->
+      val rowIndex = positionedCell.rowIndex
+      val columnIndex = positionedCell.columnIndex
+      val cell = positionedCell.cell
 
-        val layout = layouts.getValue(cell)
-        val columnSpan = cell.columnSpan
-        val contentWidth = layout.measureWidth()
-        val columnSpanIndices = columnIndex until columnIndex + columnSpan
-        val currentSpanColumnWidth = columnSpanIndices.sumBy { columnWidths[it] }
-        val currentSpanBorderWidth = (columnIndex + 1 until columnIndex + columnSpan).sumBy { columnBorderWidths[it] }
-        val currentSpanWidth = currentSpanColumnWidth + currentSpanBorderWidth
-        val remainingSize = contentWidth - currentSpanWidth
-        if (remainingSize > 0) {
-          // TODO change to distribute remaining size proportionally to the existing widths?
-          val commonSize = remainingSize / columnSpan
-          val extraSize = remainingSize - (commonSize * columnSpan)
-          columnSpanIndices.forEachIndexed { spanIndex, targetColumnIndex ->
-            val additionalSize = if (spanIndex < extraSize) {
-              commonSize + 1
-            } else {
-              commonSize
-            }
-            val currentWidth = columnWidths[targetColumnIndex]
-            val newWidth = currentWidth + additionalSize
-            debug { "  ($rowIndex, $columnIndex) Increasing column $targetColumnIndex width from $currentWidth to $newWidth" }
-            columnWidths[targetColumnIndex] = newWidth
+      val layout = layouts.getValue(cell)
+      val columnSpan = cell.columnSpan
+      val contentWidth = layout.measureWidth()
+      val columnSpanIndices = columnIndex until columnIndex + columnSpan
+      val currentSpanColumnWidth = columnSpanIndices.sumBy { columnWidths[it] }
+      val currentSpanBorderWidth = (columnIndex + 1 until columnIndex + columnSpan).sumBy { columnBorderWidths[it] }
+      val currentSpanWidth = currentSpanColumnWidth + currentSpanBorderWidth
+      val remainingSize = contentWidth - currentSpanWidth
+      if (remainingSize > 0) {
+        // TODO change to distribute remaining size proportionally to the existing widths?
+        val commonSize = remainingSize / columnSpan
+        val extraSize = remainingSize - (commonSize * columnSpan)
+        columnSpanIndices.forEachIndexed { spanIndex, targetColumnIndex ->
+          val additionalSize = if (spanIndex < extraSize) {
+            commonSize + 1
+          } else {
+            commonSize
           }
+          val currentWidth = columnWidths[targetColumnIndex]
+          val newWidth = currentWidth + additionalSize
+          debug { "  ($rowIndex, $columnIndex) Increasing column $targetColumnIndex width from $currentWidth to $newWidth" }
+          columnWidths[targetColumnIndex] = newWidth
         }
       }
+    }
 
   positionedCells.filter { it.cell.rowSpan > 1 }
-      .sortedBy { it.cell.rowSpan }
-      .forEach { positionedCell ->
-        val rowIndex = positionedCell.rowIndex
-        val columnIndex = positionedCell.columnIndex
-        val cell = positionedCell.cell
+    .sortedBy { it.cell.rowSpan }
+    .forEach { positionedCell ->
+      val rowIndex = positionedCell.rowIndex
+      val columnIndex = positionedCell.columnIndex
+      val cell = positionedCell.cell
 
-        val layout = layouts.getValue(cell)
-        val rowSpan = cell.rowSpan
-        val contentHeight = layout.measureHeight()
-        val rowSpanIndices = rowIndex until rowIndex + rowSpan
-        val currentSpanRowHeight = rowSpanIndices.sumBy { rowHeights[it] }
-        val currentSpanBorderHeight = (rowIndex + 1 until rowIndex + rowSpan).sumBy { rowBorderHeights[it] }
-        val currentSpanHeight = currentSpanRowHeight + currentSpanBorderHeight
-        val remainingSize = contentHeight - currentSpanHeight
-        if (remainingSize > 0) {
-          // TODO change to distribute remaining size proportionally to the existing widths?
-          val commonSize = remainingSize / rowSpan
-          val extraSize = remainingSize - (commonSize * rowSpan)
-          rowSpanIndices.forEachIndexed { spanIndex, targetRowIndex ->
-            val additionalSize = if (spanIndex < extraSize) {
-              commonSize + 1
-            } else {
-              commonSize
-            }
-            val currentHeight = rowHeights[targetRowIndex]
-            val newHeight = currentHeight + additionalSize
-            debug { "  ($rowIndex, $columnIndex) Increasing row $targetRowIndex height from $currentHeight to $newHeight" }
-            rowHeights[targetRowIndex] = newHeight
+      val layout = layouts.getValue(cell)
+      val rowSpan = cell.rowSpan
+      val contentHeight = layout.measureHeight()
+      val rowSpanIndices = rowIndex until rowIndex + rowSpan
+      val currentSpanRowHeight = rowSpanIndices.sumBy { rowHeights[it] }
+      val currentSpanBorderHeight = (rowIndex + 1 until rowIndex + rowSpan).sumBy { rowBorderHeights[it] }
+      val currentSpanHeight = currentSpanRowHeight + currentSpanBorderHeight
+      val remainingSize = contentHeight - currentSpanHeight
+      if (remainingSize > 0) {
+        // TODO change to distribute remaining size proportionally to the existing widths?
+        val commonSize = remainingSize / rowSpan
+        val extraSize = remainingSize - (commonSize * rowSpan)
+        rowSpanIndices.forEachIndexed { spanIndex, targetRowIndex ->
+          val additionalSize = if (spanIndex < extraSize) {
+            commonSize + 1
+          } else {
+            commonSize
           }
+          val currentHeight = rowHeights[targetRowIndex]
+          val newHeight = currentHeight + additionalSize
+          debug { "  ($rowIndex, $columnIndex) Increasing row $targetRowIndex height from $currentHeight to $newHeight" }
+          rowHeights[targetRowIndex] = newHeight
         }
       }
+    }
   debug {
     """
     | Final row heights: ${rowHeights.contentToString()}
@@ -236,37 +240,49 @@ fun Table.renderText(
         val previousRowColumnCellCanonicalStyle = previousRowColumnPositionedCell?.canonicalStyle
 
         val cornerTopBorder = previousRowColumnCell !== previousColumnCell &&
-            (previousRowColumnCellCanonicalStyle?.borderRight == true ||
-                previousColumnCellCanonicalStyle?.borderLeft == true ||
-                rowIndex > 0 && (columnIndex == 0 || columnIndex == columnCount) && tableStyle?.border == true)
+          (
+            previousRowColumnCellCanonicalStyle?.borderRight == true ||
+              previousColumnCellCanonicalStyle?.borderLeft == true ||
+              rowIndex > 0 && (columnIndex == 0 || columnIndex == columnCount) && tableStyle?.border == true
+            )
         val cornerLeftBorder = previousRowColumnCell !== previousRowCell &&
-            (previousRowColumnCellCanonicalStyle?.borderBottom == true ||
-                previousRowCellCanonicalStyle?.borderTop == true ||
-                columnIndex > 0 && (rowIndex == 0 || rowIndex == rowCount) && tableStyle?.border == true)
+          (
+            previousRowColumnCellCanonicalStyle?.borderBottom == true ||
+              previousRowCellCanonicalStyle?.borderTop == true ||
+              columnIndex > 0 && (rowIndex == 0 || rowIndex == rowCount) && tableStyle?.border == true
+            )
         val cornerBottomBorder = previousRowCell !== cell &&
-            (previousRowCellCanonicalStyle?.borderRight == true ||
-                cellCanonicalStyle?.borderLeft == true ||
-                rowIndex < rowCount && (columnIndex == 0 || columnIndex == columnCount) && tableStyle?.border == true)
+          (
+            previousRowCellCanonicalStyle?.borderRight == true ||
+              cellCanonicalStyle?.borderLeft == true ||
+              rowIndex < rowCount && (columnIndex == 0 || columnIndex == columnCount) && tableStyle?.border == true
+            )
         val cornerRightBorder = previousColumnCell !== cell &&
-            (previousColumnCellCanonicalStyle?.borderBottom == true ||
-                cellCanonicalStyle?.borderTop == true ||
-                columnIndex < columnCount && (rowIndex == 0 || rowIndex == rowCount) && tableStyle?.border == true)
+          (
+            previousColumnCellCanonicalStyle?.borderBottom == true ||
+              cellCanonicalStyle?.borderTop == true ||
+              columnIndex < columnCount && (rowIndex == 0 || rowIndex == rowCount) && tableStyle?.border == true
+            )
         if (cornerTopBorder || cornerLeftBorder || cornerBottomBorder || cornerRightBorder) {
           val borderChar = border.get(
-              down = cornerBottomBorder,
-              up = cornerTopBorder,
-              left = cornerLeftBorder,
-              right = cornerRightBorder)
+            down = cornerBottomBorder,
+            up = cornerTopBorder,
+            left = cornerLeftBorder,
+            right = cornerRightBorder,
+          )
           debug { "  ($rowIndex, $columnIndex) corner '$borderChar': ($rowDrawStartIndex, $columnDrawStartIndex)" }
           surface[rowDrawStartIndex, columnDrawStartIndex] = borderChar
         }
       }
 
       if (hasColumnBorder &&
-          previousRowCell !== cell &&
-          (previousRowCellCanonicalStyle?.borderRight == true ||
-              cellCanonicalStyle?.borderLeft == true ||
-              (columnIndex == 0 || columnIndex == columnCount) && tableStyle?.border == true)) {
+        previousRowCell !== cell &&
+        (
+          previousRowCellCanonicalStyle?.borderRight == true ||
+            cellCanonicalStyle?.borderLeft == true ||
+            (columnIndex == 0 || columnIndex == columnCount) && tableStyle?.border == true
+          )
+      ) {
         val rowDrawEndIndex = tableTops[rowIndex + 1] // Safe given cell != null.
         val borderChar = border.vertical
         debug { "  ($rowIndex, $columnIndex) left '$borderChar': (${rowDrawStartIndex + 1}, $columnDrawStartIndex) -> ($rowDrawEndIndex, $columnDrawStartIndex)" }
@@ -276,10 +292,13 @@ fun Table.renderText(
       }
 
       if (hasRowBorder &&
-          previousColumnCell !== cell &&
-          (previousColumnCellCanonicalStyle?.borderBottom == true ||
-              cellCanonicalStyle?.borderTop == true ||
-              (rowIndex == 0 || rowIndex == rowCount) && tableStyle?.border == true)) {
+        previousColumnCell !== cell &&
+        (
+          previousColumnCellCanonicalStyle?.borderBottom == true ||
+            cellCanonicalStyle?.borderTop == true ||
+            (rowIndex == 0 || rowIndex == rowCount) && tableStyle?.border == true
+          )
+      ) {
         val columnDrawEndIndex = tableLefts[columnIndex + 1] // Safe given cell != null
         val borderChar = border.horizontal
         debug { "  ($rowIndex, $columnIndex) top '$borderChar': ($rowDrawStartIndex, ${columnDrawStartIndex + 1}) -> ($rowDrawStartIndex, $columnDrawEndIndex)" }

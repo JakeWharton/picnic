@@ -55,7 +55,8 @@ class CellBorderTest {
       }
     }
 
-    assertThat(table.renderText()).isEqualTo("""
+    assertThat(table.renderText()).isEqualTo(
+      """
       |┌─┬─┐ ╷
       |│ │ │ │
       |├─┤ ╵ │
@@ -63,9 +64,11 @@ class CellBorderTest {
       |└─┼───┘
       |  │    
       |╶─┴─╴  
-      |""".trimMargin())
+      |""".trimMargin()
+    )
 
-    assertThat(table.renderText(border = TextBorder.ASCII)).isEqualTo("""
+    assertThat(table.renderText(border = TextBorder.ASCII)).isEqualTo(
+      """
       |+-+-+  
       || | | |
       |+-+   |
@@ -73,7 +76,8 @@ class CellBorderTest {
       |+-+---+
       |  |    
       | -+-   
-      |""".trimMargin())
+      |""".trimMargin()
+    )
   }
 
   @Test fun adjacentRowBordersWithoutCorners() {
@@ -89,11 +93,13 @@ class CellBorderTest {
       row(3, 4)
     }
 
-    assertThat(table.renderText()).isEqualTo("""
+    assertThat(table.renderText()).isEqualTo(
+      """
       |12
       |──
       |34
-      |""".trimMargin())
+      |""".trimMargin()
+    )
   }
 
   @Test fun adjacentColumnBordersWithoutCorners() {
@@ -112,10 +118,12 @@ class CellBorderTest {
       }
     }
 
-    assertThat(table.renderText()).isEqualTo("""
+    assertThat(table.renderText()).isEqualTo(
+      """
       |1│2
       |3│4
-      |""".trimMargin())
+      |""".trimMargin()
+    )
   }
 
   @Test fun rowSpanPushesBordersToTheRight() {
@@ -136,12 +144,14 @@ class CellBorderTest {
       }
     }
 
-    assertThat(table.renderText()).isEqualTo("""
+    assertThat(table.renderText()).isEqualTo(
+      """
       |AB
       | ─
       | C
       |──
-      |""".trimMargin())
+      |""".trimMargin()
+    )
   }
 
   @Test fun stylePropagation() {
@@ -164,10 +174,12 @@ class CellBorderTest {
       }
     }
 
-    assertThat(table.renderText()).isEqualTo("""
+    assertThat(table.renderText()).isEqualTo(
+      """
       |A
       |─
-      |""".trimMargin())
+      |""".trimMargin()
+    )
   }
 
   @Test fun tableStyleTakesPrecedenceOverCell() {
@@ -185,13 +197,15 @@ class CellBorderTest {
       }
     }
 
-    assertThat(table.renderText()).isEqualTo("""
+    assertThat(table.renderText()).isEqualTo(
+      """
       |A│B│C
       |─┼─┼─
       |D│E│F
       |─┼─┼─
       |G│H│I
-      |""".trimMargin())
+      |""".trimMargin()
+    )
   }
 
   @Test fun tableStyleTakesPrecedenceOverCellWithRowAndColumnSpans() {
@@ -222,7 +236,8 @@ class CellBorderTest {
       row("1", "1")
     }
 
-    assertThat(table.renderText()).isEqualTo("""
+    assertThat(table.renderText()).isEqualTo(
+      """
       |1│1│2  
       |─┼─┤   
       |1│1│   
@@ -230,7 +245,8 @@ class CellBorderTest {
       |2  │1│1
       |   ├─┼─
       |   │1│1
-      |""".trimMargin())
+      |""".trimMargin()
+    )
   }
 
   @Test fun borderLeftCalculationWithTableBorderHidden() {
@@ -261,12 +277,14 @@ class CellBorderTest {
       }
     }
 
-    assertThat(table.renderText()).isEqualTo("""
+    assertThat(table.renderText()).isEqualTo(
+      """
       |1│2│3
       |4  │5
       |6│7  
       |8    
-      |""".trimMargin())
+      |""".trimMargin()
+    )
   }
 
   @Test fun borderRightCalculationWithTableBorderHidden() {
@@ -297,12 +315,14 @@ class CellBorderTest {
       }
     }
 
-    assertThat(table.renderText()).isEqualTo("""
+    assertThat(table.renderText()).isEqualTo(
+      """
       |1│2│3
       |4  │5
       |6│7  
       |8    
-      |""".trimMargin())
+      |""".trimMargin()
+    )
   }
 
   @Test fun borderTopCalculationWithTableBorderHidden() {
@@ -332,13 +352,15 @@ class CellBorderTest {
       row("7", "8")
     }
 
-    assertThat(table.renderText()).isEqualTo("""
+    assertThat(table.renderText()).isEqualTo(
+      """
       |1234
       |─ ─ 
       |5 6 
       |──  
       |78  
-      |""".trimMargin())
+      |""".trimMargin()
+    )
   }
 
   @Test fun borderBottomCalculationWithTableBorderHidden() {
@@ -368,12 +390,14 @@ class CellBorderTest {
       row("7", "8")
     }
 
-    assertThat(table.renderText()).isEqualTo("""
+    assertThat(table.renderText()).isEqualTo(
+      """
       |1234
       |─ ─ 
       |5 6 
       |──  
       |78  
-      |""".trimMargin())
+      |""".trimMargin()
+    )
   }
 }

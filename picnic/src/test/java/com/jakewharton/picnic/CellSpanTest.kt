@@ -35,12 +35,14 @@ class CellSpanTest {
       }
     }
 
-    assertThat(table.renderText()).isEqualTo("""
+    assertThat(table.renderText()).isEqualTo(
+      """
       |888888881
       |444444441
       |222222221
       |111111111
-      |""".trimMargin())
+      |""".trimMargin()
+    )
   }
 
   @Test fun columnSpanAcrossDifferentSizedColumnsDoesNotExpand() {
@@ -53,10 +55,12 @@ class CellSpanTest {
       }
     }
 
-    assertThat(table.renderText()).isEqualTo("""
+    assertThat(table.renderText()).isEqualTo(
+      """
       |122333
       |666666
-      |""".trimMargin())
+      |""".trimMargin()
+    )
   }
 
   @Test fun columnSpanAcrossBorderDoesNotExpand() {
@@ -74,10 +78,12 @@ class CellSpanTest {
       }
     }
 
-    assertThat(table.renderText()).isEqualTo("""
+    assertThat(table.renderText()).isEqualTo(
+      """
       |11│22
       |33333
-      |""".trimMargin())
+      |""".trimMargin()
+    )
   }
 
   @Test fun rowSpans() {
@@ -126,7 +132,8 @@ class CellSpanTest {
       }
     }
 
-    assertThat(table.renderText()).isEqualTo("""
+    assertThat(table.renderText()).isEqualTo(
+      """
       |8421
       |8421
       |8421
@@ -136,7 +143,8 @@ class CellSpanTest {
       |8421
       |8421
       |1111
-      |""".trimMargin())
+      |""".trimMargin()
+    )
   }
 
   @Test fun rowSpanAcrossDifferentSizedRowsDoesNotExpand() {
@@ -151,14 +159,16 @@ class CellSpanTest {
       row("3\n3\n3")
     }
 
-    assertThat(table.renderText()).isEqualTo("""
+    assertThat(table.renderText()).isEqualTo(
+      """
       |61
       |62
       |62
       |63
       |63
       |63
-      |""".trimMargin())
+      |""".trimMargin()
+    )
   }
 
   @Test fun rowSpanAcrossBorderDoesNotExpand() {
@@ -174,11 +184,13 @@ class CellSpanTest {
       row("3")
     }
 
-    assertThat(table.renderText()).isEqualTo("""
+    assertThat(table.renderText()).isEqualTo(
+      """
       |12
       |1─
       |13
-      |""".trimMargin())
+      |""".trimMargin()
+    )
   }
 
   @Test fun rowAndColumnSpans() {
@@ -216,7 +228,8 @@ class CellSpanTest {
       row("1", "1", "1", "1", "1", "1")
     }
 
-    assertThat(table.renderText()).isEqualTo("""
+    assertThat(table.renderText()).isEqualTo(
+      """
       |333111
       |333221
       |333221
@@ -224,7 +237,8 @@ class CellSpanTest {
       |223331
       |113331
       |111111
-      |""".trimMargin())
+      |""".trimMargin()
+    )
   }
 
   @Test fun rowSpanAtEndOfRow() {
@@ -242,11 +256,13 @@ class CellSpanTest {
       row("1", "1")
     }
 
-    assertThat(table.renderText()).isEqualTo("""
+    assertThat(table.renderText()).isEqualTo(
+      """
       |12
       |12
       |11
-      |""".trimMargin())
+      |""".trimMargin()
+    )
   }
 
   @Test fun rowSpanLeaveHole() {
@@ -265,11 +281,13 @@ class CellSpanTest {
       row("1", "1", "1", "1")
     }
 
-    assertThat(table.renderText()).isEqualTo("""
+    assertThat(table.renderText()).isEqualTo(
+      """
       |1212
       |12 2
       |1111
-      |""".trimMargin())
+      |""".trimMargin()
+    )
     assertThat(table.getOrNull(1, 2)).isNull()
     assertThat(table.getOrNull(1, 3)).isNotNull()
   }
@@ -291,11 +309,13 @@ class CellSpanTest {
       row("1", "1")
     }
 
-    assertThat(table.renderText()).isEqualTo("""
+    assertThat(table.renderText()).isEqualTo(
+      """
       |12
       |22
       |21
       |11
-      |""".trimMargin())
+      |""".trimMargin()
+    )
   }
 }

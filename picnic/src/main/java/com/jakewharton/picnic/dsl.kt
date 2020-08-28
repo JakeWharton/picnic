@@ -167,7 +167,7 @@ private class RowDslImpl : RowDsl {
 
 private class CellDslImpl private constructor(
   private val content: Any?,
-  private val cellStyleImpl: CellStyleDslImpl
+  private val cellStyleImpl: CellStyleDslImpl,
 ) : CellDsl, CellStyleDsl by cellStyleImpl {
 
   constructor(content: Any?) : this(content, CellStyleDslImpl())
@@ -195,14 +195,14 @@ private class CellStyleDslImpl : CellStyleDsl {
 
   fun createOrNull(): CellStyle? {
     if (paddingLeft != null ||
-        paddingRight != null ||
-        paddingTop != null ||
-        paddingBottom != null ||
-        borderLeft != null ||
-        borderRight != null ||
-        borderTop != null ||
-        borderBottom != null ||
-        alignment != null
+      paddingRight != null ||
+      paddingTop != null ||
+      paddingBottom != null ||
+      borderLeft != null ||
+      borderRight != null ||
+      borderTop != null ||
+      borderBottom != null ||
+      alignment != null
     ) {
       return CellStyle {
         paddingLeft = this@CellStyleDslImpl.paddingLeft
@@ -225,8 +225,7 @@ private class TableStyleDslImpl : TableStyleDsl {
   override var borderStyle: BorderStyle? = null
 
   fun createOrNull(): TableStyle? {
-    if (border != null ||
-        borderStyle != null) {
+    if (border != null || borderStyle != null) {
       return TableStyle {
         border = this@TableStyleDslImpl.border
         borderStyle = this@TableStyleDslImpl.borderStyle

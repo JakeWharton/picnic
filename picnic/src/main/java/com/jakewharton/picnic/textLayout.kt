@@ -30,15 +30,15 @@ internal class SimpleLayout(private val cell: PositionedCell) : TextLayout {
 
   override fun measureWidth(): Int {
     return leftPadding +
-        (cell.canonicalStyle?.paddingRight ?: 0) +
-        (cell.cell.content.split('\n').maxBy { it.unicodeLength }?.unicodeLength ?: 0)
+      (cell.canonicalStyle?.paddingRight ?: 0) +
+      cell.cell.content.split('\n').maxOf { it.unicodeLength }
   }
 
   override fun measureHeight(): Int {
     return 1 +
-        topPadding +
-        (cell.canonicalStyle?.paddingBottom ?: 0) +
-        cell.cell.content.count { it == '\n' }
+      topPadding +
+      (cell.canonicalStyle?.paddingBottom ?: 0) +
+      cell.cell.content.count { it == '\n' }
   }
 
   override fun draw(canvas: TextCanvas) {

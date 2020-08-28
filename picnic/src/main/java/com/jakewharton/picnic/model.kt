@@ -7,16 +7,16 @@ class Table private constructor(
   val body: TableSection,
   val footer: TableSection?,
   val cellStyle: CellStyle?,
-  val tableStyle: TableStyle?
+  val tableStyle: TableStyle?,
 ) {
   override fun toString() = renderText()
   override fun hashCode() = hash(header, body, footer, cellStyle, tableStyle)
   override fun equals(other: Any?) = other is Table &&
-      header == other.header &&
-      body == other.body &&
-      footer == other.footer &&
-      cellStyle == other.cellStyle &&
-      tableStyle == other.tableStyle
+    header == other.header &&
+    body == other.body &&
+    footer == other.footer &&
+    cellStyle == other.cellStyle &&
+    tableStyle == other.tableStyle
 
   val rowCount: Int = (header?.rows?.size ?: 0) + body.rows.size + (footer?.rows?.size ?: 0)
   val columnCount: Int
@@ -96,18 +96,18 @@ class Table private constructor(
     val rowIndex: Int,
     val columnIndex: Int,
     val cell: Cell,
-    val canonicalStyle: CellStyle?
+    val canonicalStyle: CellStyle?,
   ) {
     override fun hashCode() = hash(rowIndex, columnIndex, cell, canonicalStyle)
     override fun equals(other: Any?) = other is PositionedCell &&
-        rowIndex == other.rowIndex &&
-        columnIndex == other.columnIndex &&
-        cell == other.cell &&
-        canonicalStyle == other.canonicalStyle
+      rowIndex == other.rowIndex &&
+      columnIndex == other.columnIndex &&
+      cell == other.cell &&
+      canonicalStyle == other.canonicalStyle
 
     override fun toString() =
       "PositionedCell(rowIndex=$rowIndex, colIndex=$columnIndex, cell=$cell, " +
-          "canonicalStyle=$canonicalStyle)"
+        "canonicalStyle=$canonicalStyle)"
   }
 
   class Builder {
@@ -147,11 +147,11 @@ class Table private constructor(
     }
 
     fun build() = Table(
-        header,
-        checkNotNull(body) { "Body section is required" },
-        footer,
-        cellStyle,
-        tableStyle
+      header,
+      checkNotNull(body) { "Body section is required" },
+      footer,
+      cellStyle,
+      tableStyle,
     )
   }
 }
@@ -163,13 +163,13 @@ fun Table(initializer: Table.Builder.() -> Unit): Table {
 
 class TableStyle private constructor(
   val border: Boolean?,
-  val borderStyle: BorderStyle?
+  val borderStyle: BorderStyle?,
 ) {
   override fun toString() = "TableStyle(border=$border, borderStyle=$borderStyle)"
   override fun hashCode() = border.hashCode() * 37 + borderStyle.hashCode()
   override fun equals(other: Any?) = other is TableStyle &&
-      border == other.border &&
-      borderStyle == other.borderStyle
+    border == other.border &&
+    borderStyle == other.borderStyle
 
   class Builder {
     @set:JvmSynthetic // Hide 'void' setter from Java.
@@ -201,13 +201,13 @@ enum class BorderStyle {
 
 class TableSection private constructor(
   val rows: List<Row>,
-  val cellStyle: CellStyle?
+  val cellStyle: CellStyle?,
 ) {
   override fun toString() = "TableSection(rows=$rows, cellStyle=$cellStyle)"
   override fun hashCode() = hash(rows, cellStyle)
   override fun equals(other: Any?) = other is TableSection &&
-      rows == other.rows &&
-      cellStyle == other.cellStyle
+    rows == other.rows &&
+    cellStyle == other.cellStyle
 
   class Builder {
     @set:JvmSynthetic // Hide 'void' setter from Java.
@@ -243,13 +243,13 @@ fun TableSection(initializer: TableSection.Builder.() -> Unit): TableSection {
 
 class Row private constructor(
   val cells: List<Cell>,
-  val cellStyle: CellStyle?
+  val cellStyle: CellStyle?,
 ) {
   override fun toString() = "Row(cells=$cells, cellStyle=$cellStyle)"
   override fun hashCode() = hash(cells, cellStyle)
   override fun equals(other: Any?) = other is Row &&
-      cells == other.cells &&
-      cellStyle == other.cellStyle
+    cells == other.cells &&
+    cellStyle == other.cellStyle
 
   class Builder {
     @set:JvmSynthetic // Hide 'void' setter from Java.
@@ -287,17 +287,17 @@ class Cell private constructor(
   val content: String,
   val columnSpan: Int,
   val rowSpan: Int,
-  val style: CellStyle?
+  val style: CellStyle?,
 ) {
   override fun toString() =
     "Cell(content=$content, columnSpan=$columnSpan, rowSpan=$rowSpan, style=$style)"
 
   override fun hashCode() = hash(content, columnSpan, rowSpan, style)
   override fun equals(other: Any?) = other is Cell &&
-      content == other.content &&
-      columnSpan == other.columnSpan &&
-      rowSpan == other.rowSpan &&
-      style == other.style
+    content == other.content &&
+    columnSpan == other.columnSpan &&
+    rowSpan == other.rowSpan &&
+    style == other.style
 
   class Builder(val content: Any?) {
     @set:JvmSynthetic // Hide 'void' setter from Java.
@@ -339,28 +339,28 @@ class CellStyle private constructor(
   val borderRight: Boolean?,
   val borderTop: Boolean?,
   val borderBottom: Boolean?,
-  val alignment: TextAlignment?
+  val alignment: TextAlignment?,
 ) {
   override fun toString() =
     "CellStyle(padding(l=$paddingLeft,r=$paddingRight,t=$paddingTop,b=$paddingBottom), " +
-        "border(l=$borderLeft,r=$borderRight,t=$borderTop,b=$borderBottom), alignment=$alignment)"
+      "border(l=$borderLeft,r=$borderRight,t=$borderTop,b=$borderBottom), alignment=$alignment)"
 
   override fun hashCode() = hash(
-      paddingLeft, paddingRight, paddingTop, paddingBottom,
-      borderLeft, borderRight, borderTop, borderBottom,
-      alignment
+    paddingLeft, paddingRight, paddingTop, paddingBottom,
+    borderLeft, borderRight, borderTop, borderBottom,
+    alignment,
   )
 
   override fun equals(other: Any?) = other is CellStyle &&
-      paddingLeft == other.paddingLeft &&
-      paddingRight == other.paddingRight &&
-      paddingTop == other.paddingTop &&
-      paddingBottom == other.paddingBottom &&
-      borderLeft == other.borderLeft &&
-      borderRight == other.borderRight &&
-      borderTop == other.borderTop &&
-      borderBottom == other.borderBottom &&
-      alignment == other.alignment
+    paddingLeft == other.paddingLeft &&
+    paddingRight == other.paddingRight &&
+    paddingTop == other.paddingTop &&
+    paddingBottom == other.paddingBottom &&
+    borderLeft == other.borderLeft &&
+    borderRight == other.borderRight &&
+    borderTop == other.borderTop &&
+    borderBottom == other.borderBottom &&
+    alignment == other.alignment
 
   class Builder {
     @set:JvmSynthetic // Hide 'void' setter from Java.
@@ -441,9 +441,9 @@ class CellStyle private constructor(
     }
 
     fun build() = CellStyle(
-        paddingLeft, paddingRight, paddingTop, paddingBottom,
-        borderLeft, borderRight, borderTop, borderBottom,
-        alignment
+      paddingLeft, paddingRight, paddingTop, paddingBottom,
+      borderLeft, borderRight, borderTop, borderBottom,
+      alignment,
     )
   }
 }

@@ -1,6 +1,7 @@
 package com.jakewharton.picnic
 
 import com.google.common.truth.Truth.assertThat
+import org.junit.Ignore
 import org.junit.Test
 
 class CellSizeTest {
@@ -131,6 +132,7 @@ class CellSizeTest {
     )
   }
 
+  @Ignore
   @Test fun unicode() {
     val table = table {
       // 1 UTF-8 bytes.
@@ -156,6 +158,7 @@ class CellSizeTest {
     )
   }
 
+  @Ignore
   @Test fun mixedWidth() {
     // Rows contain mixture of BMP and supplementary codepoints.
     val table = table {

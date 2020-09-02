@@ -67,6 +67,18 @@ class CellBorderTest {
       |""".trimMargin()
     )
 
+    assertThat(table.renderText(border = TextBorder.ROUNDED)).isEqualTo(
+      """
+      |╭─┬─╮ ╷
+      |│ │ │ │
+      |├─┤ ╵ │
+      |│ │   │
+      |╰─┼───╯
+      |  │    
+      |╶─┴─╴  
+      |""".trimMargin()
+    )
+
     assertThat(table.renderText(border = TextBorder.ASCII)).isEqualTo(
       """
       |+-+-+  

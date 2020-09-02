@@ -38,6 +38,7 @@ class TextBorder(private val characters: String) {
 
   companion object {
     @JvmField val DEFAULT = TextBorder(" ╷╵│╶┌└├╴┐┘┤─┬┴┼")
+    @JvmField val ROUNDED = TextBorder(" ╷╵│╶╭╰├╴╮╯┤─┬┴┼")
     @JvmField val ASCII = TextBorder("   | +++ +++-+++")
   }
 }

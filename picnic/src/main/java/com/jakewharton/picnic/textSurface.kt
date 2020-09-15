@@ -4,36 +4,44 @@ internal class TextSurface(
   override val width: Int,
   override val height: Int,
 ) : TextCanvas {
-  private val buffer = StringBuilder(height * (width + 1)).apply {
-    repeat(height) {
+  private val rowBuilders = Array(height) {
+    StringBuilder(width).apply {
       repeat(width) {
         append(' ')
       }
-      append('\n')
     }
   }
 
-  override operator fun set(row: Int, column: Int, char: Char) {
-    require(row in 0 until height) { "Row $row not in range [0, $height)" }
-    require(column in 0 until width) { "Column $column not in range [0, $width)" }
-    buffer[row * (width + 1) + column] = char
+  override fun write(row: Int, column: Int, char: Char) {
+    val rowBuilder = rowBuilders[row]
+    val writeIndex = rowBuilder.visualIndex(column)
+    rowBuilder.setCharAt(writeIndex, char)
   }
 
-  override fun get(row: Int, column: Int): Char {
-    require(row in 0 until height) { "Row $row not in range [0, $height)" }
-    require(column in 0 until width) { "Column $column not in range [0, $width)" }
-    return buffer[row * (width + 1) + column]
+  override fun write(row: Int, column: Int, string: String) {
+    string.split('\n').forEachIndexed { lineIndex, line ->
+      val rowBuilder = rowBuilders[row + lineIndex]
+      val writeStartIndex = rowBuilder.visualIndex(column)
+      val writeEndIndex = rowBuilder.visualIndex(column + line.visualCodePointCount)
+
+      rowBuilder.replace(writeStartIndex, writeEndIndex, line)
+    }
   }
 
-  override fun toString() = buffer.toString()
+  override fun toString() = buildString(rowBuilders.sumOf { it.length } + height) {
+    for (rowBuffer in rowBuilders) {
+      append(rowBuffer)
+      append('\n')
+    }
+  }
 }
 
 interface TextCanvas {
   val width: Int
   val height: Int
 
-  operator fun set(row: Int, column: Int, char: Char)
-  operator fun get(row: Int, column: Int): Char
+  fun write(row: Int, column: Int, char: Char)
+  fun write(row: Int, column: Int, string: String)
 
   @JvmDefault
   fun clip(left: Int, right: Int, top: Int, bottom: Int): TextCanvas {
@@ -51,15 +59,11 @@ private class ClippedTextCanvas(
   override val width = right - left
   override val height = bottom - top
 
-  override fun set(row: Int, column: Int, char: Char) {
-    require(row in 0 until height) { "Row $row not in range [0, $height)" }
-    require(column in 0 until width) { "Column $column not in range [0, $width)" }
-    canvas[top + row, left + column] = char
+  override fun write(row: Int, column: Int, char: Char) {
+    canvas.write(top + row, left + column, char)
   }
 
-  override fun get(row: Int, column: Int): Char {
-    require(row in 0 until height) { "Row $row not in range [0, $height)" }
-    require(column in 0 until width) { "Column $column not in range [0, $width)" }
-    return canvas[top + row, left + column]
+  override fun write(row: Int, column: Int, string: String) {
+    canvas.write(top + row, left + column, string)
   }
 }

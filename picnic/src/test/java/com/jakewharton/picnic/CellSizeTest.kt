@@ -1,7 +1,6 @@
 package com.jakewharton.picnic
 
 import com.google.common.truth.Truth.assertThat
-import org.junit.Ignore
 import org.junit.Test
 
 class CellSizeTest {
@@ -132,7 +131,6 @@ class CellSizeTest {
     )
   }
 
-  @Ignore
   @Test fun unicode() {
     val table = table {
       // 1 UTF-8 bytes.
@@ -158,7 +156,6 @@ class CellSizeTest {
     )
   }
 
-  @Ignore
   @Test fun mixedWidth() {
     // Rows contain mixture of BMP and supplementary codepoints.
     val table = table {
@@ -177,4 +174,21 @@ class CellSizeTest {
       |""".trimMargin()
     )
   }
+
+  @Test fun asniEscapeCodesAreNotMeasured() {
+    val table = table {
+      row("a")
+      row("\u001B[31;1;4ma\u001B[0m")
+    }
+    assertThat(table.columnCount).isEqualTo(1)
+
+    assertThat(table.renderText()).isEqualTo(
+      """
+      |a
+      |$esc[31;1;4ma$esc[0m
+      |""".trimMargin()
+    )
+  }
 }
+
+private const val esc = "\u001B"

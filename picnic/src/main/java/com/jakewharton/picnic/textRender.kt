@@ -271,7 +271,7 @@ fun Table.renderText(
             right = cornerRightBorder,
           )
           debug { "  ($rowIndex, $columnIndex) corner '$borderChar': ($rowDrawStartIndex, $columnDrawStartIndex)" }
-          surface[rowDrawStartIndex, columnDrawStartIndex] = borderChar
+          surface.write(rowDrawStartIndex, columnDrawStartIndex, borderChar)
         }
       }
 
@@ -287,7 +287,7 @@ fun Table.renderText(
         val borderChar = border.vertical
         debug { "  ($rowIndex, $columnIndex) left '$borderChar': (${rowDrawStartIndex + 1}, $columnDrawStartIndex) -> ($rowDrawEndIndex, $columnDrawStartIndex)" }
         for (rowDrawIndex in rowDrawStartIndex + rowBorderHeight until rowDrawEndIndex) {
-          surface[rowDrawIndex, columnDrawStartIndex] = borderChar
+          surface.write(rowDrawIndex, columnDrawStartIndex, borderChar)
         }
       }
 
@@ -303,7 +303,7 @@ fun Table.renderText(
         val borderChar = border.horizontal
         debug { "  ($rowIndex, $columnIndex) top '$borderChar': ($rowDrawStartIndex, ${columnDrawStartIndex + 1}) -> ($rowDrawStartIndex, $columnDrawEndIndex)" }
         for (columnDrawIndex in columnDrawStartIndex + columnBorderWidth until columnDrawEndIndex) {
-          surface[rowDrawStartIndex, columnDrawIndex] = borderChar
+          surface.write(rowDrawStartIndex, columnDrawIndex, borderChar)
         }
       }
     }

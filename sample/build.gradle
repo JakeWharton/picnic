@@ -1,0 +1,9 @@
+apply plugin: 'org.jetbrains.kotlin.jvm'
+apply plugin: 'application'
+
+mainClassName = 'example.Main'
+
+dependencies {
+  implementation project(':picnic')
+  implementation 'com.github.ajalt:mordant:1.2.1'
+}

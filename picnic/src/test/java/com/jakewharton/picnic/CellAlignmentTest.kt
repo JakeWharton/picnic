@@ -55,7 +55,7 @@ class CellAlignmentTest {
       |TLTCTR
       |MLMCMR
       |BLBCBR
-      |""".trimMargin()
+      """.trimMargin()
     )
   }
 
@@ -356,7 +356,7 @@ class CellAlignmentTest {
       |            │XXX│XXX│XXX│XXX│XXX │XXX │XXX │XXX │ XXX│ XXX│ XXX│ XXX│ XXX │ XXX │ XXX │ XXX │
       |            │XXX│   │XXX│   │XXX │    │XXX │    │ XXX│    │ XXX│    │ XXX │     │ XXX │     │
       |            └───┴───┴───┴───┴────┴────┴────┴────┴────┴────┴────┴────┴─────┴─────┴─────┴─────┘
-      |""".trimMargin()
+      """.trimMargin()
     )
   }
 
@@ -373,12 +373,12 @@ class CellAlignmentTest {
 
     assertThat(table.renderText()).isEqualTo(
       """
-        |X      X      X
-        |XXX   XXX   XXX
-        |XXXXXXXXXXXXXXX
-        |XXX   XXX   XXX
-        |X      X      X
-        |""".trimMargin()
+      |X      X      X
+      |XXX   XXX   XXX
+      |XXXXXXXXXXXXXXX
+      |XXX   XXX   XXX
+      |X      X      X
+      """.trimMargin()
     )
   }
 
@@ -423,7 +423,7 @@ class CellAlignmentTest {
       |7TL    
       |8      
       |9      
-      |""".trimMargin()
+      """.trimMargin()
     )
   }
 
@@ -440,7 +440,7 @@ class CellAlignmentTest {
       """
       | $esc[31;1;4mHello$esc[0m a
       |<Hello>a
-      |""".trimMargin()
+      """.trimMargin()
     )
   }
 
@@ -457,7 +457,7 @@ class CellAlignmentTest {
       | $esc[31;1;4mHello$esc[0m a
       |$esc[31;1;4mHello12$esc[0ma
       | Hello a
-      |""".trimMargin()
+      """.trimMargin()
     )
   }
 }

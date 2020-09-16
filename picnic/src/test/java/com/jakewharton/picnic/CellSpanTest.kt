@@ -41,7 +41,7 @@ class CellSpanTest {
       |444444441
       |222222221
       |111111111
-      |""".trimMargin()
+      """.trimMargin()
     )
   }
 
@@ -59,7 +59,7 @@ class CellSpanTest {
       """
       |122333
       |666666
-      |""".trimMargin()
+      """.trimMargin()
     )
   }
 
@@ -82,7 +82,7 @@ class CellSpanTest {
       """
       |11│22
       |33333
-      |""".trimMargin()
+      """.trimMargin()
     )
   }
 
@@ -143,7 +143,7 @@ class CellSpanTest {
       |8421
       |8421
       |1111
-      |""".trimMargin()
+      """.trimMargin()
     )
   }
 
@@ -167,7 +167,7 @@ class CellSpanTest {
       |63
       |63
       |63
-      |""".trimMargin()
+      """.trimMargin()
     )
   }
 
@@ -189,7 +189,7 @@ class CellSpanTest {
       |12
       |1─
       |13
-      |""".trimMargin()
+      """.trimMargin()
     )
   }
 
@@ -237,7 +237,7 @@ class CellSpanTest {
       |223331
       |113331
       |111111
-      |""".trimMargin()
+      """.trimMargin()
     )
   }
 
@@ -261,7 +261,7 @@ class CellSpanTest {
       |12
       |12
       |11
-      |""".trimMargin()
+      """.trimMargin()
     )
   }
 
@@ -286,7 +286,7 @@ class CellSpanTest {
       |1212
       |12 2
       |1111
-      |""".trimMargin()
+      """.trimMargin()
     )
     assertThat(table.getOrNull(1, 2)).isNull()
     assertThat(table.getOrNull(1, 3)).isNotNull()
@@ -315,7 +315,7 @@ class CellSpanTest {
       |22
       |21
       |11
-      |""".trimMargin()
+      """.trimMargin()
     )
   }
 }

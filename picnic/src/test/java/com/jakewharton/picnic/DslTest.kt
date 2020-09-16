@@ -19,7 +19,7 @@ class DslTest {
       |  c
       | bc
       |abc
-      |""".trimMargin()
+      """.trimMargin()
     )
   }
 }

@@ -28,10 +28,16 @@ internal class TextSurface(
     }
   }
 
-  override fun toString() = buildString(rowBuilders.sumOf { it.length } + height) {
-    for (rowBuffer in rowBuilders) {
-      append(rowBuffer)
-      append('\n')
+  override fun toString(): String {
+    val rowCharacterCount = rowBuilders.sumOf { it.length }
+    val newLineCount = height - 1
+    return buildString(rowCharacterCount + newLineCount) {
+      rowBuilders.forEachIndexed { index, rowBuilder ->
+        if (index > 0) {
+          append('\n')
+        }
+        append(rowBuilder)
+      }
     }
   }
 }

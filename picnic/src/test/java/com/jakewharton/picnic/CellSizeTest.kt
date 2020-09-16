@@ -22,7 +22,7 @@ class CellSizeTest {
       |111
       | 22
       | 3 
-      |""".trimMargin()
+      """.trimMargin()
     )
   }
 
@@ -57,7 +57,7 @@ class CellSizeTest {
       |1  
       | 23
       |   
-      |""".trimMargin()
+      """.trimMargin()
     )
   }
 
@@ -73,7 +73,7 @@ class CellSizeTest {
       |12312 1  
       |12 1  123
       |1  12312 
-      |""".trimMargin()
+      """.trimMargin()
     )
   }
 
@@ -105,7 +105,7 @@ class CellSizeTest {
       """
       |1  23  
       |1 2  3 
-      |""".trimMargin()
+      """.trimMargin()
     )
   }
 
@@ -127,7 +127,7 @@ class CellSizeTest {
       |1  12312 
       |   12 1  
       |   1     
-      |""".trimMargin()
+      """.trimMargin()
     )
   }
 
@@ -152,7 +152,7 @@ class CellSizeTest {
       |€a
       |北a
       |😃a
-      |""".trimMargin()
+      """.trimMargin()
     )
   }
 
@@ -171,7 +171,7 @@ class CellSizeTest {
       |a    a
       |😃.😃.😃a
       |.😃.😃.a
-      |""".trimMargin()
+      """.trimMargin()
     )
   }
 
@@ -186,7 +186,7 @@ class CellSizeTest {
       """
       |a
       |$esc[31;1;4ma$esc[0m
-      |""".trimMargin()
+      """.trimMargin()
     )
   }
 }

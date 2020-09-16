@@ -64,7 +64,7 @@ class CellBorderTest {
       |└─┼───┘
       |  │    
       |╶─┴─╴  
-      |""".trimMargin()
+      """.trimMargin()
     )
 
     assertThat(table.renderText(border = TextBorder.ROUNDED)).isEqualTo(
@@ -76,7 +76,7 @@ class CellBorderTest {
       |╰─┼───╯
       |  │    
       |╶─┴─╴  
-      |""".trimMargin()
+      """.trimMargin()
     )
 
     assertThat(table.renderText(border = TextBorder.ASCII)).isEqualTo(
@@ -88,7 +88,7 @@ class CellBorderTest {
       |+-+---+
       |  |    
       | -+-   
-      |""".trimMargin()
+      """.trimMargin()
     )
   }
 
@@ -110,7 +110,7 @@ class CellBorderTest {
       |12
       |──
       |34
-      |""".trimMargin()
+      """.trimMargin()
     )
   }
 
@@ -134,7 +134,7 @@ class CellBorderTest {
       """
       |1│2
       |3│4
-      |""".trimMargin()
+      """.trimMargin()
     )
   }
 
@@ -162,7 +162,7 @@ class CellBorderTest {
       | ─
       | C
       |──
-      |""".trimMargin()
+      """.trimMargin()
     )
   }
 
@@ -190,7 +190,7 @@ class CellBorderTest {
       """
       |A
       |─
-      |""".trimMargin()
+      """.trimMargin()
     )
   }
 
@@ -216,7 +216,7 @@ class CellBorderTest {
       |D│E│F
       |─┼─┼─
       |G│H│I
-      |""".trimMargin()
+      """.trimMargin()
     )
   }
 
@@ -257,7 +257,7 @@ class CellBorderTest {
       |2  │1│1
       |   ├─┼─
       |   │1│1
-      |""".trimMargin()
+      """.trimMargin()
     )
   }
 
@@ -295,7 +295,7 @@ class CellBorderTest {
       |4  │5
       |6│7  
       |8    
-      |""".trimMargin()
+      """.trimMargin()
     )
   }
 
@@ -333,7 +333,7 @@ class CellBorderTest {
       |4  │5
       |6│7  
       |8    
-      |""".trimMargin()
+      """.trimMargin()
     )
   }
 
@@ -371,7 +371,7 @@ class CellBorderTest {
       |5 6 
       |──  
       |78  
-      |""".trimMargin()
+      """.trimMargin()
     )
   }
 
@@ -409,7 +409,7 @@ class CellBorderTest {
       |5 6 
       |──  
       |78  
-      |""".trimMargin()
+      """.trimMargin()
     )
   }
 }

@@ -29,7 +29,7 @@ class TableBorderTest {
       |├─┼─┼─┤
       |│G│H│I│
       |└─┴─┴─┘
-      |""".trimMargin()
+      """.trimMargin()
     )
   }
 
@@ -55,7 +55,7 @@ class TableBorderTest {
       |│DEF│
       |│GHI│
       |└───┘
-      |""".trimMargin()
+      """.trimMargin()
     )
   }
 
@@ -77,7 +77,7 @@ class TableBorderTest {
       |ABC
       |DEF
       |GHI
-      |""".trimMargin()
+      """.trimMargin()
     )
   }
 
@@ -138,7 +138,7 @@ class TableBorderTest {
       |├─┼──┤
       |│J│KL│
       |└─┴──┘
-      |""".trimMargin()
+      """.trimMargin()
     )
   }
 }

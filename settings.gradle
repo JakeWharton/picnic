@@ -1,1 +1,2 @@
 include ':picnic'
+include ':sample'

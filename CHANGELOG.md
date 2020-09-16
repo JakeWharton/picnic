@@ -1,6 +1,13 @@
 Change Log
 ==========
 
+Version 0.5.0 *(2020-09-16)*
+----------------------------
+
+ * New: Each line in a multi-line cell is now individually aligned.
+ * New: Do not measure ANSI control sequences allowing color to be used inside cells.
+
+
 Version 0.4.0 *(2020-08-12)*
 ----------------------------
 

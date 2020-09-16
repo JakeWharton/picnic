@@ -360,6 +360,28 @@ class CellAlignmentTest {
     )
   }
 
+  @Test fun multipleLinesAlignedIndividually() {
+    val table = table {
+      row {
+        for (alignment in listOf(TopLeft, TopCenter, TopRight)) {
+          cell("X\nXXX\nXXXXX\nXXX\nX") {
+            this.alignment = alignment
+          }
+        }
+      }
+    }
+
+    assertThat(table.renderText()).isEqualTo(
+      """
+        |X      X      X
+        |XXX   XXX   XXX
+        |XXXXXXXXXXXXXXX
+        |XXX   XXX   XXX
+        |X      X      X
+        |""".trimMargin()
+    )
+  }
+
   @Test fun stylePropagation() {
     val table = table {
       cellStyle {
@@ -404,4 +426,40 @@ class CellAlignmentTest {
       |""".trimMargin()
     )
   }
+
+  @Test fun displaySizeUsedForAlignment() {
+    val table = table {
+      cellStyle {
+        alignment = MiddleCenter
+      }
+      row("\u001B[31;1;4mHello\u001B[0m", "a")
+      row("<Hello>", "a")
+    }
+
+    assertThat(table.renderText()).isEqualTo(
+      """
+      | $esc[31;1;4mHello$esc[0m a
+      |<Hello>a
+      |""".trimMargin()
+    )
+  }
+
+  @Test fun singleCellAlignmentWithInvisibleChars() {
+    val table = table {
+      cellStyle {
+        alignment = MiddleCenter
+      }
+      row("\u001B[31;1;4mHello\u001B[0m\n\u001B[31;1;4mHello12\u001B[0m\nHello", "a\na\na")
+    }
+
+    assertThat(table.renderText()).isEqualTo(
+      """
+      | $esc[31;1;4mHello$esc[0m a
+      |$esc[31;1;4mHello12$esc[0ma
+      | Hello a
+      |""".trimMargin()
+    )
+  }
 }
+
+private const val esc = "\u001B"

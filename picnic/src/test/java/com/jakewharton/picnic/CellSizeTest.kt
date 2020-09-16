@@ -174,4 +174,21 @@ class CellSizeTest {
       |""".trimMargin()
     )
   }
+
+  @Test fun asniEscapeCodesAreNotMeasured() {
+    val table = table {
+      row("a")
+      row("\u001B[31;1;4ma\u001B[0m")
+    }
+    assertThat(table.columnCount).isEqualTo(1)
+
+    assertThat(table.renderText()).isEqualTo(
+      """
+      |a
+      |$esc[31;1;4ma$esc[0m
+      |""".trimMargin()
+    )
+  }
 }
+
+private const val esc = "\u001B"

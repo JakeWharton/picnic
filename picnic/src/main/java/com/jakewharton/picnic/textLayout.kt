@@ -12,17 +12,18 @@ import com.jakewharton.picnic.TextAlignment.TopLeft
 import com.jakewharton.picnic.TextAlignment.TopRight
 
 interface TextLayout {
+  /**
+   * The width in columns that this cell will occupy.
+   *
+   * Consider that multi-character codepoints and emoji occupy a single column. Non-printable
+   * characters and ANSI color escape sequences occupy zero.
+   */
   fun measureWidth(): Int
+
   fun measureHeight(): Int
 
   fun draw(canvas: TextCanvas)
 }
-
-/**
- * Returns number of Unicode code points in this string. This may be different from [String.length]
- * if the string contains surrogate pairs.
- */
-private val String.unicodeLength: Int get() = codePointCount(0, length)
 
 internal class SimpleLayout(private val cell: PositionedCell) : TextLayout {
   private val leftPadding = cell.canonicalStyle?.paddingLeft ?: 0
@@ -31,7 +32,7 @@ internal class SimpleLayout(private val cell: PositionedCell) : TextLayout {
   override fun measureWidth(): Int {
     return leftPadding +
       (cell.canonicalStyle?.paddingRight ?: 0) +
-      cell.cell.content.split('\n').maxOf { it.unicodeLength }
+      cell.cell.content.split('\n').maxOf { it.visualCodePointCount }
   }
 
   override fun measureHeight(): Int {
@@ -42,40 +43,24 @@ internal class SimpleLayout(private val cell: PositionedCell) : TextLayout {
   }
 
   override fun draw(canvas: TextCanvas) {
-    val width = measureWidth()
     val height = measureHeight()
-
     val alignment = cell.canonicalStyle?.alignment ?: TopLeft
-    val left = when (alignment) {
-      TopLeft, MiddleLeft, BottomLeft -> leftPadding
-      TopCenter, MiddleCenter, BottomCenter -> ((canvas.width - width) / 2) + leftPadding
-      TopRight, MiddleRight, BottomRight -> canvas.width - width + leftPadding
-    }
     val top = when (alignment) {
       TopLeft, TopCenter, TopRight -> topPadding
       MiddleLeft, MiddleCenter, MiddleRight -> ((canvas.height - height) / 2) + topPadding
       BottomLeft, BottomCenter, BottomRight -> canvas.height - height + topPadding
     }
 
-    var x = left
-    var y = top
-    for (codePoint in cell.cell.content.codePoints) {
-      // TODO invisible chars, graphemes, etc.
-      if (codePoint != '\n'.toInt()) {
-        canvas[y, x++] = codePoint
-      } else {
-        y++
-        x = left
+    cell.cell.content.split('\n').forEachIndexed { index, line ->
+      val lineWidth = leftPadding +
+        (cell.canonicalStyle?.paddingRight ?: 0) +
+        line.visualCodePointCount
+      val left = when (alignment) {
+        TopLeft, MiddleLeft, BottomLeft -> leftPadding
+        TopCenter, MiddleCenter, BottomCenter -> ((canvas.width - lineWidth) / 2) + leftPadding
+        TopRight, MiddleRight, BottomRight -> canvas.width - lineWidth + leftPadding
       }
+      canvas.write(top + index, left, line)
     }
-  }
-}
-
-private val String.codePoints get() = sequence {
-  var i = 0
-  while (i < length) {
-    val codePoint = codePointAt(i)
-    yield(codePoint)
-    i += Character.charCount(codePoint)
   }
 }

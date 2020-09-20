@@ -17,6 +17,8 @@ compileKotlin {
 }
 
 dependencies {
+  implementation deps.crossword
+
   testImplementation deps.junit
   testImplementation deps.truth
 }

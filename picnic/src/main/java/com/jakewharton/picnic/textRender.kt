@@ -2,6 +2,7 @@
 
 package com.jakewharton.picnic
 
+import com.jakewharton.crossword.TextCanvas
 import com.jakewharton.picnic.Table.PositionedCell
 
 @Suppress("NOTHING_TO_INLINE", "UNUSED_PARAMETER")
@@ -210,7 +211,7 @@ fun Table.renderText(
 
   debug { "Drawing pass..." }
 
-  val surface = TextSurface(tableWidth, tableHeight)
+  val canvas = TextCanvas(tableWidth, tableHeight)
 
   debug { " Borders..." }
   for (rowIndex in 0..rowCount) {
@@ -271,7 +272,7 @@ fun Table.renderText(
             right = cornerRightBorder,
           )
           debug { "  ($rowIndex, $columnIndex) corner '$borderChar': ($rowDrawStartIndex, $columnDrawStartIndex)" }
-          surface.write(rowDrawStartIndex, columnDrawStartIndex, borderChar)
+          canvas.write(rowDrawStartIndex, columnDrawStartIndex, borderChar)
         }
       }
 
@@ -287,7 +288,7 @@ fun Table.renderText(
         val borderChar = border.vertical
         debug { "  ($rowIndex, $columnIndex) left '$borderChar': (${rowDrawStartIndex + 1}, $columnDrawStartIndex) -> ($rowDrawEndIndex, $columnDrawStartIndex)" }
         for (rowDrawIndex in rowDrawStartIndex + rowBorderHeight until rowDrawEndIndex) {
-          surface.write(rowDrawIndex, columnDrawStartIndex, borderChar)
+          canvas.write(rowDrawIndex, columnDrawStartIndex, borderChar)
         }
       }
 
@@ -303,7 +304,7 @@ fun Table.renderText(
         val borderChar = border.horizontal
         debug { "  ($rowIndex, $columnIndex) top '$borderChar': ($rowDrawStartIndex, ${columnDrawStartIndex + 1}) -> ($rowDrawStartIndex, $columnDrawEndIndex)" }
         for (columnDrawIndex in columnDrawStartIndex + columnBorderWidth until columnDrawEndIndex) {
-          surface.write(rowDrawStartIndex, columnDrawIndex, borderChar)
+          canvas.write(rowDrawStartIndex, columnDrawIndex, borderChar)
         }
       }
     }
@@ -328,10 +329,10 @@ fun Table.renderText(
       """.trimMargin()
     }
 
-    val canvas = surface.clip(cellLeft, cellRight, cellTop, cellBottom)
+    val clipped = canvas.clip(cellLeft, cellTop, cellRight, cellBottom)
     val layout = layouts.getValue(cell)
-    layout.draw(canvas)
+    layout.draw(clipped)
   }
 
-  return surface.toString()
+  return canvas.toString()
 }

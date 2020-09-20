@@ -1,17 +1,14 @@
 import org.gradle.internal.jvm.Jvm
 
 buildscript {
-  ext.versions = [
-      'kotlin': '1.4.0'
-  ]
-
   ext.deps = [
       'junit': 'junit:junit:4.13',
       'truth': 'com.google.truth:truth:1.0.1',
+      'crossword': 'com.jakewharton.crossword:crossword:0.1.1',
   ]
 
   dependencies {
-    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.0"
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.10"
     classpath 'org.jlleitschuh.gradle:ktlint-gradle:9.1.0'
     classpath 'org.jetbrains.dokka:dokka-gradle-plugin:0.10.0'
     classpath 'ru.vyarus:gradle-animalsniffer-plugin:1.5.0'

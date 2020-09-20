@@ -1,5 +1,7 @@
 package com.jakewharton.picnic
 
+import com.jakewharton.crossword.TextCanvas
+import com.jakewharton.crossword.visualCodePointCount
 import com.jakewharton.picnic.Table.PositionedCell
 import com.jakewharton.picnic.TextAlignment.BottomCenter
 import com.jakewharton.picnic.TextAlignment.BottomLeft

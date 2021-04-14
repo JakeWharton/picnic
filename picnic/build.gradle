@@ -4,6 +4,8 @@ java {
   targetCompatibility = JavaVersion.VERSION_1_8
   withSourcesJar()
 }
+compileJava.options.encoding = "UTF-8"
+compileTestJava.options.encoding = "UTF-8"
 
 apply plugin: 'org.jetbrains.kotlin.jvm'
 compileKotlin {
@@ -24,9 +26,8 @@ dependencies {
 }
 
 apply plugin: 'org.jetbrains.dokka'
-def dokkaDir = "$buildDir/dokka"
-dokka {
-  outputFormat = 'html'
+def dokkaDir = new File(buildDir, "dokka")
+dokkaHtml {
   outputDirectory = dokkaDir
 }
 def dokkaJarTaskProvider = tasks.register('dokkaJar', Jar) { task ->
@@ -35,12 +36,12 @@ def dokkaJarTaskProvider = tasks.register('dokkaJar', Jar) { task ->
   task.dependsOn('dokka')
 }
 
-def javadocJarTaskProvider = tasks.register('javadocJar', org.jetbrains.dokka.gradle.DokkaTask) { task ->
-  task.outputFormat = 'javadoc'
-  task.outputDirectory = "$buildDir/javadoc"
+dokkaJavadoc {
+  outputDirectory = new File(buildDir, 'javadoc')
 }
+
 tasks.named('assemble').configure {
-  it.dependsOn(javadocJarTaskProvider)
+  it.dependsOn(dokkaJavadoc)
 }
 
 def isReleaseBuild = !version.endsWith('-SNAPSHOT')

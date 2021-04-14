@@ -4,6 +4,8 @@ java {
   targetCompatibility = JavaVersion.VERSION_1_8
   withSourcesJar()
 }
+compileJava.options.encoding = "UTF-8"
+compileTestJava.options.encoding = "UTF-8"
 
 apply plugin: 'org.jetbrains.kotlin.jvm'
 compileKotlin {

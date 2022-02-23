@@ -2,48 +2,46 @@ import org.gradle.internal.jvm.Jvm
 
 buildscript {
   ext.deps = [
-      'junit': 'junit:junit:4.13',
-      'truth': 'com.google.truth:truth:1.0.1',
-      'crossword': 'com.jakewharton.crossword:crossword:0.1.1',
+    'crossword': 'com.jakewharton.crossword:crossword:0.1.1',
   ]
 
   dependencies {
-    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.10"
-    classpath 'org.jlleitschuh.gradle:ktlint-gradle:9.1.0'
-    classpath 'org.jetbrains.dokka:dokka-gradle-plugin:0.10.0'
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10"
+    classpath 'org.jetbrains.dokka:dokka-gradle-plugin:1.6.10'
+    classpath 'com.diffplug.spotless:spotless-plugin-gradle:6.3.0'
     classpath 'ru.vyarus:gradle-animalsniffer-plugin:1.5.0'
+    classpath 'com.vanniktech:gradle-maven-publish-plugin:0.18.0'
   }
 
   repositories {
     mavenCentral()
-    jcenter()
     gradlePluginPortal()
   }
 }
 
 subprojects {
-  group('com.jakewharton.picnic')
-  version('0.6.0-SNAPSHOT')
-
   repositories {
     mavenCentral()
-    jcenter()
   }
 
-  apply plugin: 'org.jlleitschuh.gradle.ktlint'
-  ktlint {
-    version = '0.38.1'
-    disabledRules = [
-        'filename',
-    ]
+  apply plugin: 'com.diffplug.spotless'
+  spotless {
+    kotlin {
+      ktlint('0.44.0').userData([
+        'indent_size': '2',
+        'continuation_indent_size': '2',
+        'disabled_rules': 'filename',
+      ])
+    }
   }
 
   plugins.withId('org.jetbrains.kotlin.jvm') {
     compileKotlin {
       kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = '1.8'
         freeCompilerArgs = [
-            "-progressive",
+            '-progressive',
+            '-Xjvm-default=all',
         ]
       }
     }

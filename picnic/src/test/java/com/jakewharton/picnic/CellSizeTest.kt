@@ -1,7 +1,7 @@
 package com.jakewharton.picnic
 
-import com.google.common.truth.Truth.assertThat
-import org.junit.Test
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 class CellSizeTest {
   @Test fun height() {
@@ -11,7 +11,7 @@ class CellSizeTest {
       row("1", "1\n2\n3", "1\n2")
     }
 
-    assertThat(table.renderText()).isEqualTo(
+    assertEquals(
       """
       |111
       |22 
@@ -22,7 +22,8 @@ class CellSizeTest {
       |111
       | 22
       | 3 
-      """.trimMargin()
+      """.trimMargin(),
+      table.renderText(),
     )
   }
 
@@ -50,14 +51,15 @@ class CellSizeTest {
       }
     }
 
-    assertThat(table.renderText()).isEqualTo(
+    assertEquals(
       """
       |1 3
       | 2 
       |1  
       | 23
       |   
-      """.trimMargin()
+      """.trimMargin(),
+      table.renderText(),
     )
   }
 
@@ -68,12 +70,13 @@ class CellSizeTest {
       row("1", "123", "12")
     }
 
-    assertThat(table.renderText()).isEqualTo(
+    assertEquals(
       """
       |12312 1  
       |12 1  123
       |1  12312 
-      """.trimMargin()
+      """.trimMargin(),
+      table.renderText(),
     )
   }
 
@@ -101,11 +104,12 @@ class CellSizeTest {
       }
     }
 
-    assertThat(table.renderText()).isEqualTo(
+    assertEquals(
       """
       |1  23  
       |1 2  3 
-      """.trimMargin()
+      """.trimMargin(),
+      table.renderText(),
     )
   }
 
@@ -116,7 +120,7 @@ class CellSizeTest {
       row("1", "123\n12\n1", "12\n1")
     }
 
-    assertThat(table.renderText()).isEqualTo(
+    assertEquals(
       """
       |12312 1  
       |12 1     
@@ -127,7 +131,8 @@ class CellSizeTest {
       |1  12312 
       |   12 1  
       |   1     
-      """.trimMargin()
+      """.trimMargin(),
+      table.renderText(),
     )
   }
 
@@ -145,14 +150,15 @@ class CellSizeTest {
       row(String(Character.toChars(0x1F603)), 'a')
     }
 
-    assertThat(table.renderText()).isEqualTo(
+    assertEquals(
       """
       |1a
       |£a
       |€a
       |北a
       |😃a
-      """.trimMargin()
+      """.trimMargin(),
+      table.renderText(),
     )
   }
 
@@ -166,12 +172,13 @@ class CellSizeTest {
       row(".😃.😃.", 'a')
     }
 
-    assertThat(table.renderText()).isEqualTo(
+    assertEquals(
       """
       |a    a
       |😃.😃.😃a
       |.😃.😃.a
-      """.trimMargin()
+      """.trimMargin(),
+      table.renderText(),
     )
   }
 
@@ -180,13 +187,14 @@ class CellSizeTest {
       row("a")
       row("\u001B[31;1;4ma\u001B[0m")
     }
-    assertThat(table.columnCount).isEqualTo(1)
+    assertEquals(1, table.columnCount)
 
-    assertThat(table.renderText()).isEqualTo(
+    assertEquals(
       """
       |a
       |$esc[31;1;4ma$esc[0m
-      """.trimMargin()
+      """.trimMargin(),
+      table.renderText(),
     )
   }
 }

@@ -2,107 +2,13 @@ apply plugin: 'java-library'
 java {
   sourceCompatibility = JavaVersion.VERSION_1_8
   targetCompatibility = JavaVersion.VERSION_1_8
-  withSourcesJar()
 }
 
 apply plugin: 'org.jetbrains.kotlin.jvm'
-compileKotlin {
-  kotlinOptions {
-    jvmTarget = '1.8'
-    freeCompilerArgs = [
-        '-progressive',
-        '-Xjvm-default=enable',
-    ]
-  }
-}
+apply plugin: 'com.vanniktech.maven.publish'
 
 dependencies {
   implementation deps.crossword
 
-  testImplementation deps.junit
-  testImplementation deps.truth
-}
-
-apply plugin: 'org.jetbrains.dokka'
-def dokkaDir = "$buildDir/dokka"
-dokka {
-  outputFormat = 'html'
-  outputDirectory = dokkaDir
-}
-def dokkaJarTaskProvider = tasks.register('dokkaJar', Jar) { task ->
-  task.archiveClassifier.set('javadoc')
-  task.from(dokkaDir)
-  task.dependsOn('dokka')
-}
-
-def javadocJarTaskProvider = tasks.register('javadocJar', org.jetbrains.dokka.gradle.DokkaTask) { task ->
-  task.outputFormat = 'javadoc'
-  task.outputDirectory = "$buildDir/javadoc"
-}
-tasks.named('assemble').configure {
-  it.dependsOn(javadocJarTaskProvider)
-}
-
-def isReleaseBuild = !version.endsWith('-SNAPSHOT')
-
-apply plugin: 'maven-publish'
-
-publishing {
-  publications {
-    release(MavenPublication) {
-      from components.java
-
-      // TODO how to provide this asynchronously?
-      // TODO how to provide this through the component?
-      artifact dokkaJarTaskProvider.get()
-
-      pom {
-        name = 'Picnic'
-        description = 'An API for constructing HTML-like tables which can be rendered to text'
-        url = 'https://github.com/JakeWharton/picnic'
-        licenses {
-          license {
-            name = 'The Apache License, Version 2.0'
-            url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-          }
-        }
-        developers {
-          developer {
-            id = 'jakewharton'
-            name = 'Jake Wharton'
-          }
-        }
-        scm {
-          connection = 'scm:git:git://github.com/JakeWharton/picnic.git'
-          developerConnection = 'scm:git:ssh://git@github.com/JakeWharton/picnic.git'
-          url = 'https://github.com/JakeWharton/picnic'
-        }
-      }
-    }
-  }
-  repositories {
-    maven {
-      url = isReleaseBuild
-          ? 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
-          : 'https://oss.sonatype.org/content/repositories/snapshots/'
-      credentials {
-        username = project.hasProperty('SONATYPE_NEXUS_USERNAME') ? SONATYPE_NEXUS_USERNAME : ''
-        password = project.hasProperty('SONATYPE_NEXUS_PASSWORD') ? SONATYPE_NEXUS_PASSWORD : ''
-      }
-    }
-  }
-}
-
-if (isReleaseBuild) {
-  apply plugin: 'signing'
-  signing {
-    required { gradle.taskGraph.hasTask("publish") }
-    sign publishing.publications
-  }
-}
-
-tasks.register('publishSnapshot').configure { task ->
-  if (!isReleaseBuild) {
-    task.dependsOn(tasks.getByName('publish'))
-  }
+  testImplementation 'org.jetbrains.kotlin:kotlin-test'
 }

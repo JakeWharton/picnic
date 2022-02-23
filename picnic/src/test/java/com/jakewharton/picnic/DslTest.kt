@@ -1,8 +1,8 @@
 package com.jakewharton.picnic
 
-import com.google.common.truth.Truth.assertThat
 import com.jakewharton.picnic.TextAlignment.BottomCenter
-import org.junit.Test
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 class DslTest {
   @Test fun cellsAppliesStyleToEachCell() {
@@ -14,12 +14,13 @@ class DslTest {
       }
     }
 
-    assertThat(table.renderText()).isEqualTo(
+    assertEquals(
       """
       |  c
       | bc
       |abc
-      """.trimMargin()
+      """.trimMargin(),
+      table.renderText(),
     )
   }
 }

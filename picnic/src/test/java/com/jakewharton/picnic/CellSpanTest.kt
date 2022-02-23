@@ -1,7 +1,9 @@
 package com.jakewharton.picnic
 
-import com.google.common.truth.Truth.assertThat
-import org.junit.Test
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
+import kotlin.test.assertNull
 
 class CellSpanTest {
   @Test fun columnSpans() {
@@ -35,13 +37,14 @@ class CellSpanTest {
       }
     }
 
-    assertThat(table.renderText()).isEqualTo(
+    assertEquals(
       """
       |888888881
       |444444441
       |222222221
       |111111111
-      """.trimMargin()
+      """.trimMargin(),
+      table.renderText(),
     )
   }
 
@@ -55,11 +58,12 @@ class CellSpanTest {
       }
     }
 
-    assertThat(table.renderText()).isEqualTo(
+    assertEquals(
       """
       |122333
       |666666
-      """.trimMargin()
+      """.trimMargin(),
+      table.renderText(),
     )
   }
 
@@ -78,11 +82,12 @@ class CellSpanTest {
       }
     }
 
-    assertThat(table.renderText()).isEqualTo(
+    assertEquals(
       """
       |11│22
       |33333
-      """.trimMargin()
+      """.trimMargin(),
+      table.renderText(),
     )
   }
 
@@ -132,7 +137,7 @@ class CellSpanTest {
       }
     }
 
-    assertThat(table.renderText()).isEqualTo(
+    assertEquals(
       """
       |8421
       |8421
@@ -143,7 +148,8 @@ class CellSpanTest {
       |8421
       |8421
       |1111
-      """.trimMargin()
+      """.trimMargin(),
+      table.renderText(),
     )
   }
 
@@ -159,7 +165,7 @@ class CellSpanTest {
       row("3\n3\n3")
     }
 
-    assertThat(table.renderText()).isEqualTo(
+    assertEquals(
       """
       |61
       |62
@@ -167,7 +173,8 @@ class CellSpanTest {
       |63
       |63
       |63
-      """.trimMargin()
+      """.trimMargin(),
+      table.renderText(),
     )
   }
 
@@ -184,12 +191,13 @@ class CellSpanTest {
       row("3")
     }
 
-    assertThat(table.renderText()).isEqualTo(
+    assertEquals(
       """
       |12
       |1─
       |13
-      """.trimMargin()
+      """.trimMargin(),
+      table.renderText(),
     )
   }
 
@@ -228,7 +236,7 @@ class CellSpanTest {
       row("1", "1", "1", "1", "1", "1")
     }
 
-    assertThat(table.renderText()).isEqualTo(
+    assertEquals(
       """
       |333111
       |333221
@@ -237,7 +245,8 @@ class CellSpanTest {
       |223331
       |113331
       |111111
-      """.trimMargin()
+      """.trimMargin(),
+      table.renderText(),
     )
   }
 
@@ -256,12 +265,13 @@ class CellSpanTest {
       row("1", "1")
     }
 
-    assertThat(table.renderText()).isEqualTo(
+    assertEquals(
       """
       |12
       |12
       |11
-      """.trimMargin()
+      """.trimMargin(),
+      table.renderText(),
     )
   }
 
@@ -281,15 +291,16 @@ class CellSpanTest {
       row("1", "1", "1", "1")
     }
 
-    assertThat(table.renderText()).isEqualTo(
+    assertEquals(
       """
       |1212
       |12 2
       |1111
-      """.trimMargin()
+      """.trimMargin(),
+      table.renderText(),
     )
-    assertThat(table.getOrNull(1, 2)).isNull()
-    assertThat(table.getOrNull(1, 3)).isNotNull()
+    assertNull(table.getOrNull(1, 2))
+    assertNotNull(table.getOrNull(1, 3))
   }
 
   @Test fun rowSpanPartialOverlaps() {
@@ -309,13 +320,14 @@ class CellSpanTest {
       row("1", "1")
     }
 
-    assertThat(table.renderText()).isEqualTo(
+    assertEquals(
       """
       |12
       |22
       |21
       |11
-      """.trimMargin()
+      """.trimMargin(),
+      table.renderText(),
     )
   }
 }

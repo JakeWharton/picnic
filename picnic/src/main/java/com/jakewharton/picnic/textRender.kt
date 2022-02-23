@@ -112,8 +112,8 @@ fun Table.renderText(
       val columnSpan = cell.columnSpan
       val contentWidth = layout.measureWidth()
       val columnSpanIndices = columnIndex until columnIndex + columnSpan
-      val currentSpanColumnWidth = columnSpanIndices.sumBy { columnWidths[it] }
-      val currentSpanBorderWidth = (columnIndex + 1 until columnIndex + columnSpan).sumBy { columnBorderWidths[it] }
+      val currentSpanColumnWidth = columnSpanIndices.sumOf { columnWidths[it] }
+      val currentSpanBorderWidth = (columnIndex + 1 until columnIndex + columnSpan).sumOf { columnBorderWidths[it] }
       val currentSpanWidth = currentSpanColumnWidth + currentSpanBorderWidth
       val remainingSize = contentWidth - currentSpanWidth
       if (remainingSize > 0) {
@@ -145,8 +145,8 @@ fun Table.renderText(
       val rowSpan = cell.rowSpan
       val contentHeight = layout.measureHeight()
       val rowSpanIndices = rowIndex until rowIndex + rowSpan
-      val currentSpanRowHeight = rowSpanIndices.sumBy { rowHeights[it] }
-      val currentSpanBorderHeight = (rowIndex + 1 until rowIndex + rowSpan).sumBy { rowBorderHeights[it] }
+      val currentSpanRowHeight = rowSpanIndices.sumOf { rowHeights[it] }
+      val currentSpanBorderHeight = (rowIndex + 1 until rowIndex + rowSpan).sumOf { rowBorderHeights[it] }
       val currentSpanHeight = currentSpanRowHeight + currentSpanBorderHeight
       val remainingSize = contentHeight - currentSpanHeight
       if (remainingSize > 0) {

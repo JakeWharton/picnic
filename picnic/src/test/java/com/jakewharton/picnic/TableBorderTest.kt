@@ -1,8 +1,8 @@
 package com.jakewharton.picnic
 
-import com.google.common.truth.Truth.assertThat
 import com.jakewharton.picnic.BorderStyle.Hidden
-import org.junit.Test
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 class TableBorderTest {
   @Test fun tableBorderAndCellBorderMerges() {
@@ -20,7 +20,7 @@ class TableBorderTest {
       }
     }
 
-    assertThat(table.renderText()).isEqualTo(
+    assertEquals(
       """
       |┌─┬─┬─┐
       |│A│B│C│
@@ -29,7 +29,8 @@ class TableBorderTest {
       |├─┼─┼─┤
       |│G│H│I│
       |└─┴─┴─┘
-      """.trimMargin()
+      """.trimMargin(),
+      table.renderText(),
     )
   }
 
@@ -48,14 +49,15 @@ class TableBorderTest {
       }
     }
 
-    assertThat(table.renderText()).isEqualTo(
+    assertEquals(
       """
       |┌───┐
       |│ABC│
       |│DEF│
       |│GHI│
       |└───┘
-      """.trimMargin()
+      """.trimMargin(),
+      table.renderText(),
     )
   }
 
@@ -72,12 +74,13 @@ class TableBorderTest {
       }
     }
 
-    assertThat(table.renderText()).isEqualTo(
+    assertEquals(
       """
       |ABC
       |DEF
       |GHI
-      """.trimMargin()
+      """.trimMargin(),
+      table.renderText(),
     )
   }
 
@@ -128,7 +131,7 @@ class TableBorderTest {
       }
     }
 
-    assertThat(table.renderText()).isEqualTo(
+    assertEquals(
       """
       |┌─┬──┐
       |│A│BC│
@@ -138,7 +141,8 @@ class TableBorderTest {
       |├─┼──┤
       |│J│KL│
       |└─┴──┘
-      """.trimMargin()
+      """.trimMargin(),
+      table.renderText(),
     )
   }
 }

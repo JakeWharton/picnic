@@ -1,7 +1,7 @@
 package com.jakewharton.picnic
 
-import com.google.common.truth.Truth.assertThat
-import org.junit.Test
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 class CellBorderTest {
   @Test fun allCorners() {
@@ -55,7 +55,7 @@ class CellBorderTest {
       }
     }
 
-    assertThat(table.renderText()).isEqualTo(
+    assertEquals(
       """
       |┌─┬─┐ ╷
       |│ │ │ │
@@ -64,10 +64,11 @@ class CellBorderTest {
       |└─┼───┘
       |  │    
       |╶─┴─╴  
-      """.trimMargin()
+      """.trimMargin(),
+      table.renderText(),
     )
 
-    assertThat(table.renderText(border = TextBorder.ROUNDED)).isEqualTo(
+    assertEquals(
       """
       |╭─┬─╮ ╷
       |│ │ │ │
@@ -76,10 +77,11 @@ class CellBorderTest {
       |╰─┼───╯
       |  │    
       |╶─┴─╴  
-      """.trimMargin()
+      """.trimMargin(),
+      table.renderText(border = TextBorder.ROUNDED),
     )
 
-    assertThat(table.renderText(border = TextBorder.ASCII)).isEqualTo(
+    assertEquals(
       """
       |+-+-+  
       || | | |
@@ -88,7 +90,8 @@ class CellBorderTest {
       |+-+---+
       |  |    
       | -+-   
-      """.trimMargin()
+      """.trimMargin(),
+      table.renderText(border = TextBorder.ASCII),
     )
   }
 
@@ -105,12 +108,13 @@ class CellBorderTest {
       row(3, 4)
     }
 
-    assertThat(table.renderText()).isEqualTo(
+    assertEquals(
       """
       |12
       |──
       |34
-      """.trimMargin()
+      """.trimMargin(),
+      table.renderText(),
     )
   }
 
@@ -130,11 +134,12 @@ class CellBorderTest {
       }
     }
 
-    assertThat(table.renderText()).isEqualTo(
+    assertEquals(
       """
       |1│2
       |3│4
-      """.trimMargin()
+      """.trimMargin(),
+      table.renderText(),
     )
   }
 
@@ -156,13 +161,14 @@ class CellBorderTest {
       }
     }
 
-    assertThat(table.renderText()).isEqualTo(
+    assertEquals(
       """
       |AB
       | ─
       | C
       |──
-      """.trimMargin()
+      """.trimMargin(),
+      table.renderText(),
     )
   }
 
@@ -186,11 +192,12 @@ class CellBorderTest {
       }
     }
 
-    assertThat(table.renderText()).isEqualTo(
+    assertEquals(
       """
       |A
       |─
-      """.trimMargin()
+      """.trimMargin(),
+      table.renderText(),
     )
   }
 
@@ -209,14 +216,15 @@ class CellBorderTest {
       }
     }
 
-    assertThat(table.renderText()).isEqualTo(
+    assertEquals(
       """
       |A│B│C
       |─┼─┼─
       |D│E│F
       |─┼─┼─
       |G│H│I
-      """.trimMargin()
+      """.trimMargin(),
+      table.renderText(),
     )
   }
 
@@ -248,7 +256,7 @@ class CellBorderTest {
       row("1", "1")
     }
 
-    assertThat(table.renderText()).isEqualTo(
+    assertEquals(
       """
       |1│1│2  
       |─┼─┤   
@@ -257,7 +265,8 @@ class CellBorderTest {
       |2  │1│1
       |   ├─┼─
       |   │1│1
-      """.trimMargin()
+      """.trimMargin(),
+      table.renderText(),
     )
   }
 
@@ -289,13 +298,14 @@ class CellBorderTest {
       }
     }
 
-    assertThat(table.renderText()).isEqualTo(
+    assertEquals(
       """
       |1│2│3
       |4  │5
       |6│7  
       |8    
-      """.trimMargin()
+      """.trimMargin(),
+      table.renderText(),
     )
   }
 
@@ -327,13 +337,14 @@ class CellBorderTest {
       }
     }
 
-    assertThat(table.renderText()).isEqualTo(
+    assertEquals(
       """
       |1│2│3
       |4  │5
       |6│7  
       |8    
-      """.trimMargin()
+      """.trimMargin(),
+      table.renderText(),
     )
   }
 
@@ -364,14 +375,15 @@ class CellBorderTest {
       row("7", "8")
     }
 
-    assertThat(table.renderText()).isEqualTo(
+    assertEquals(
       """
       |1234
       |─ ─ 
       |5 6 
       |──  
       |78  
-      """.trimMargin()
+      """.trimMargin(),
+      table.renderText(),
     )
   }
 
@@ -402,14 +414,15 @@ class CellBorderTest {
       row("7", "8")
     }
 
-    assertThat(table.renderText()).isEqualTo(
+    assertEquals(
       """
       |1234
       |─ ─ 
       |5 6 
       |──  
       |78  
-      """.trimMargin()
+      """.trimMargin(),
+      table.renderText(),
     )
   }
 }

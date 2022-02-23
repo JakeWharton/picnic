@@ -2,7 +2,7 @@ package com.jakewharton.picnic;
 
 import org.junit.Test;
 
-import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.assertEquals;
 import static com.jakewharton.picnic.BorderStyle.Hidden;
 import static com.jakewharton.picnic.TextAlignment.BottomCenter;
 import static com.jakewharton.picnic.TextAlignment.BottomLeft;
@@ -60,7 +60,7 @@ public final class RepresentativeJavaBuilderTest {
             .addRow("total", "1.3 MiB", "1.3 MiB", "-39 B", "2.2 MiB", "2.2 MiB", "-112 B")
             .build())
         .build();
-    assertThat(table.toString()).isEqualTo(""
+    assertEquals(""
         + "          │          compressed           │          uncompressed          \n"
         + "          ├───────────┬───────────┬───────┼───────────┬───────────┬────────\n"
         + " APK      │ old       │ new       │ diff  │ old       │ new       │ diff   \n"
@@ -72,6 +72,7 @@ public final class RepresentativeJavaBuilderTest {
         + "    asset │       0 B │       0 B │   0 B │       0 B │       0 B │    0 B \n"
         + "    other │  37.1 KiB │  37.1 KiB │   0 B │  36.3 KiB │  36.3 KiB │    0 B \n"
         + "──────────┼───────────┼───────────┼───────┼───────────┼───────────┼────────\n"
-        + "    total │   1.3 MiB │   1.3 MiB │ -39 B │   2.2 MiB │   2.2 MiB │ -112 B ");
+        + "    total │   1.3 MiB │   1.3 MiB │ -39 B │   2.2 MiB │   2.2 MiB │ -112 B ",
+        table.toString());
   }
 }

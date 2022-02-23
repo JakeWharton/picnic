@@ -1,6 +1,5 @@
 package com.jakewharton.picnic
 
-import com.google.common.truth.Truth.assertThat
 import com.jakewharton.picnic.TextAlignment.BottomCenter
 import com.jakewharton.picnic.TextAlignment.BottomLeft
 import com.jakewharton.picnic.TextAlignment.BottomRight
@@ -10,7 +9,8 @@ import com.jakewharton.picnic.TextAlignment.MiddleRight
 import com.jakewharton.picnic.TextAlignment.TopCenter
 import com.jakewharton.picnic.TextAlignment.TopLeft
 import com.jakewharton.picnic.TextAlignment.TopRight
-import org.junit.Test
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 class CellAlignmentTest {
   @Test fun alignmentsDoNotAffectSizing() {
@@ -50,12 +50,13 @@ class CellAlignmentTest {
       }
     }
 
-    assertThat(table.renderText()).isEqualTo(
+    assertEquals(
       """
       |TLTCTR
       |MLMCMR
       |BLBCBR
-      """.trimMargin()
+      """.trimMargin(),
+      table.renderText(),
     )
   }
 
@@ -78,7 +79,7 @@ class CellAlignmentTest {
                             |r$paddingRight
                             |t$paddingTop
                             |b$paddingBottom
-                          """.trimMargin()
+                        """.trimMargin()
                       } else {
                         ("X".repeat(contentWidth) + '\n').repeat(contentHeight).trimEnd()
                       }
@@ -105,7 +106,7 @@ class CellAlignmentTest {
       }
     }
 
-    assertThat(table.renderText()).isEqualTo(
+    assertEquals(
       """
       |            ┌───┬───┬───┬───┬────┬────┬────┬────┬────┬────┬────┬────┬─────┬─────┬─────┬─────┐
       |padding >   │l0 │l0 │l0 │l0 │l0  │l0  │l0  │l0  │l1  │l1  │l1  │l1  │l1   │l1   │l1   │l1   │
@@ -356,7 +357,8 @@ class CellAlignmentTest {
       |            │XXX│XXX│XXX│XXX│XXX │XXX │XXX │XXX │ XXX│ XXX│ XXX│ XXX│ XXX │ XXX │ XXX │ XXX │
       |            │XXX│   │XXX│   │XXX │    │XXX │    │ XXX│    │ XXX│    │ XXX │     │ XXX │     │
       |            └───┴───┴───┴───┴────┴────┴────┴────┴────┴────┴────┴────┴─────┴─────┴─────┴─────┘
-      """.trimMargin()
+      """.trimMargin(),
+      table.renderText(),
     )
   }
 
@@ -371,14 +373,15 @@ class CellAlignmentTest {
       }
     }
 
-    assertThat(table.renderText()).isEqualTo(
+    assertEquals(
       """
       |X      X      X
       |XXX   XXX   XXX
       |XXXXXXXXXXXXXXX
       |XXX   XXX   XXX
       |X      X      X
-      """.trimMargin()
+      """.trimMargin(),
+      table.renderText(),
     )
   }
 
@@ -411,7 +414,7 @@ class CellAlignmentTest {
       }
     }
 
-    assertThat(table.renderText()).isEqualTo(
+    assertEquals(
       """
       |0123456
       |1 TR   
@@ -423,7 +426,8 @@ class CellAlignmentTest {
       |7TL    
       |8      
       |9      
-      """.trimMargin()
+      """.trimMargin(),
+      table.renderText(),
     )
   }
 
@@ -436,11 +440,12 @@ class CellAlignmentTest {
       row("<Hello>", "a")
     }
 
-    assertThat(table.renderText()).isEqualTo(
+    assertEquals(
       """
       | $esc[31;1;4mHello$esc[0m a
       |<Hello>a
-      """.trimMargin()
+      """.trimMargin(),
+      table.renderText(),
     )
   }
 
@@ -452,12 +457,13 @@ class CellAlignmentTest {
       row("\u001B[31;1;4mHello\u001B[0m\n\u001B[31;1;4mHello12\u001B[0m\nHello", "a\na\na")
     }
 
-    assertThat(table.renderText()).isEqualTo(
+    assertEquals(
       """
       | $esc[31;1;4mHello$esc[0m a
       |$esc[31;1;4mHello12$esc[0ma
       | Hello a
-      """.trimMargin()
+      """.trimMargin(),
+      table.renderText(),
     )
   }
 }

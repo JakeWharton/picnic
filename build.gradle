@@ -8,9 +8,9 @@ buildscript {
   ]
 
   dependencies {
-    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.10"
-    classpath 'org.jlleitschuh.gradle:ktlint-gradle:9.1.0'
-    classpath 'org.jetbrains.dokka:dokka-gradle-plugin:0.10.0'
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.30"
+    classpath 'org.jlleitschuh.gradle:ktlint-gradle:10.0.0'
+    classpath 'org.jetbrains.dokka:dokka-gradle-plugin:1.4.30'
     classpath 'ru.vyarus:gradle-animalsniffer-plugin:1.5.0'
   }
 
@@ -32,7 +32,7 @@ subprojects {
 
   apply plugin: 'org.jlleitschuh.gradle.ktlint'
   ktlint {
-    version = '0.38.1'
+    version = '0.40.0'
     disabledRules = [
         'filename',
     ]

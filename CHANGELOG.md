@@ -1,28 +1,29 @@
-Change Log
-==========
+# Change Log
 
-Version 0.5.0 *(2020-09-16)*
-----------------------------
+## 0.6.0 - 2022-02-25
+
+ * Library is now fully multiplatform supporting JS and native targets in addition to JVM/Android.
+ * Text drawing is now provided by [crossword](https://github.com/JakeWharton/crossword) library.
+
+
+## 0.5.0 - 2020-09-16
 
  * New: Each line in a multi-line cell is now individually aligned.
  * New: Do not measure ANSI control sequences allowing color to be used inside cells.
 
 
-Version 0.4.0 *(2020-08-12)*
-----------------------------
+## 0.4.0 - 2020-08-12
 
  * New: `cells()` function adds multiple cells at once to a row.
  * `TextBorder` property name changed to `characters`.
 
 
-Version 0.3.1 *(2020-04-20)*
-----------------------------
+## 0.3.1 - 2020-04-20
 
  * Fix: Use own implementation of codepoint iteration which enables running on Android.
 
 
-Version 0.3.0 *(2020-02-07)*
-----------------------------
+## 0.3.0 - 2020-02-07
 
  * New: Support for a table-level border on the table style. This border is automatically collapsed
    with cell borders which are on the edge of the table. The table border makes it easy to enclose
@@ -31,8 +32,7 @@ Version 0.3.0 *(2020-02-07)*
    glyphs which render as a single visual "character" are now supported and measured correctly.
 
 
-Version 0.2.0 *(2019-12-09)*
-----------------------------
+## 0.2.0 - 2019-12-09
 
  * New: Builder-based API for Java users.
  * Fix: Use actual Java default methods on interfaces instead of fake Kotlin default methods.
@@ -41,7 +41,6 @@ Version 0.2.0 *(2019-12-09)*
    longer destructure or `copy` model types.
 
 
-Version 0.1.0 *(2019-11-18)*
-----------------------------
+## 0.1.0 2019-11-18
 
 Initial release.

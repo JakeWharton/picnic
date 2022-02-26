@@ -313,10 +313,32 @@ table {
 Download
 --------
 
-Artifacts are available in Maven Central at `com.jakewharton.picnic:picnic:0.5.0`.
+```groovy
+repositories {
+  mavenCentral()
+}
+dependencies {
+  implementation 'com.jakewharton.picnic:picnic:0.6.0'
+}
+```
 
-In-development snapshots are available from
-[Sonatype's snapshot repository](https://oss.sonatype.org/content/repositories/snapshots/).
+<details>
+<summary>Snapshots of the development version are available in Sonatype's snapshots repository.</summary>
+<p>
+
+```groovy
+repositories {
+  maven {
+    url 'https://oss.sonatype.org/content/repositories/snapshots/'
+  }
+}
+dependencies {
+  implementation 'com.jakewharton.picnic:picnic:0.7.0-SNAPSHOT'
+}
+```
+
+</p>
+</details>
 
 
 

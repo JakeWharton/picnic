@@ -147,7 +147,7 @@ class CellSizeTest {
       // 3 UTF-8 bytes, full-width.
       row('\u5317', 'a')
       // 4 UTF-8 bytes (2 * UTF-16), full-width.
-      row(String(Character.toChars(0x1F603)), 'a')
+      row("\uD83D\uDE03", 'a')
     }
 
     assertEquals(

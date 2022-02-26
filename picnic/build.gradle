@@ -1,14 +1,21 @@
-apply plugin: 'java-library'
-java {
-  sourceCompatibility = JavaVersion.VERSION_1_8
-  targetCompatibility = JavaVersion.VERSION_1_8
-}
-
-apply plugin: 'org.jetbrains.kotlin.jvm'
+apply plugin: 'org.jetbrains.kotlin.multiplatform'
 apply plugin: 'com.vanniktech.maven.publish'
 
-dependencies {
-  implementation deps.crossword
+kotlin {
+  jvm {
+    withJava() // Required for Animal Sniffer to work.
+  }
 
-  testImplementation 'org.jetbrains.kotlin:kotlin-test'
+  sourceSets {
+    commonMain {
+      dependencies {
+        implementation deps.crossword
+      }
+    }
+    commonTest {
+      dependencies {
+        implementation 'org.jetbrains.kotlin:kotlin-test'
+      }
+    }
+  }
 }

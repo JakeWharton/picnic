@@ -3,6 +3,8 @@
 package com.jakewharton.picnic
 
 import kotlin.DeprecationLevel.ERROR
+import kotlin.jvm.JvmName
+import kotlin.jvm.JvmSynthetic
 
 @DslMarker
 private annotation class PicnicDsl

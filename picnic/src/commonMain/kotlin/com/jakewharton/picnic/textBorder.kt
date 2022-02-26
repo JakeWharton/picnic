@@ -1,5 +1,7 @@
 package com.jakewharton.picnic
 
+import kotlin.jvm.JvmField
+
 class TextBorder(private val characters: String) {
   init {
     require(characters.length == 16) { "Border string must contain exactly 16 characters" }

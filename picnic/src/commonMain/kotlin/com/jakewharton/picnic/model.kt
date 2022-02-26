@@ -1,6 +1,6 @@
 package com.jakewharton.picnic
 
-import java.util.Objects.hash
+import kotlin.jvm.JvmSynthetic
 
 class Table private constructor(
   val header: TableSection?,
@@ -478,3 +478,5 @@ enum class TextAlignment {
   MiddleLeft, MiddleCenter, MiddleRight,
   BottomLeft, BottomCenter, BottomRight
 }
+
+private fun hash(vararg args: Any?): Int = args.contentHashCode()

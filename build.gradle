@@ -2,7 +2,7 @@ import org.gradle.internal.jvm.Jvm
 
 buildscript {
   ext.deps = [
-    'crossword': 'com.jakewharton.crossword:crossword:0.1.1',
+    'crossword': 'com.jakewharton.crossword:crossword:0.2.0',
   ]
 
   dependencies {
@@ -35,19 +35,17 @@ subprojects {
     }
   }
 
-  plugins.withId('org.jetbrains.kotlin.jvm') {
-    compileKotlin {
-      kotlinOptions {
-        jvmTarget = '1.8'
-        freeCompilerArgs = [
-            '-progressive',
-            '-Xjvm-default=all',
-        ]
-      }
+  tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile) {
+    kotlinOptions {
+      jvmTarget = '1.8'
+      freeCompilerArgs = [
+          '-progressive',
+          '-Xjvm-default=all',
+      ]
     }
   }
 
-  plugins.withId('java-library') {
+  plugins.withId('java') {
     // Animal Sniffer only works on JDK 11 or older currently.
     if (!Jvm.current().javaVersion.isJava12Compatible()) {
       project.apply plugin: 'ru.vyarus.animalsniffer'

@@ -1,7 +1,7 @@
 package com.jakewharton.picnic
 
 import com.jakewharton.crossword.TextCanvas
-import com.jakewharton.crossword.visualCodePointCount
+import com.jakewharton.crossword.visualWidth
 import com.jakewharton.picnic.Table.PositionedCell
 import com.jakewharton.picnic.TextAlignment.BottomCenter
 import com.jakewharton.picnic.TextAlignment.BottomLeft
@@ -34,7 +34,7 @@ internal class SimpleLayout(private val cell: PositionedCell) : TextLayout {
   override fun measureWidth(): Int {
     return leftPadding +
       (cell.canonicalStyle?.paddingRight ?: 0) +
-      cell.cell.content.split('\n').maxOf { it.visualCodePointCount }
+      cell.cell.content.split('\n').maxOf { it.visualWidth }
   }
 
   override fun measureHeight(): Int {
@@ -56,7 +56,7 @@ internal class SimpleLayout(private val cell: PositionedCell) : TextLayout {
     cell.cell.content.split('\n').forEachIndexed { index, line ->
       val lineWidth = leftPadding +
         (cell.canonicalStyle?.paddingRight ?: 0) +
-        line.visualCodePointCount
+        line.visualWidth
       val left = when (alignment) {
         TopLeft, MiddleLeft, BottomLeft -> leftPadding
         TopCenter, MiddleCenter, BottomCenter -> ((canvas.width - lineWidth) / 2) + leftPadding

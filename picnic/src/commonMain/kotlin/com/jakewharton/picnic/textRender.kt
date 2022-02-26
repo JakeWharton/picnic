@@ -4,6 +4,8 @@ package com.jakewharton.picnic
 
 import com.jakewharton.crossword.TextCanvas
 import com.jakewharton.picnic.Table.PositionedCell
+import kotlin.jvm.JvmName
+import kotlin.jvm.JvmOverloads
 
 @Suppress("NOTHING_TO_INLINE", "UNUSED_PARAMETER")
 private inline fun debug(message: () -> String) {

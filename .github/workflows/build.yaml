@@ -2,11 +2,12 @@ name: build
 
 on:
   pull_request: {}
+  workflow_dispatch: {}
   push:
     branches:
-      - '*'
+      - 'trunk'
     tags:
-      - '*'
+      - '**'
 
 jobs:
   build:

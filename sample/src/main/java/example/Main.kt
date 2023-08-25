@@ -46,6 +46,6 @@ fun main() {
           }
         }
       }
-    }.renderText(border = ROUNDED)
+    }.renderText(border = ROUNDED),
   )
 }

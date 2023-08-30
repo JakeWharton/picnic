@@ -1,5 +1,23 @@
 # Change Log
 
+## 0.7.0 - 2022-08-31
+
+### Added
+
+* New Kotlin targets:
+   * `androidNativeArm32`
+   * `androidNativeArm64`
+   * `androidNativeX86`
+   * `androidNativeX64`
+   * `linuxArm64`
+   * `wasm`
+   * `watchosDeviceArm64`
+
+### Changed
+
+ * Publish using a newer version of Kotlin to produce non-legacy artifacts.
+
+
 ## 0.6.0 - 2022-02-25
 
  * Library is now fully multiplatform supporting JS and native targets in addition to JVM/Android.

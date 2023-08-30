@@ -318,7 +318,7 @@ repositories {
   mavenCentral()
 }
 dependencies {
-  implementation 'com.jakewharton.picnic:picnic:0.6.0'
+  implementation 'com.jakewharton.picnic:picnic:0.7.0'
 }
 ```
 
@@ -333,7 +333,7 @@ repositories {
   }
 }
 dependencies {
-  implementation 'com.jakewharton.picnic:picnic:0.7.0-SNAPSHOT'
+  implementation 'com.jakewharton.picnic:picnic:0.8.0-SNAPSHOT'
 }
 ```
 

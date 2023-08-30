@@ -22,25 +22,23 @@
     $ ./gradlew clean publish
     ```
 
-6. Visit [Sonatype Nexus](https://oss.sonatype.org/) and promote the artifact.
+    If this step fails, drop the Sonatype repo, fix, commit, and publish again.
 
-   If this step fails, drop the Sonatype repo, fix, commit, and publish again.
-
-7. Tag
+6. Tag
 
    ```
    $ git tag -am "Version X.Y.Z" X.Y.Z
    ```
 
-8. Update the `VERSION_NAME` in `gradle.properties` to the next "SNAPSHOT" version.
+7. Update the `VERSION_NAME` in `gradle.properties` to the next "SNAPSHOT" version.
 
-9. Commit
+8. Commit
 
    ```
    $ git commit -am "Prepare next development version"
    ```
 
-10. Push!
+9. Push!
 
    ```
    $ git push && git push --tags

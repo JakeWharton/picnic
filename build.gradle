@@ -2,7 +2,7 @@ import org.gradle.internal.jvm.Jvm
 
 buildscript {
   ext.deps = [
-    'crossword': 'com.jakewharton.crossword:crossword:0.2.0',
+    'crossword': 'com.jakewharton.crossword:crossword:0.3.0',
   ]
 
   dependencies {

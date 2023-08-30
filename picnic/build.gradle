@@ -2,18 +2,17 @@ apply plugin: 'org.jetbrains.kotlin.multiplatform'
 apply plugin: 'com.vanniktech.maven.publish'
 
 kotlin {
-  js {
-    nodejs()
-  }
-
-  jvm {
-    withJava() // Required for Animal Sniffer to work.
-  }
-
+  androidNativeArm32()
+  androidNativeArm64()
+  androidNativeX86()
+  androidNativeX64()
   iosArm32()
   iosArm64()
   iosX64()
   iosSimulatorArm64()
+  js().nodejs()
+  jvm().withJava() // Required for Animal Sniffer to work.
+  linuxArm64()
   linuxX64()
   macosX64()
   macosArm64()
@@ -21,8 +20,10 @@ kotlin {
   tvosArm64()
   tvosX64()
   tvosSimulatorArm64()
+  wasm().nodejs()
   watchosArm32()
   watchosArm64()
+  watchosDeviceArm64()
   watchosX86()
   watchosX64()
   watchosSimulatorArm64()
@@ -30,7 +31,7 @@ kotlin {
   sourceSets {
     commonMain {
       dependencies {
-        implementation deps.crossword
+        implementation 'com.jakewharton.crossword:crossword:0.3.0'
       }
     }
     commonTest {

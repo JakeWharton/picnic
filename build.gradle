@@ -1,10 +1,9 @@
 import org.gradle.internal.jvm.Jvm
+import org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootExtension
+import org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootPlugin
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 buildscript {
-  ext.deps = [
-    'crossword': 'com.jakewharton.crossword:crossword:0.2.0',
-  ]
-
   dependencies {
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.10"
     classpath 'org.jetbrains.dokka:dokka-gradle-plugin:1.8.20'
@@ -17,6 +16,10 @@ buildscript {
     mavenCentral()
     gradlePluginPortal()
   }
+}
+
+plugins.withType(NodeJsRootPlugin).configureEach {
+  extensions.getByType(NodeJsRootExtension).nodeVersion = '20.0.0'
 }
 
 subprojects {
@@ -33,7 +36,7 @@ subprojects {
     }
   }
 
-  tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile) {
+  tasks.withType(KotlinCompile).configureEach {
     kotlinOptions {
       jvmTarget = JavaVersion.VERSION_1_8.toString()
       freeCompilerArgs = [
@@ -43,7 +46,7 @@ subprojects {
     }
   }
 
-  tasks.withType(JavaCompile) {
+  tasks.withType(JavaCompile).configureEach {
     sourceCompatibility = JavaVersion.VERSION_1_8.toString()
     targetCompatibility = JavaVersion.VERSION_1_8.toString()
   }

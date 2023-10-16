@@ -6,7 +6,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 buildscript {
   dependencies {
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.10"
-    classpath 'org.jetbrains.dokka:dokka-gradle-plugin:1.9.0'
+    classpath 'org.jetbrains.dokka:dokka-gradle-plugin:1.9.10'
     classpath 'com.diffplug.spotless:spotless-plugin-gradle:6.22.0'
     classpath 'ru.vyarus:gradle-animalsniffer-plugin:1.7.1'
     classpath 'com.vanniktech:gradle-maven-publish-plugin:0.25.3'

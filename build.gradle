@@ -18,15 +18,13 @@ buildscript {
   }
 }
 
-plugins.withType(NodeJsRootPlugin).configureEach {
-  extensions.getByType(NodeJsRootExtension).nodeVersion = '20.0.0'
-}
-
-subprojects {
+allprojects { 
   repositories {
     mavenCentral()
   }
+}
 
+subprojects {
   apply plugin: 'com.diffplug.spotless'
   spotless {
     kotlin {

@@ -20,7 +20,7 @@ jobs:
           distribution: 'zulu'
           java-version: 11
 
-      - uses: gradle/actions/wrapper-validation@v3
+      - uses: gradle/actions/wrapper-validation@v4
       - run: ./gradlew build
 
       - name: Extract release notes

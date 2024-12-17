@@ -6,3 +6,6 @@
 /.gradle
 build
 /reports
+
+# Kotlin
+.kotlin

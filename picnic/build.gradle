@@ -30,7 +30,7 @@ kotlin {
   sourceSets {
     commonMain {
       dependencies {
-        implementation 'com.jakewharton.crossword:crossword:0.3.0'
+        implementation 'com.jakewharton.crossword:crossword:0.4.0'
       }
     }
     commonTest {

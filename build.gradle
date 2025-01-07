@@ -7,7 +7,7 @@ buildscript {
   dependencies {
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:2.1.0"
     classpath 'org.jetbrains.dokka:dokka-gradle-plugin:2.0.0'
-    classpath 'com.diffplug.spotless:spotless-plugin-gradle:7.0.0'
+    classpath 'com.diffplug.spotless:spotless-plugin-gradle:7.0.1'
     classpath 'ru.vyarus:gradle-animalsniffer-plugin:1.7.2'
     classpath 'com.vanniktech:gradle-maven-publish-plugin:0.30.0'
   }

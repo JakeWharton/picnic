@@ -1,7 +1,9 @@
 apply plugin: 'org.jetbrains.kotlin.jvm'
 apply plugin: 'application'
 
-mainClassName = 'example.Main'
+application {
+  mainClass = 'example.Main'
+}
 
 dependencies {
   implementation project(':picnic')

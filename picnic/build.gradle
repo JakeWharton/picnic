@@ -10,7 +10,7 @@ kotlin {
   iosX64()
   iosSimulatorArm64()
   js().nodejs()
-  jvm().withJava() // Required for Animal Sniffer to work.
+  jvm()
   linuxArm64()
   linuxX64()
   macosX64()
@@ -30,7 +30,7 @@ kotlin {
   sourceSets {
     commonMain {
       dependencies {
-        implementation 'com.jakewharton.crossword:crossword:0.4.0'
+        implementation libs.crossword
       }
     }
     commonTest {

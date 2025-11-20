@@ -4,7 +4,8 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class CellBorderTest {
-  @Test fun allCorners() {
+  @Test
+  fun allCorners() {
     val table = table {
       row {
         cell(" ") {
@@ -49,9 +50,7 @@ class CellBorderTest {
           borderLeft = true
           borderBottom = true
         }
-        cell(" ") {
-          borderTop = true
-        }
+        cell(" ") { borderTop = true }
       }
     }
 
@@ -64,7 +63,8 @@ class CellBorderTest {
       |└─┼───┘
       |  │    
       |╶─┴─╴  
-      """.trimMargin(),
+      """
+        .trimMargin(),
       table.renderText(),
     )
 
@@ -77,7 +77,8 @@ class CellBorderTest {
       |╰─┼───╯
       |  │    
       |╶─┴─╴  
-      """.trimMargin(),
+      """
+        .trimMargin(),
       table.renderText(border = TextBorder.ROUNDED),
     )
 
@@ -90,20 +91,18 @@ class CellBorderTest {
       |+-+---+
       |  |    
       | -+-   
-      """.trimMargin(),
+      """
+        .trimMargin(),
       table.renderText(border = TextBorder.ASCII),
     )
   }
 
-  @Test fun adjacentRowBordersWithoutCorners() {
+  @Test
+  fun adjacentRowBordersWithoutCorners() {
     val table = table {
       row {
-        cell(1) {
-          borderBottom = true
-        }
-        cell(2) {
-          borderBottom = true
-        }
+        cell(1) { borderBottom = true }
+        cell(2) { borderBottom = true }
       }
       row(3, 4)
     }
@@ -113,23 +112,21 @@ class CellBorderTest {
       |12
       |──
       |34
-      """.trimMargin(),
+      """
+        .trimMargin(),
       table.renderText(),
     )
   }
 
-  @Test fun adjacentColumnBordersWithoutCorners() {
+  @Test
+  fun adjacentColumnBordersWithoutCorners() {
     val table = table {
       row {
-        cell(1) {
-          borderRight = true
-        }
+        cell(1) { borderRight = true }
         cell(2)
       }
       row {
-        cell(3) {
-          borderRight = true
-        }
+        cell(3) { borderRight = true }
         cell(4)
       }
     }
@@ -138,27 +135,23 @@ class CellBorderTest {
       """
       |1│2
       |3│4
-      """.trimMargin(),
+      """
+        .trimMargin(),
       table.renderText(),
     )
   }
 
-  @Test fun rowSpanPushesBordersToTheRight() {
+  @Test
+  fun rowSpanPushesBordersToTheRight() {
     val table = table {
       row {
         cell("A") {
           rowSpan = 2
           borderBottom = true
         }
-        cell("B") {
-          borderBottom = true
-        }
+        cell("B") { borderBottom = true }
       }
-      row {
-        cell("C") {
-          borderBottom = true
-        }
-      }
+      row { cell("C") { borderBottom = true } }
     }
 
     assertEquals(
@@ -167,27 +160,21 @@ class CellBorderTest {
       | ─
       | C
       |──
-      """.trimMargin(),
+      """
+        .trimMargin(),
       table.renderText(),
     )
   }
 
-  @Test fun stylePropagation() {
+  @Test
+  fun stylePropagation() {
     val table = table {
-      cellStyle {
-        border = true
-      }
+      cellStyle { border = true }
       body {
-        cellStyle {
-          borderTop = false
-        }
+        cellStyle { borderTop = false }
         row {
-          cellStyle {
-            borderLeft = false
-          }
-          cell("A") {
-            borderRight = false
-          }
+          cellStyle { borderLeft = false }
+          cell("A") { borderRight = false }
         }
       }
     }
@@ -196,19 +183,17 @@ class CellBorderTest {
       """
       |A
       |─
-      """.trimMargin(),
+      """
+        .trimMargin(),
       table.renderText(),
     )
   }
 
-  @Test fun tableStyleTakesPrecedenceOverCell() {
+  @Test
+  fun tableStyleTakesPrecedenceOverCell() {
     val table = table {
-      style {
-        borderStyle = BorderStyle.Hidden
-      }
-      cellStyle {
-        border = true
-      }
+      style { borderStyle = BorderStyle.Hidden }
+      cellStyle { border = true }
       body {
         row("A", "B", "C")
         row("D", "E", "F")
@@ -223,19 +208,17 @@ class CellBorderTest {
       |D│E│F
       |─┼─┼─
       |G│H│I
-      """.trimMargin(),
+      """
+        .trimMargin(),
       table.renderText(),
     )
   }
 
-  @Test fun tableStyleTakesPrecedenceOverCellWithRowAndColumnSpans() {
+  @Test
+  fun tableStyleTakesPrecedenceOverCellWithRowAndColumnSpans() {
     val table = table {
-      style {
-        borderStyle = BorderStyle.Hidden
-      }
-      cellStyle {
-        border = true
-      }
+      style { borderStyle = BorderStyle.Hidden }
+      cellStyle { border = true }
       row {
         cell("1")
         cell("1")
@@ -265,37 +248,27 @@ class CellBorderTest {
       |2  │1│1
       |   ├─┼─
       |   │1│1
-      """.trimMargin(),
+      """
+        .trimMargin(),
       table.renderText(),
     )
   }
 
-  @Test fun borderLeftCalculationWithTableBorderHidden() {
+  @Test
+  fun borderLeftCalculationWithTableBorderHidden() {
     val table = table {
-      style {
-        borderStyle = BorderStyle.Hidden
-      }
-      cellStyle {
-        borderLeft = true
-      }
+      style { borderStyle = BorderStyle.Hidden }
+      cellStyle { borderLeft = true }
       row("1", "2", "3")
       row {
-        cell("4") {
-          columnSpan = 2
-        }
+        cell("4") { columnSpan = 2 }
         cell("5")
       }
       row {
         cell("6")
-        cell("7") {
-          columnSpan = 2
-        }
+        cell("7") { columnSpan = 2 }
       }
-      row {
-        cell("8") {
-          columnSpan = 3
-        }
-      }
+      row { cell("8") { columnSpan = 3 } }
     }
 
     assertEquals(
@@ -304,37 +277,27 @@ class CellBorderTest {
       |4  │5
       |6│7  
       |8    
-      """.trimMargin(),
+      """
+        .trimMargin(),
       table.renderText(),
     )
   }
 
-  @Test fun borderRightCalculationWithTableBorderHidden() {
+  @Test
+  fun borderRightCalculationWithTableBorderHidden() {
     val table = table {
-      style {
-        borderStyle = BorderStyle.Hidden
-      }
-      cellStyle {
-        borderRight = true
-      }
+      style { borderStyle = BorderStyle.Hidden }
+      cellStyle { borderRight = true }
       row("1", "2", "3")
       row {
-        cell("4") {
-          columnSpan = 2
-        }
+        cell("4") { columnSpan = 2 }
         cell("5")
       }
       row {
         cell("6")
-        cell("7") {
-          columnSpan = 2
-        }
+        cell("7") { columnSpan = 2 }
       }
-      row {
-        cell("8") {
-          columnSpan = 3
-        }
-      }
+      row { cell("8") { columnSpan = 3 } }
     }
 
     assertEquals(
@@ -343,34 +306,26 @@ class CellBorderTest {
       |4  │5
       |6│7  
       |8    
-      """.trimMargin(),
+      """
+        .trimMargin(),
       table.renderText(),
     )
   }
 
-  @Test fun borderTopCalculationWithTableBorderHidden() {
+  @Test
+  fun borderTopCalculationWithTableBorderHidden() {
     val table = table {
-      style {
-        borderStyle = BorderStyle.Hidden
-      }
-      cellStyle {
-        borderTop = true
-      }
+      style { borderStyle = BorderStyle.Hidden }
+      cellStyle { borderTop = true }
       row {
         cell("1")
-        cell("2") {
-          rowSpan = 2
-        }
+        cell("2") { rowSpan = 2 }
         cell("3")
-        cell("4") {
-          rowSpan = 3
-        }
+        cell("4") { rowSpan = 3 }
       }
       row {
         cell("5")
-        cell("6") {
-          rowSpan = 2
-        }
+        cell("6") { rowSpan = 2 }
       }
       row("7", "8")
     }
@@ -382,34 +337,26 @@ class CellBorderTest {
       |5 6 
       |──  
       |78  
-      """.trimMargin(),
+      """
+        .trimMargin(),
       table.renderText(),
     )
   }
 
-  @Test fun borderBottomCalculationWithTableBorderHidden() {
+  @Test
+  fun borderBottomCalculationWithTableBorderHidden() {
     val table = table {
-      style {
-        borderStyle = BorderStyle.Hidden
-      }
-      cellStyle {
-        borderBottom = true
-      }
+      style { borderStyle = BorderStyle.Hidden }
+      cellStyle { borderBottom = true }
       row {
         cell("1")
-        cell("2") {
-          rowSpan = 2
-        }
+        cell("2") { rowSpan = 2 }
         cell("3")
-        cell("4") {
-          rowSpan = 3
-        }
+        cell("4") { rowSpan = 3 }
       }
       row {
         cell("5")
-        cell("6") {
-          rowSpan = 2
-        }
+        cell("6") { rowSpan = 2 }
       }
       row("7", "8")
     }
@@ -421,7 +368,8 @@ class CellBorderTest {
       |5 6 
       |──  
       |78  
-      """.trimMargin(),
+      """
+        .trimMargin(),
       table.renderText(),
     )
   }

@@ -12,40 +12,35 @@ fun main() {
   println()
   println(
     table {
-      with(TermColors()) {
-        header {
-          cellStyle {
-            borderBottom = true
+        with(TermColors()) {
+          header {
+            cellStyle { borderBottom = true }
+            row {
+              cell(brightBlue.bg(" Picnic Tables ")) {
+                alignment = TopCenter
+                columnSpan = 6
+              }
+            }
           }
-          row {
-            cell(brightBlue.bg(" Picnic Tables ")) {
+          body {
+            cellStyle {
+              border = true
+              paddingLeft = 1
+              paddingRight = 1
               alignment = TopCenter
-              columnSpan = 6
             }
-          }
-        }
-        body {
-          cellStyle {
-            border = true
-            paddingLeft = 1
-            paddingRight = 1
-            alignment = TopCenter
-          }
-          row {
-            cell("borders${blue("?")}")
-            cell("padding${red("?")}")
-            cell("styling${yellow("?")}")
-            cell("headers/footers${green("?")}")
-            cell("row/col spans${magenta("?")}")
-            cell("alignment${cyan("?")}")
-          }
-          row {
-            repeat(6) {
-              cell(brightGreen("Yes!"))
+            row {
+              cell("borders${blue("?")}")
+              cell("padding${red("?")}")
+              cell("styling${yellow("?")}")
+              cell("headers/footers${green("?")}")
+              cell("row/col spans${magenta("?")}")
+              cell("alignment${cyan("?")}")
             }
+            row { repeat(6) { cell(brightGreen("Yes!")) } }
           }
         }
       }
-    }.renderText(border = ROUNDED),
+      .renderText(border = ROUNDED)
   )
 }

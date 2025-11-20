@@ -8,11 +8,10 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class RepresentativeKotlinDslTest {
-  @Test fun test() {
+  @Test
+  fun test() {
     val table = table {
-      style {
-        borderStyle = Hidden
-      }
+      style { borderStyle = Hidden }
       cellStyle {
         alignment = MiddleRight
         paddingLeft = 1
@@ -26,9 +25,7 @@ class RepresentativeKotlinDslTest {
           alignment = BottomLeft
         }
         row {
-          cell("APK") {
-            rowSpan = 2
-          }
+          cell("APK") { rowSpan = 2 }
           cell("compressed") {
             alignment = BottomCenter
             columnSpan = 3
@@ -49,9 +46,7 @@ class RepresentativeKotlinDslTest {
         row("other", "37.1 KiB", "37.1 KiB", "0 B", "36.3 KiB", "36.3 KiB", "0 B")
       }
       footer {
-        cellStyle {
-          border = true
-        }
+        cellStyle { border = true }
         row("total", "1.3 MiB", "1.3 MiB", "-39 B", "2.2 MiB", "2.2 MiB", "-112 B")
       }
     }
@@ -69,8 +64,9 @@ class RepresentativeKotlinDslTest {
       |    other │  37.1 KiB │  37.1 KiB │   0 B │  36.3 KiB │  36.3 KiB │    0 B 
       |──────────┼───────────┼───────────┼───────┼───────────┼───────────┼────────
       |    total │   1.3 MiB │   1.3 MiB │ -39 B │   2.2 MiB │   2.2 MiB │ -112 B 
-      """.trimMargin(),
-      table.toString()
+      """
+        .trimMargin(),
+      table.toString(),
     )
   }
 }

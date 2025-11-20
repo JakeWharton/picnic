@@ -47,21 +47,33 @@ internal class SimpleLayout(private val cell: PositionedCell) : TextLayout {
   override fun draw(canvas: TextCanvas) {
     val height = measureHeight()
     val alignment = cell.canonicalStyle?.alignment ?: TopLeft
-    val top = when (alignment) {
-      TopLeft, TopCenter, TopRight -> topPadding
-      MiddleLeft, MiddleCenter, MiddleRight -> ((canvas.height - height) / 2) + topPadding
-      BottomLeft, BottomCenter, BottomRight -> canvas.height - height + topPadding
-    }
+    val top =
+      when (alignment) {
+        TopLeft,
+        TopCenter,
+        TopRight -> topPadding
+        MiddleLeft,
+        MiddleCenter,
+        MiddleRight -> ((canvas.height - height) / 2) + topPadding
+        BottomLeft,
+        BottomCenter,
+        BottomRight -> canvas.height - height + topPadding
+      }
 
     cell.cell.content.split('\n').forEachIndexed { index, line ->
-      val lineWidth = leftPadding +
-        (cell.canonicalStyle?.paddingRight ?: 0) +
-        line.visualWidth
-      val left = when (alignment) {
-        TopLeft, MiddleLeft, BottomLeft -> leftPadding
-        TopCenter, MiddleCenter, BottomCenter -> ((canvas.width - lineWidth) / 2) + leftPadding
-        TopRight, MiddleRight, BottomRight -> canvas.width - lineWidth + leftPadding
-      }
+      val lineWidth = leftPadding + (cell.canonicalStyle?.paddingRight ?: 0) + line.visualWidth
+      val left =
+        when (alignment) {
+          TopLeft,
+          MiddleLeft,
+          BottomLeft -> leftPadding
+          TopCenter,
+          MiddleCenter,
+          BottomCenter -> ((canvas.width - lineWidth) / 2) + leftPadding
+          TopRight,
+          MiddleRight,
+          BottomRight -> canvas.width - lineWidth + leftPadding
+        }
       canvas.write(top + index, left, line)
     }
   }

@@ -6,16 +6,18 @@ import kotlin.DeprecationLevel.ERROR
 import kotlin.jvm.JvmName
 import kotlin.jvm.JvmSynthetic
 
-@DslMarker
-private annotation class PicnicDsl
+@DslMarker private annotation class PicnicDsl
 
 fun table(content: TableDsl.() -> Unit) = TableDslImpl().apply(content).create()
 
 @PicnicDsl
 interface TableDsl : TableSectionDsl {
   fun header(content: TableSectionDsl.() -> Unit)
+
   fun body(content: TableSectionDsl.() -> Unit)
+
   fun footer(content: TableSectionDsl.() -> Unit)
+
   fun style(content: TableStyleDsl.() -> Unit)
 }
 
@@ -28,9 +30,7 @@ interface TableStyleDsl {
 @PicnicDsl
 interface TableSectionDsl {
   fun row(vararg cells: Any?) {
-    row {
-      cells.forEach { cell(it) }
-    }
+    row { cells.forEach { cell(it) } }
   }
 
   fun row(content: RowDsl.() -> Unit)
@@ -145,6 +145,7 @@ private class TableSectionDslImpl : TableSectionDsl {
   }
 
   fun createOrNull() = if (builder.rows.isEmpty()) null else create()
+
   fun create() = builder.setCellStyle(cellStyleImpl.createOrNull()).build()
 }
 
@@ -163,21 +164,21 @@ private class RowDslImpl : RowDsl {
   fun create() = builder.setCellStyle(cellStyleImpl.createOrNull()).build()
 }
 
-private class CellDslImpl private constructor(
-  private val content: Any?,
-  private val cellStyleImpl: CellStyleDslImpl,
-) : CellDsl, CellStyleDsl by cellStyleImpl {
+private class CellDslImpl
+private constructor(private val content: Any?, private val cellStyleImpl: CellStyleDslImpl) :
+  CellDsl, CellStyleDsl by cellStyleImpl {
 
   constructor(content: Any?) : this(content, CellStyleDslImpl())
 
   override var columnSpan: Int = 1
   override var rowSpan: Int = 1
 
-  fun create() = Cell(content?.toString() ?: "") {
-    columnSpan = this@CellDslImpl.columnSpan
-    rowSpan = this@CellDslImpl.rowSpan
-    style = cellStyleImpl.createOrNull()
-  }
+  fun create() =
+    Cell(content?.toString() ?: "") {
+      columnSpan = this@CellDslImpl.columnSpan
+      rowSpan = this@CellDslImpl.rowSpan
+      style = cellStyleImpl.createOrNull()
+    }
 }
 
 private class CellStyleDslImpl : CellStyleDsl {
@@ -192,15 +193,16 @@ private class CellStyleDslImpl : CellStyleDsl {
   override var alignment: TextAlignment? = null
 
   fun createOrNull(): CellStyle? {
-    if (paddingLeft != null ||
-      paddingRight != null ||
-      paddingTop != null ||
-      paddingBottom != null ||
-      borderLeft != null ||
-      borderRight != null ||
-      borderTop != null ||
-      borderBottom != null ||
-      alignment != null
+    if (
+      paddingLeft != null ||
+        paddingRight != null ||
+        paddingTop != null ||
+        paddingBottom != null ||
+        borderLeft != null ||
+        borderRight != null ||
+        borderTop != null ||
+        borderBottom != null ||
+        alignment != null
     ) {
       return CellStyle {
         paddingLeft = this@CellStyleDslImpl.paddingLeft

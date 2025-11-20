@@ -4,7 +4,8 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class CellSizeTest {
-  @Test fun height() {
+  @Test
+  fun height() {
     val table = table {
       row("1\n2\n3", "1\n2", "1")
       row("1\n2", "1", "1\n2\n3")
@@ -22,21 +23,19 @@ class CellSizeTest {
       |111
       | 22
       | 3 
-      """.trimMargin(),
+      """
+        .trimMargin(),
       table.renderText(),
     )
   }
 
-  @Test fun heightWithVerticalPadding() {
+  @Test
+  fun heightWithVerticalPadding() {
     val table = table {
       row {
         cell(1)
-        cell(2) {
-          paddingTop = 1
-        }
-        cell(3) {
-          paddingBottom = 1
-        }
+        cell(2) { paddingTop = 1 }
+        cell(3) { paddingBottom = 1 }
       }
       row {
         cell(1)
@@ -58,12 +57,14 @@ class CellSizeTest {
       |1  
       | 23
       |   
-      """.trimMargin(),
+      """
+        .trimMargin(),
       table.renderText(),
     )
   }
 
-  @Test fun width() {
+  @Test
+  fun width() {
     val table = table {
       row("123", "12", "1")
       row("12", "1", "123")
@@ -75,21 +76,19 @@ class CellSizeTest {
       |12312 1  
       |12 1  123
       |1  12312 
-      """.trimMargin(),
+      """
+        .trimMargin(),
       table.renderText(),
     )
   }
 
-  @Test fun widthWithHorizontalPadding() {
+  @Test
+  fun widthWithHorizontalPadding() {
     val table = table {
       row {
         cell(1)
-        cell(2) {
-          paddingLeft = 2
-        }
-        cell(3) {
-          paddingRight = 2
-        }
+        cell(2) { paddingLeft = 2 }
+        cell(3) { paddingRight = 2 }
       }
       row {
         cell(1)
@@ -108,12 +107,14 @@ class CellSizeTest {
       """
       |1  23  
       |1 2  3 
-      """.trimMargin(),
+      """
+        .trimMargin(),
       table.renderText(),
     )
   }
 
-  @Test fun widthAndHeight() {
+  @Test
+  fun widthAndHeight() {
     val table = table {
       row("123\n12\n1", "12\n1", "1")
       row("12\n1", "1", "123\n12\n1")
@@ -131,12 +132,14 @@ class CellSizeTest {
       |1  12312 
       |   12 1  
       |   1     
-      """.trimMargin(),
+      """
+        .trimMargin(),
       table.renderText(),
     )
   }
 
-  @Test fun unicode() {
+  @Test
+  fun unicode() {
     val table = table {
       // 1 UTF-8 bytes.
       row('\u0031', 'a')
@@ -157,12 +160,14 @@ class CellSizeTest {
       |€a
       |北a
       |😃a
-      """.trimMargin(),
+      """
+        .trimMargin(),
       table.renderText(),
     )
   }
 
-  @Test fun mixedWidth() {
+  @Test
+  fun mixedWidth() {
     // Rows contain mixture of BMP and supplementary codepoints.
     val table = table {
       row("a", "a")
@@ -177,12 +182,14 @@ class CellSizeTest {
       |a    a
       |😃.😃.😃a
       |.😃.😃.a
-      """.trimMargin(),
+      """
+        .trimMargin(),
       table.renderText(),
     )
   }
 
-  @Test fun asniEscapeCodesAreNotMeasured() {
+  @Test
+  fun asniEscapeCodesAreNotMeasured() {
     val table = table {
       row("a")
       row("\u001B[31;1;4ma\u001B[0m")
@@ -193,7 +200,8 @@ class CellSizeTest {
       """
       |a
       |$esc[31;1;4ma$esc[0m
-      """.trimMargin(),
+      """
+        .trimMargin(),
       table.renderText(),
     )
   }

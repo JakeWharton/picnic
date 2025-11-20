@@ -5,14 +5,11 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class TableBorderTest {
-  @Test fun tableBorderAndCellBorderMerges() {
+  @Test
+  fun tableBorderAndCellBorderMerges() {
     val table = table {
-      style {
-        border = true
-      }
-      cellStyle {
-        border = true
-      }
+      style { border = true }
+      cellStyle { border = true }
       body {
         row("A", "B", "C")
         row("D", "E", "F")
@@ -29,19 +26,17 @@ class TableBorderTest {
       |├─┼─┼─┤
       |│G│H│I│
       |└─┴─┴─┘
-      """.trimMargin(),
+      """
+        .trimMargin(),
       table.renderText(),
     )
   }
 
-  @Test fun tableBorderTakesPrecedenceOverCellBorder() {
+  @Test
+  fun tableBorderTakesPrecedenceOverCellBorder() {
     val table = table {
-      style {
-        border = true
-      }
-      cellStyle {
-        border = false
-      }
+      style { border = true }
+      cellStyle { border = false }
       body {
         row("A", "B", "C")
         row("D", "E", "F")
@@ -56,12 +51,14 @@ class TableBorderTest {
       |│DEF│
       |│GHI│
       |└───┘
-      """.trimMargin(),
+      """
+        .trimMargin(),
       table.renderText(),
     )
   }
 
-  @Test fun tableBorderHiddenByBorderStyle() {
+  @Test
+  fun tableBorderHiddenByBorderStyle() {
     val table = table {
       style {
         border = true
@@ -79,52 +76,40 @@ class TableBorderTest {
       |ABC
       |DEF
       |GHI
-      """.trimMargin(),
+      """
+        .trimMargin(),
       table.renderText(),
     )
   }
 
-  @Test fun tableBorderWithMiddleBorders() {
+  @Test
+  fun tableBorderWithMiddleBorders() {
     val table = table {
-      style {
-        border = true
-      }
+      style { border = true }
       header {
-        cellStyle {
-          borderBottom = true
-        }
+        cellStyle { borderBottom = true }
         row {
-          cell("A") {
-            borderRight = true
-          }
+          cell("A") { borderRight = true }
           cell("B")
           cell("C")
         }
       }
       body {
         row {
-          cell("D") {
-            borderRight = true
-          }
+          cell("D") { borderRight = true }
           cell("E")
           cell("F")
         }
         row {
-          cell("G") {
-            borderRight = true
-          }
+          cell("G") { borderRight = true }
           cell("H")
           cell("I")
         }
       }
       footer {
-        cellStyle {
-          borderTop = true
-        }
+        cellStyle { borderTop = true }
         row {
-          cell("J") {
-            borderRight = true
-          }
+          cell("J") { borderRight = true }
           cell("K")
           cell("L")
         }
@@ -141,7 +126,8 @@ class TableBorderTest {
       |├─┼──┤
       |│J│KL│
       |└─┴──┘
-      """.trimMargin(),
+      """
+        .trimMargin(),
       table.renderText(),
     )
   }

@@ -13,40 +13,23 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class CellAlignmentTest {
-  @Test fun alignmentsDoNotAffectSizing() {
+  @Test
+  fun alignmentsDoNotAffectSizing() {
     val table = table {
       row {
-        cell("TL") {
-          alignment = TopLeft
-        }
-        cell("TC") {
-          alignment = TopCenter
-        }
-        cell("TR") {
-          alignment = TopRight
-        }
+        cell("TL") { alignment = TopLeft }
+        cell("TC") { alignment = TopCenter }
+        cell("TR") { alignment = TopRight }
       }
       row {
-        cell("ML") {
-          alignment = MiddleLeft
-        }
-        cell("MC") {
-          alignment = MiddleCenter
-        }
-        cell("MR") {
-          alignment = MiddleRight
-        }
+        cell("ML") { alignment = MiddleLeft }
+        cell("MC") { alignment = MiddleCenter }
+        cell("MR") { alignment = MiddleRight }
       }
       row {
-        cell("BL") {
-          alignment = BottomLeft
-        }
-        cell("BC") {
-          alignment = BottomCenter
-        }
-        cell("BR") {
-          alignment = BottomRight
-        }
+        cell("BL") { alignment = BottomLeft }
+        cell("BC") { alignment = BottomCenter }
+        cell("BR") { alignment = BottomRight }
       }
     }
 
@@ -55,12 +38,14 @@ class CellAlignmentTest {
       |TLTCTR
       |MLMCMR
       |BLBCBR
-      """.trimMargin(),
+      """
+        .trimMargin(),
       table.renderText(),
     )
   }
 
-  @Test fun alignmentsAndSizes() {
+  @Test
+  fun alignmentsAndSizes() {
     val table = table {
       for (alignment in arrayOf<TextAlignment?>(null) + TextAlignment.values()) {
         for (contentWidth in 1..3) {
@@ -73,16 +58,18 @@ class CellAlignmentTest {
                 for (paddingRight in 0..1) {
                   for (paddingTop in 0..1) {
                     for (paddingBottom in 0..1) {
-                      val text = if (alignment == null) {
-                        """
+                      val text =
+                        if (alignment == null) {
+                          """
                             |l$paddingLeft
                             |r$paddingRight
                             |t$paddingTop
                             |b$paddingBottom
-                        """.trimMargin()
-                      } else {
-                        ("X".repeat(contentWidth) + '\n').repeat(contentHeight).trimEnd()
-                      }
+                        """
+                            .trimMargin()
+                        } else {
+                          ("X".repeat(contentWidth) + '\n').repeat(contentHeight).trimEnd()
+                        }
                       cell(text) {
                         border = true
 
@@ -357,18 +344,18 @@ class CellAlignmentTest {
       |            │XXX│XXX│XXX│XXX│XXX │XXX │XXX │XXX │ XXX│ XXX│ XXX│ XXX│ XXX │ XXX │ XXX │ XXX │
       |            │XXX│   │XXX│   │XXX │    │XXX │    │ XXX│    │ XXX│    │ XXX │     │ XXX │     │
       |            └───┴───┴───┴───┴────┴────┴────┴────┴────┴────┴────┴────┴─────┴─────┴─────┴─────┘
-      """.trimMargin(),
+      """
+        .trimMargin(),
       table.renderText(),
     )
   }
 
-  @Test fun multipleLinesAlignedIndividually() {
+  @Test
+  fun multipleLinesAlignedIndividually() {
     val table = table {
       row {
         for (alignment in listOf(TopLeft, TopCenter, TopRight)) {
-          cell("X\nXXX\nXXXXX\nXXX\nX") {
-            this.alignment = alignment
-          }
+          cell("X\nXXX\nXXXXX\nXXX\nX") { this.alignment = alignment }
         }
       }
     }
@@ -380,38 +367,28 @@ class CellAlignmentTest {
       |XXXXXXXXXXXXXXX
       |XXX   XXX   XXX
       |X      X      X
-      """.trimMargin(),
+      """
+        .trimMargin(),
       table.renderText(),
     )
   }
 
-  @Test fun stylePropagation() {
+  @Test
+  fun stylePropagation() {
     val table = table {
-      cellStyle {
-        alignment = TopLeft
-      }
-      header {
-        row("0", "123", "456")
-      }
+      cellStyle { alignment = TopLeft }
+      header { row("0", "123", "456") }
       body {
-        cellStyle {
-          alignment = BottomLeft
-        }
+        cellStyle { alignment = BottomLeft }
         row {
-          cellStyle {
-            alignment = TopRight
-          }
+          cellStyle { alignment = TopRight }
           cell("1\n2\n3")
           cell("TR")
-          cell("BR") {
-            alignment = BottomRight
-          }
+          cell("BR") { alignment = BottomRight }
         }
         row("4\n5\n6", "BL")
       }
-      footer {
-        row("7\n8\n9", "TL")
-      }
+      footer { row("7\n8\n9", "TL") }
     }
 
     assertEquals(
@@ -426,16 +403,16 @@ class CellAlignmentTest {
       |7TL    
       |8      
       |9      
-      """.trimMargin(),
+      """
+        .trimMargin(),
       table.renderText(),
     )
   }
 
-  @Test fun displaySizeUsedForAlignment() {
+  @Test
+  fun displaySizeUsedForAlignment() {
     val table = table {
-      cellStyle {
-        alignment = MiddleCenter
-      }
+      cellStyle { alignment = MiddleCenter }
       row("\u001B[31;1;4mHello\u001B[0m", "a")
       row("<Hello>", "a")
     }
@@ -444,16 +421,16 @@ class CellAlignmentTest {
       """
       | $esc[31;1;4mHello$esc[0m a
       |<Hello>a
-      """.trimMargin(),
+      """
+        .trimMargin(),
       table.renderText(),
     )
   }
 
-  @Test fun singleCellAlignmentWithInvisibleChars() {
+  @Test
+  fun singleCellAlignmentWithInvisibleChars() {
     val table = table {
-      cellStyle {
-        alignment = MiddleCenter
-      }
+      cellStyle { alignment = MiddleCenter }
       row("\u001B[31;1;4mHello\u001B[0m\n\u001B[31;1;4mHello12\u001B[0m\nHello", "a\na\na")
     }
 
@@ -462,7 +439,8 @@ class CellAlignmentTest {
       | $esc[31;1;4mHello$esc[0m a
       |$esc[31;1;4mHello12$esc[0ma
       | Hello a
-      """.trimMargin(),
+      """
+        .trimMargin(),
       table.renderText(),
     )
   }

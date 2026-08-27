@@ -1,6 +1,6 @@
 [libraries]
 kotlinPlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:2.4.10"
-spotlessPlugin = 'com.diffplug.spotless:spotless-plugin-gradle:8.10.0'
+spotlessPlugin = 'com.diffplug.spotless:spotless-plugin-gradle:8.10.1'
 dokkaPlugin = "org.jetbrains.dokka:dokka-gradle-plugin:2.2.0"
 animalSnifferPlugin = "ru.vyarus:gradle-animalsniffer-plugin:2.0.1"
 publishPlugin = "com.vanniktech:gradle-maven-publish-plugin:0.37.0"

@@ -36,7 +36,7 @@ subprojects {
       jvmTarget = JvmTarget.JVM_1_8
       freeCompilerArgs.addAll([
           '-progressive',
-          '-Xjvm-default=all',
+          '-jvm-default=no-compatibility',
       ])
     }
   }

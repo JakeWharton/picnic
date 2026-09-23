@@ -1,0 +1,322 @@
+public final class com/jakewharton/picnic/-DslKt {
+	public static final fun table (Lkotlin/jvm/functions/Function1;)Lcom/jakewharton/picnic/Table;
+}
+
+public final class com/jakewharton/picnic/BorderStyle : java/lang/Enum {
+	public static final field Hidden Lcom/jakewharton/picnic/BorderStyle;
+	public static final field Solid Lcom/jakewharton/picnic/BorderStyle;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lcom/jakewharton/picnic/BorderStyle;
+	public static fun values ()[Lcom/jakewharton/picnic/BorderStyle;
+}
+
+public final class com/jakewharton/picnic/Cell {
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getColumnSpan ()I
+	public final fun getContent ()Ljava/lang/String;
+	public final fun getRowSpan ()I
+	public final fun getStyle ()Lcom/jakewharton/picnic/CellStyle;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/jakewharton/picnic/Cell$Builder {
+	public fun <init> (Ljava/lang/Object;)V
+	public final fun build ()Lcom/jakewharton/picnic/Cell;
+	public final fun getColumnSpan ()I
+	public final fun getContent ()Ljava/lang/Object;
+	public final fun getRowSpan ()I
+	public final fun getStyle ()Lcom/jakewharton/picnic/CellStyle;
+	public final fun setColumnSpan (I)Lcom/jakewharton/picnic/Cell$Builder;
+	public final synthetic fun setColumnSpan (I)V
+	public final fun setRowSpan (I)Lcom/jakewharton/picnic/Cell$Builder;
+	public final synthetic fun setRowSpan (I)V
+	public final fun setStyle (Lcom/jakewharton/picnic/CellStyle;)Lcom/jakewharton/picnic/Cell$Builder;
+	public final synthetic fun setStyle (Lcom/jakewharton/picnic/CellStyle;)V
+}
+
+public abstract interface class com/jakewharton/picnic/CellDsl : com/jakewharton/picnic/CellStyleDsl {
+	public abstract fun getColumnSpan ()I
+	public abstract fun getRowSpan ()I
+	public abstract fun setColumnSpan (I)V
+	public abstract fun setRowSpan (I)V
+}
+
+public final class com/jakewharton/picnic/CellStyle {
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAlignment ()Lcom/jakewharton/picnic/TextAlignment;
+	public final fun getBorderBottom ()Ljava/lang/Boolean;
+	public final fun getBorderLeft ()Ljava/lang/Boolean;
+	public final fun getBorderRight ()Ljava/lang/Boolean;
+	public final fun getBorderTop ()Ljava/lang/Boolean;
+	public final fun getPaddingBottom ()Ljava/lang/Integer;
+	public final fun getPaddingLeft ()Ljava/lang/Integer;
+	public final fun getPaddingRight ()Ljava/lang/Integer;
+	public final fun getPaddingTop ()Ljava/lang/Integer;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/jakewharton/picnic/CellStyle$Builder {
+	public fun <init> ()V
+	public final fun build ()Lcom/jakewharton/picnic/CellStyle;
+	public final fun getAlignment ()Lcom/jakewharton/picnic/TextAlignment;
+	public final fun getBorderBottom ()Ljava/lang/Boolean;
+	public final fun getBorderLeft ()Ljava/lang/Boolean;
+	public final fun getBorderRight ()Ljava/lang/Boolean;
+	public final fun getBorderTop ()Ljava/lang/Boolean;
+	public final fun getPaddingBottom ()Ljava/lang/Integer;
+	public final fun getPaddingLeft ()Ljava/lang/Integer;
+	public final fun getPaddingRight ()Ljava/lang/Integer;
+	public final fun getPaddingTop ()Ljava/lang/Integer;
+	public final fun setAlignment (Lcom/jakewharton/picnic/TextAlignment;)Lcom/jakewharton/picnic/CellStyle$Builder;
+	public final synthetic fun setAlignment (Lcom/jakewharton/picnic/TextAlignment;)V
+	public final fun setBorder (Ljava/lang/Boolean;)Lcom/jakewharton/picnic/CellStyle$Builder;
+	public final fun setBorderBottom (Ljava/lang/Boolean;)Lcom/jakewharton/picnic/CellStyle$Builder;
+	public final synthetic fun setBorderBottom (Ljava/lang/Boolean;)V
+	public final fun setBorderLeft (Ljava/lang/Boolean;)Lcom/jakewharton/picnic/CellStyle$Builder;
+	public final synthetic fun setBorderLeft (Ljava/lang/Boolean;)V
+	public final fun setBorderRight (Ljava/lang/Boolean;)Lcom/jakewharton/picnic/CellStyle$Builder;
+	public final synthetic fun setBorderRight (Ljava/lang/Boolean;)V
+	public final fun setBorderTop (Ljava/lang/Boolean;)Lcom/jakewharton/picnic/CellStyle$Builder;
+	public final synthetic fun setBorderTop (Ljava/lang/Boolean;)V
+	public final fun setPadding (Ljava/lang/Integer;)Lcom/jakewharton/picnic/CellStyle$Builder;
+	public final fun setPaddingBottom (Ljava/lang/Integer;)Lcom/jakewharton/picnic/CellStyle$Builder;
+	public final synthetic fun setPaddingBottom (Ljava/lang/Integer;)V
+	public final fun setPaddingLeft (Ljava/lang/Integer;)Lcom/jakewharton/picnic/CellStyle$Builder;
+	public final synthetic fun setPaddingLeft (Ljava/lang/Integer;)V
+	public final fun setPaddingRight (Ljava/lang/Integer;)Lcom/jakewharton/picnic/CellStyle$Builder;
+	public final synthetic fun setPaddingRight (Ljava/lang/Integer;)V
+	public final fun setPaddingTop (Ljava/lang/Integer;)Lcom/jakewharton/picnic/CellStyle$Builder;
+	public final synthetic fun setPaddingTop (Ljava/lang/Integer;)V
+}
+
+public abstract interface class com/jakewharton/picnic/CellStyleDsl {
+	public abstract fun getAlignment ()Lcom/jakewharton/picnic/TextAlignment;
+	public synthetic fun getBorder ()Z
+	public abstract fun getBorderBottom ()Ljava/lang/Boolean;
+	public abstract fun getBorderLeft ()Ljava/lang/Boolean;
+	public abstract fun getBorderRight ()Ljava/lang/Boolean;
+	public abstract fun getBorderTop ()Ljava/lang/Boolean;
+	public synthetic fun getPadding ()I
+	public abstract fun getPaddingBottom ()Ljava/lang/Integer;
+	public abstract fun getPaddingLeft ()Ljava/lang/Integer;
+	public abstract fun getPaddingRight ()Ljava/lang/Integer;
+	public abstract fun getPaddingTop ()Ljava/lang/Integer;
+	public abstract fun setAlignment (Lcom/jakewharton/picnic/TextAlignment;)V
+	public fun setBorder (Z)V
+	public abstract fun setBorderBottom (Ljava/lang/Boolean;)V
+	public abstract fun setBorderLeft (Ljava/lang/Boolean;)V
+	public abstract fun setBorderRight (Ljava/lang/Boolean;)V
+	public abstract fun setBorderTop (Ljava/lang/Boolean;)V
+	public fun setPadding (I)V
+	public abstract fun setPaddingBottom (Ljava/lang/Integer;)V
+	public abstract fun setPaddingLeft (Ljava/lang/Integer;)V
+	public abstract fun setPaddingRight (Ljava/lang/Integer;)V
+	public abstract fun setPaddingTop (Ljava/lang/Integer;)V
+}
+
+public final class com/jakewharton/picnic/ModelKt {
+	public static final synthetic fun Cell (Ljava/lang/Object;Lkotlin/jvm/functions/Function1;)Lcom/jakewharton/picnic/Cell;
+	public static synthetic fun Cell$default (Ljava/lang/Object;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lcom/jakewharton/picnic/Cell;
+	public static final synthetic fun CellStyle (Lkotlin/jvm/functions/Function1;)Lcom/jakewharton/picnic/CellStyle;
+	public static final synthetic fun Row (Lkotlin/jvm/functions/Function1;)Lcom/jakewharton/picnic/Row;
+	public static final synthetic fun Table (Lkotlin/jvm/functions/Function1;)Lcom/jakewharton/picnic/Table;
+	public static final synthetic fun TableSection (Lkotlin/jvm/functions/Function1;)Lcom/jakewharton/picnic/TableSection;
+	public static final synthetic fun TableStyle (Lkotlin/jvm/functions/Function1;)Lcom/jakewharton/picnic/TableStyle;
+}
+
+public final class com/jakewharton/picnic/Row {
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCellStyle ()Lcom/jakewharton/picnic/CellStyle;
+	public final fun getCells ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/jakewharton/picnic/Row$Builder {
+	public fun <init> ()V
+	public final fun addCell (Lcom/jakewharton/picnic/Cell;)Lcom/jakewharton/picnic/Row$Builder;
+	public final fun addCell (Ljava/lang/String;)Lcom/jakewharton/picnic/Row$Builder;
+	public final fun build ()Lcom/jakewharton/picnic/Row;
+	public final fun getCellStyle ()Lcom/jakewharton/picnic/CellStyle;
+	public final fun getCells ()Ljava/util/List;
+	public final fun setCellStyle (Lcom/jakewharton/picnic/CellStyle;)Lcom/jakewharton/picnic/Row$Builder;
+	public final synthetic fun setCellStyle (Lcom/jakewharton/picnic/CellStyle;)V
+	public final fun setCells (Ljava/util/List;)Lcom/jakewharton/picnic/Row$Builder;
+	public final synthetic fun setCells (Ljava/util/List;)V
+}
+
+public abstract interface class com/jakewharton/picnic/RowDsl {
+	public abstract fun cell (Ljava/lang/Object;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun cell$default (Lcom/jakewharton/picnic/RowDsl;Ljava/lang/Object;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public abstract fun cellStyle (Lkotlin/jvm/functions/Function1;)V
+	public fun cells ([Ljava/lang/Object;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun cells$default (Lcom/jakewharton/picnic/RowDsl;[Ljava/lang/Object;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+}
+
+public final class com/jakewharton/picnic/Table {
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun get (II)Lcom/jakewharton/picnic/Table$PositionedCell;
+	public final fun getBody ()Lcom/jakewharton/picnic/TableSection;
+	public final fun getCellStyle ()Lcom/jakewharton/picnic/CellStyle;
+	public final fun getColumnCount ()I
+	public final fun getFooter ()Lcom/jakewharton/picnic/TableSection;
+	public final fun getHeader ()Lcom/jakewharton/picnic/TableSection;
+	public final fun getOrNull (II)Lcom/jakewharton/picnic/Table$PositionedCell;
+	public final fun getPositionedCells ()Ljava/util/List;
+	public final fun getRowCount ()I
+	public final fun getTableStyle ()Lcom/jakewharton/picnic/TableStyle;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/jakewharton/picnic/Table$Builder {
+	public fun <init> ()V
+	public final fun build ()Lcom/jakewharton/picnic/Table;
+	public final fun getBody ()Lcom/jakewharton/picnic/TableSection;
+	public final fun getCellStyle ()Lcom/jakewharton/picnic/CellStyle;
+	public final fun getFooter ()Lcom/jakewharton/picnic/TableSection;
+	public final fun getHeader ()Lcom/jakewharton/picnic/TableSection;
+	public final fun getTableStyle ()Lcom/jakewharton/picnic/TableStyle;
+	public final fun setBody (Lcom/jakewharton/picnic/TableSection;)Lcom/jakewharton/picnic/Table$Builder;
+	public final synthetic fun setBody (Lcom/jakewharton/picnic/TableSection;)V
+	public final fun setCellStyle (Lcom/jakewharton/picnic/CellStyle;)Lcom/jakewharton/picnic/Table$Builder;
+	public final synthetic fun setCellStyle (Lcom/jakewharton/picnic/CellStyle;)V
+	public final fun setFooter (Lcom/jakewharton/picnic/TableSection;)Lcom/jakewharton/picnic/Table$Builder;
+	public final synthetic fun setFooter (Lcom/jakewharton/picnic/TableSection;)V
+	public final fun setHeader (Lcom/jakewharton/picnic/TableSection;)Lcom/jakewharton/picnic/Table$Builder;
+	public final synthetic fun setHeader (Lcom/jakewharton/picnic/TableSection;)V
+	public final fun setTableStyle (Lcom/jakewharton/picnic/TableStyle;)Lcom/jakewharton/picnic/Table$Builder;
+	public final synthetic fun setTableStyle (Lcom/jakewharton/picnic/TableStyle;)V
+}
+
+public final class com/jakewharton/picnic/Table$PositionedCell {
+	public fun <init> (IILcom/jakewharton/picnic/Cell;Lcom/jakewharton/picnic/CellStyle;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCanonicalStyle ()Lcom/jakewharton/picnic/CellStyle;
+	public final fun getCell ()Lcom/jakewharton/picnic/Cell;
+	public final fun getColumnIndex ()I
+	public final fun getRowIndex ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class com/jakewharton/picnic/TableDsl : com/jakewharton/picnic/TableSectionDsl {
+	public abstract fun body (Lkotlin/jvm/functions/Function1;)V
+	public abstract fun footer (Lkotlin/jvm/functions/Function1;)V
+	public abstract fun header (Lkotlin/jvm/functions/Function1;)V
+	public abstract fun style (Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class com/jakewharton/picnic/TableSection {
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCellStyle ()Lcom/jakewharton/picnic/CellStyle;
+	public final fun getRows ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/jakewharton/picnic/TableSection$Builder {
+	public fun <init> ()V
+	public final fun addRow (Lcom/jakewharton/picnic/Row;)Lcom/jakewharton/picnic/TableSection$Builder;
+	public final fun addRow ([Lcom/jakewharton/picnic/Cell;)Lcom/jakewharton/picnic/TableSection$Builder;
+	public final fun addRow ([Ljava/lang/String;)Lcom/jakewharton/picnic/TableSection$Builder;
+	public final fun build ()Lcom/jakewharton/picnic/TableSection;
+	public final fun getCellStyle ()Lcom/jakewharton/picnic/CellStyle;
+	public final fun getRows ()Ljava/util/List;
+	public final fun setCellStyle (Lcom/jakewharton/picnic/CellStyle;)Lcom/jakewharton/picnic/TableSection$Builder;
+	public final synthetic fun setCellStyle (Lcom/jakewharton/picnic/CellStyle;)V
+	public final fun setRows (Ljava/util/List;)Lcom/jakewharton/picnic/TableSection$Builder;
+	public final synthetic fun setRows (Ljava/util/List;)V
+}
+
+public abstract interface class com/jakewharton/picnic/TableSectionDsl {
+	public abstract fun cellStyle (Lkotlin/jvm/functions/Function1;)V
+	public abstract fun row (Lkotlin/jvm/functions/Function1;)V
+	public fun row ([Ljava/lang/Object;)V
+}
+
+public final class com/jakewharton/picnic/TableStyle {
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBorder ()Ljava/lang/Boolean;
+	public final fun getBorderStyle ()Lcom/jakewharton/picnic/BorderStyle;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/jakewharton/picnic/TableStyle$Builder {
+	public fun <init> ()V
+	public final fun build ()Lcom/jakewharton/picnic/TableStyle;
+	public final fun getBorder ()Ljava/lang/Boolean;
+	public final fun getBorderStyle ()Lcom/jakewharton/picnic/BorderStyle;
+	public final fun setBorder (Ljava/lang/Boolean;)Lcom/jakewharton/picnic/TableStyle$Builder;
+	public final synthetic fun setBorder (Ljava/lang/Boolean;)V
+	public final fun setBorderStyle (Lcom/jakewharton/picnic/BorderStyle;)Lcom/jakewharton/picnic/TableStyle$Builder;
+	public final synthetic fun setBorderStyle (Lcom/jakewharton/picnic/BorderStyle;)V
+}
+
+public abstract interface class com/jakewharton/picnic/TableStyleDsl {
+	public abstract fun getBorder ()Ljava/lang/Boolean;
+	public abstract fun getBorderStyle ()Lcom/jakewharton/picnic/BorderStyle;
+	public abstract fun setBorder (Ljava/lang/Boolean;)V
+	public abstract fun setBorderStyle (Lcom/jakewharton/picnic/BorderStyle;)V
+}
+
+public final class com/jakewharton/picnic/TextAlignment : java/lang/Enum {
+	public static final field BottomCenter Lcom/jakewharton/picnic/TextAlignment;
+	public static final field BottomLeft Lcom/jakewharton/picnic/TextAlignment;
+	public static final field BottomRight Lcom/jakewharton/picnic/TextAlignment;
+	public static final field MiddleCenter Lcom/jakewharton/picnic/TextAlignment;
+	public static final field MiddleLeft Lcom/jakewharton/picnic/TextAlignment;
+	public static final field MiddleRight Lcom/jakewharton/picnic/TextAlignment;
+	public static final field TopCenter Lcom/jakewharton/picnic/TextAlignment;
+	public static final field TopLeft Lcom/jakewharton/picnic/TextAlignment;
+	public static final field TopRight Lcom/jakewharton/picnic/TextAlignment;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lcom/jakewharton/picnic/TextAlignment;
+	public static fun values ()[Lcom/jakewharton/picnic/TextAlignment;
+}
+
+public final class com/jakewharton/picnic/TextBorder {
+	public static final field ASCII Lcom/jakewharton/picnic/TextBorder;
+	public static final field Companion Lcom/jakewharton/picnic/TextBorder$Companion;
+	public static final field DEFAULT Lcom/jakewharton/picnic/TextBorder;
+	public static final field ROUNDED Lcom/jakewharton/picnic/TextBorder;
+	public fun <init> (Ljava/lang/String;)V
+	public final fun get (ZZZZ)C
+	public static synthetic fun get$default (Lcom/jakewharton/picnic/TextBorder;ZZZZILjava/lang/Object;)C
+	public final fun getDown ()C
+	public final fun getDownAndHorizontal ()C
+	public final fun getDownAndLeft ()C
+	public final fun getDownAndRight ()C
+	public final fun getEmpty ()C
+	public final fun getHorizontal ()C
+	public final fun getLeft ()C
+	public final fun getRight ()C
+	public final fun getUp ()C
+	public final fun getUpAndHorizontal ()C
+	public final fun getUpAndLeft ()C
+	public final fun getUpAndRight ()C
+	public final fun getVertical ()C
+	public final fun getVerticalAndHorizontal ()C
+	public final fun getVerticalAndLeft ()C
+	public final fun getVerticalAndRight ()C
+}
+
+public final class com/jakewharton/picnic/TextBorder$Companion {
+}
+
+public abstract interface class com/jakewharton/picnic/TextLayout {
+	public abstract fun draw (Lcom/jakewharton/crossword/TextCanvas;)V
+	public abstract fun measureHeight ()I
+	public abstract fun measureWidth ()I
+}
+
+public final class com/jakewharton/picnic/TextRendering {
+	public static final fun render (Lcom/jakewharton/picnic/Table;)Ljava/lang/String;
+	public static final fun render (Lcom/jakewharton/picnic/Table;Lkotlin/jvm/functions/Function1;)Ljava/lang/String;
+	public static final fun render (Lcom/jakewharton/picnic/Table;Lkotlin/jvm/functions/Function1;Lcom/jakewharton/picnic/TextBorder;)Ljava/lang/String;
+	public static synthetic fun render$default (Lcom/jakewharton/picnic/Table;Lkotlin/jvm/functions/Function1;Lcom/jakewharton/picnic/TextBorder;ILjava/lang/Object;)Ljava/lang/String;
+}
+

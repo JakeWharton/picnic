@@ -13,18 +13,18 @@ import com.jakewharton.picnic.TextAlignment.TopCenter
 import com.jakewharton.picnic.TextAlignment.TopLeft
 import com.jakewharton.picnic.TextAlignment.TopRight
 
-interface TextLayout {
+public interface TextLayout {
   /**
    * The width in columns that this cell will occupy.
    *
    * Consider that multi-character codepoints and emoji occupy a single column. Non-printable
    * characters and ANSI color escape sequences occupy zero.
    */
-  fun measureWidth(): Int
+  public fun measureWidth(): Int
 
-  fun measureHeight(): Int
+  public fun measureHeight(): Int
 
-  fun draw(canvas: TextCanvas)
+  public fun draw(canvas: TextCanvas)
 }
 
 internal class SimpleLayout(private val cell: PositionedCell) : TextLayout {

@@ -8,68 +8,68 @@ import kotlin.jvm.JvmSynthetic
 
 @DslMarker private annotation class PicnicDsl
 
-fun table(content: TableDsl.() -> Unit) = TableDslImpl().apply(content).create()
+public fun table(content: TableDsl.() -> Unit): Table = TableDslImpl().apply(content).create()
 
 @PicnicDsl
-interface TableDsl : TableSectionDsl {
-  fun header(content: TableSectionDsl.() -> Unit)
+public interface TableDsl : TableSectionDsl {
+  public fun header(content: TableSectionDsl.() -> Unit)
 
-  fun body(content: TableSectionDsl.() -> Unit)
+  public fun body(content: TableSectionDsl.() -> Unit)
 
-  fun footer(content: TableSectionDsl.() -> Unit)
+  public fun footer(content: TableSectionDsl.() -> Unit)
 
-  fun style(content: TableStyleDsl.() -> Unit)
+  public fun style(content: TableStyleDsl.() -> Unit)
 }
 
 @PicnicDsl
-interface TableStyleDsl {
-  var border: Boolean?
-  var borderStyle: BorderStyle?
+public interface TableStyleDsl {
+  public var border: Boolean?
+  public var borderStyle: BorderStyle?
 }
 
 @PicnicDsl
-interface TableSectionDsl {
-  fun row(vararg cells: Any?) {
+public interface TableSectionDsl {
+  public fun row(vararg cells: Any?) {
     row { cells.forEach { cell(it) } }
   }
 
-  fun row(content: RowDsl.() -> Unit)
+  public fun row(content: RowDsl.() -> Unit)
 
-  fun cellStyle(content: CellStyleDsl.() -> Unit)
+  public fun cellStyle(content: CellStyleDsl.() -> Unit)
 }
 
 @PicnicDsl
-interface RowDsl {
-  fun cell(content: Any?, style: CellDsl.() -> Unit = {})
+public interface RowDsl {
+  public fun cell(content: Any?, style: CellDsl.() -> Unit = {})
 
-  fun cells(vararg content: Any?, style: CellDsl.() -> Unit = {}) {
+  public fun cells(vararg content: Any?, style: CellDsl.() -> Unit = {}) {
     content.forEach { cell(it, style) }
   }
 
-  fun cellStyle(content: CellStyleDsl.() -> Unit)
+  public fun cellStyle(content: CellStyleDsl.() -> Unit)
 }
 
 @PicnicDsl
-interface CellDsl : CellStyleDsl {
-  var columnSpan: Int
-  var rowSpan: Int
+public interface CellDsl : CellStyleDsl {
+  public var columnSpan: Int
+  public var rowSpan: Int
 }
 
 @PicnicDsl
-interface CellStyleDsl {
-  var paddingLeft: Int?
-  var paddingRight: Int?
-  var paddingTop: Int?
-  var paddingBottom: Int?
+public interface CellStyleDsl {
+  public var paddingLeft: Int?
+  public var paddingRight: Int?
+  public var paddingTop: Int?
+  public var paddingBottom: Int?
 
-  var borderLeft: Boolean?
-  var borderRight: Boolean?
-  var borderTop: Boolean?
-  var borderBottom: Boolean?
+  public var borderLeft: Boolean?
+  public var borderRight: Boolean?
+  public var borderTop: Boolean?
+  public var borderBottom: Boolean?
 
-  var alignment: TextAlignment?
+  public var alignment: TextAlignment?
 
-  var border: Boolean
+  public var border: Boolean
     @JvmSynthetic
     @Deprecated("Use individual getters", level = ERROR)
     get() = throw UnsupportedOperationException()
@@ -80,7 +80,7 @@ interface CellStyleDsl {
       borderBottom = value
     }
 
-  var padding: Int
+  public var padding: Int
     @JvmSynthetic
     @Deprecated("Use individual getters", level = ERROR)
     get() = throw UnsupportedOperationException()

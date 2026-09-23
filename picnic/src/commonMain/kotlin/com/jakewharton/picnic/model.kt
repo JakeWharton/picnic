@@ -2,19 +2,19 @@ package com.jakewharton.picnic
 
 import kotlin.jvm.JvmSynthetic
 
-class Table
+public class Table
 private constructor(
-  val header: TableSection?,
-  val body: TableSection,
-  val footer: TableSection?,
-  val cellStyle: CellStyle?,
-  val tableStyle: TableStyle?,
+  public val header: TableSection?,
+  public val body: TableSection,
+  public val footer: TableSection?,
+  public val cellStyle: CellStyle?,
+  public val tableStyle: TableStyle?,
 ) {
-  override fun toString() = renderText()
+  override fun toString(): String = renderText()
 
-  override fun hashCode() = hash(header, body, footer, cellStyle, tableStyle)
+  override fun hashCode(): Int = hash(header, body, footer, cellStyle, tableStyle)
 
-  override fun equals(other: Any?) =
+  override fun equals(other: Any?): Boolean =
     other is Table &&
       header == other.header &&
       body == other.body &&
@@ -22,9 +22,9 @@ private constructor(
       cellStyle == other.cellStyle &&
       tableStyle == other.tableStyle
 
-  val rowCount: Int = (header?.rows?.size ?: 0) + body.rows.size + (footer?.rows?.size ?: 0)
-  val columnCount: Int
-  val positionedCells: List<PositionedCell>
+  public val rowCount: Int = (header?.rows?.size ?: 0) + body.rows.size + (footer?.rows?.size ?: 0)
+  public val columnCount: Int
+  public val positionedCells: List<PositionedCell>
 
   private val cellTable: List<List<PositionedCell?>>
 
@@ -90,58 +90,61 @@ private constructor(
     this.cellTable = cellTable
   }
 
-  fun getOrNull(row: Int, column: Int) = cellTable.getOrNull(row)?.getOrNull(column)
+  public fun getOrNull(row: Int, column: Int): PositionedCell? =
+    cellTable.getOrNull(row)?.getOrNull(column)
 
-  operator fun get(row: Int, column: Int) =
+  public operator fun get(row: Int, column: Int): PositionedCell =
     requireNotNull(cellTable[row][column]) { "Cell was null" }
 
-  class PositionedCell(
-    val rowIndex: Int,
-    val columnIndex: Int,
-    val cell: Cell,
-    val canonicalStyle: CellStyle?,
+  public class PositionedCell(
+    public val rowIndex: Int,
+    public val columnIndex: Int,
+    public val cell: Cell,
+    public val canonicalStyle: CellStyle?,
   ) {
-    override fun hashCode() = hash(rowIndex, columnIndex, cell, canonicalStyle)
+    override fun hashCode(): Int = hash(rowIndex, columnIndex, cell, canonicalStyle)
 
-    override fun equals(other: Any?) =
+    override fun equals(other: Any?): Boolean =
       other is PositionedCell &&
         rowIndex == other.rowIndex &&
         columnIndex == other.columnIndex &&
         cell == other.cell &&
         canonicalStyle == other.canonicalStyle
 
-    override fun toString() =
+    override fun toString(): String =
       "PositionedCell(rowIndex=$rowIndex, colIndex=$columnIndex, cell=$cell, " +
         "canonicalStyle=$canonicalStyle)"
   }
 
-  class Builder {
+  public class Builder {
     @set:JvmSynthetic // Hide 'void' setter from Java.
-    var header: TableSection? = null
+    public var header: TableSection? = null
 
-    fun setHeader(header: TableSection?) = apply { this.header = header }
-
-    @set:JvmSynthetic // Hide 'void' setter from Java.
-    var body: TableSection? = null
-
-    fun setBody(body: TableSection?) = apply { this.body = body }
+    public fun setHeader(header: TableSection?): Builder = apply { this.header = header }
 
     @set:JvmSynthetic // Hide 'void' setter from Java.
-    var footer: TableSection? = null
+    public var body: TableSection? = null
 
-    fun setFooter(footer: TableSection?) = apply { this.footer = footer }
-
-    @set:JvmSynthetic // Hide 'void' setter from Java.
-    var cellStyle: CellStyle? = null
-
-    fun setCellStyle(cellStyle: CellStyle?) = apply { this.cellStyle = cellStyle }
+    public fun setBody(body: TableSection?): Builder = apply { this.body = body }
 
     @set:JvmSynthetic // Hide 'void' setter from Java.
-    var tableStyle: TableStyle? = null
+    public var footer: TableSection? = null
 
-    fun setTableStyle(tableStyle: TableStyle?) = apply { this.tableStyle = tableStyle }
+    public fun setFooter(footer: TableSection?): Builder = apply { this.footer = footer }
 
-    fun build() =
+    @set:JvmSynthetic // Hide 'void' setter from Java.
+    public var cellStyle: CellStyle? = null
+
+    public fun setCellStyle(cellStyle: CellStyle?): Builder = apply { this.cellStyle = cellStyle }
+
+    @set:JvmSynthetic // Hide 'void' setter from Java.
+    public var tableStyle: TableStyle? = null
+
+    public fun setTableStyle(tableStyle: TableStyle?): Builder = apply {
+      this.tableStyle = tableStyle
+    }
+
+    public fun build(): Table =
       Table(
         header,
         checkNotNull(body) { "Body section is required" },
@@ -153,170 +156,185 @@ private constructor(
 }
 
 @JvmSynthetic // Hide from Java callers who should use Builder.
-fun Table(initializer: Table.Builder.() -> Unit): Table {
+public fun Table(initializer: Table.Builder.() -> Unit): Table {
   return Table.Builder().apply(initializer).build()
 }
 
-class TableStyle private constructor(val border: Boolean?, val borderStyle: BorderStyle?) {
-  override fun toString() = "TableStyle(border=$border, borderStyle=$borderStyle)"
+public class TableStyle
+private constructor(
+  public val border: Boolean?,
+  public val borderStyle: BorderStyle?,
+) {
+  override fun toString(): String = "TableStyle(border=$border, borderStyle=$borderStyle)"
 
-  override fun hashCode() = border.hashCode() * 37 + borderStyle.hashCode()
+  override fun hashCode(): Int = border.hashCode() * 37 + borderStyle.hashCode()
 
-  override fun equals(other: Any?) =
+  override fun equals(other: Any?): Boolean =
     other is TableStyle && border == other.border && borderStyle == other.borderStyle
 
-  class Builder {
+  public class Builder {
     @set:JvmSynthetic // Hide 'void' setter from Java.
-    var border: Boolean? = null
+    public var border: Boolean? = null
 
-    fun setBorder(border: Boolean?) = apply { this.border = border }
+    public fun setBorder(border: Boolean?): Builder = apply { this.border = border }
 
     @set:JvmSynthetic // Hide 'void' setter from Java.
-    var borderStyle: BorderStyle? = null
+    public var borderStyle: BorderStyle? = null
 
-    fun setBorderStyle(borderStyle: BorderStyle?) = apply { this.borderStyle = borderStyle }
+    public fun setBorderStyle(borderStyle: BorderStyle?): Builder = apply {
+      this.borderStyle = borderStyle
+    }
 
-    fun build() = TableStyle(border, borderStyle)
+    public fun build(): TableStyle = TableStyle(border, borderStyle)
   }
 }
 
 @JvmSynthetic // Hide from Java callers who should use Builder.
-fun TableStyle(initializer: TableStyle.Builder.() -> Unit): TableStyle {
+public fun TableStyle(initializer: TableStyle.Builder.() -> Unit): TableStyle {
   return TableStyle.Builder().apply(initializer).build()
 }
 
-enum class BorderStyle {
+public enum class BorderStyle {
   Hidden,
   Solid,
 }
 
-class TableSection private constructor(val rows: List<Row>, val cellStyle: CellStyle?) {
-  override fun toString() = "TableSection(rows=$rows, cellStyle=$cellStyle)"
+public class TableSection
+private constructor(
+  public val rows: List<Row>,
+  public val cellStyle: CellStyle?,
+) {
+  override fun toString(): String = "TableSection(rows=$rows, cellStyle=$cellStyle)"
 
-  override fun hashCode() = hash(rows, cellStyle)
+  override fun hashCode(): Int = hash(rows, cellStyle)
 
-  override fun equals(other: Any?) =
+  override fun equals(other: Any?): Boolean =
     other is TableSection && rows == other.rows && cellStyle == other.cellStyle
 
-  class Builder {
+  public class Builder {
     @set:JvmSynthetic // Hide 'void' setter from Java.
-    var rows: MutableList<Row> = mutableListOf()
+    public var rows: MutableList<Row> = mutableListOf()
 
-    fun setRows(rows: List<Row>) = apply { this.rows = rows.toMutableList() }
+    public fun setRows(rows: List<Row>): Builder = apply { this.rows = rows.toMutableList() }
 
-    fun addRow(row: Row) = apply { this.rows.add(row) }
+    public fun addRow(row: Row): Builder = apply { this.rows.add(row) }
 
-    fun addRow(vararg cells: Cell) = addRow(Row { this.cells.addAll(cells) })
+    public fun addRow(vararg cells: Cell): Builder = addRow(Row { this.cells.addAll(cells) })
 
-    fun addRow(vararg cells: String) = addRow(Row { this.cells.addAll(cells.map { Cell(it) }) })
+    public fun addRow(vararg cells: String): Builder =
+      addRow(Row { this.cells.addAll(cells.map { Cell(it) }) })
 
     @set:JvmSynthetic // Hide 'void' setter from Java.
-    var cellStyle: CellStyle? = null
+    public var cellStyle: CellStyle? = null
 
-    fun setCellStyle(cellStyle: CellStyle?) = apply { this.cellStyle = cellStyle }
+    public fun setCellStyle(cellStyle: CellStyle?): Builder = apply { this.cellStyle = cellStyle }
 
-    fun build() = TableSection(rows.toList(), cellStyle)
+    public fun build(): TableSection = TableSection(rows.toList(), cellStyle)
   }
 }
 
 @JvmSynthetic // Hide from Java callers who should use Builder.
-fun TableSection(initializer: TableSection.Builder.() -> Unit): TableSection {
+public fun TableSection(initializer: TableSection.Builder.() -> Unit): TableSection {
   return TableSection.Builder().apply(initializer).build()
 }
 
-class Row private constructor(val cells: List<Cell>, val cellStyle: CellStyle?) {
-  override fun toString() = "Row(cells=$cells, cellStyle=$cellStyle)"
+public class Row
+private constructor(
+  public val cells: List<Cell>,
+  public val cellStyle: CellStyle?,
+) {
+  override fun toString(): String = "Row(cells=$cells, cellStyle=$cellStyle)"
 
-  override fun hashCode() = hash(cells, cellStyle)
+  override fun hashCode(): Int = hash(cells, cellStyle)
 
-  override fun equals(other: Any?) =
+  override fun equals(other: Any?): Boolean =
     other is Row && cells == other.cells && cellStyle == other.cellStyle
 
-  class Builder {
+  public class Builder {
     @set:JvmSynthetic // Hide 'void' setter from Java.
-    var cells: MutableList<Cell> = mutableListOf()
+    public var cells: MutableList<Cell> = mutableListOf()
 
-    fun setCells(cells: List<Cell>) = apply { this.cells = cells.toMutableList() }
+    public fun setCells(cells: List<Cell>): Builder = apply { this.cells = cells.toMutableList() }
 
-    fun addCell(cell: Cell) = apply { cells.add(cell) }
+    public fun addCell(cell: Cell): Builder = apply { cells.add(cell) }
 
-    fun addCell(cell: String) = apply { cells.add(Cell(cell)) }
+    public fun addCell(cell: String): Builder = apply { cells.add(Cell(cell)) }
 
     @set:JvmSynthetic // Hide 'void' setter from Java.
-    var cellStyle: CellStyle? = null
+    public var cellStyle: CellStyle? = null
 
-    fun setCellStyle(cellStyle: CellStyle?) = apply { this.cellStyle = cellStyle }
+    public fun setCellStyle(cellStyle: CellStyle?): Builder = apply { this.cellStyle = cellStyle }
 
-    fun build() = Row(cells.toList(), cellStyle)
+    public fun build(): Row = Row(cells.toList(), cellStyle)
   }
 }
 
 @JvmSynthetic // Hide from Java callers who should use Builder.
-fun Row(initializer: Row.Builder.() -> Unit): Row {
+public fun Row(initializer: Row.Builder.() -> Unit): Row {
   return Row.Builder().apply(initializer).build()
 }
 
-class Cell
+public class Cell
 private constructor(
-  val content: String,
-  val columnSpan: Int,
-  val rowSpan: Int,
-  val style: CellStyle?,
+  public val content: String,
+  public val columnSpan: Int,
+  public val rowSpan: Int,
+  public val style: CellStyle?,
 ) {
-  override fun toString() =
+  override fun toString(): String =
     "Cell(content=$content, columnSpan=$columnSpan, rowSpan=$rowSpan, style=$style)"
 
-  override fun hashCode() = hash(content, columnSpan, rowSpan, style)
+  override fun hashCode(): Int = hash(content, columnSpan, rowSpan, style)
 
-  override fun equals(other: Any?) =
+  override fun equals(other: Any?): Boolean =
     other is Cell &&
       content == other.content &&
       columnSpan == other.columnSpan &&
       rowSpan == other.rowSpan &&
       style == other.style
 
-  class Builder(val content: Any?) {
+  public class Builder(public val content: Any?) {
     @set:JvmSynthetic // Hide 'void' setter from Java.
-    var columnSpan: Int = 1
+    public var columnSpan: Int = 1
 
-    fun setColumnSpan(columnSpan: Int) = apply { this.columnSpan = columnSpan }
-
-    @set:JvmSynthetic // Hide 'void' setter from Java.
-    var rowSpan: Int = 1
-
-    fun setRowSpan(rowSpan: Int) = apply { this.rowSpan = rowSpan }
+    public fun setColumnSpan(columnSpan: Int): Builder = apply { this.columnSpan = columnSpan }
 
     @set:JvmSynthetic // Hide 'void' setter from Java.
-    var style: CellStyle? = null
+    public var rowSpan: Int = 1
 
-    fun setStyle(style: CellStyle?) = apply { this.style = style }
+    public fun setRowSpan(rowSpan: Int): Builder = apply { this.rowSpan = rowSpan }
 
-    fun build() = Cell(content.toString(), columnSpan, rowSpan, style)
+    @set:JvmSynthetic // Hide 'void' setter from Java.
+    public var style: CellStyle? = null
+
+    public fun setStyle(style: CellStyle?): Builder = apply { this.style = style }
+
+    public fun build(): Cell = Cell(content.toString(), columnSpan, rowSpan, style)
   }
 }
 
 @JvmSynthetic // Hide from Java callers who should use Builder.
-fun Cell(content: Any?, initializer: Cell.Builder.() -> Unit = {}): Cell {
+public fun Cell(content: Any?, initializer: Cell.Builder.() -> Unit = {}): Cell {
   return Cell.Builder(content).apply(initializer).build()
 }
 
-class CellStyle
+public class CellStyle
 private constructor(
-  val paddingLeft: Int?,
-  val paddingRight: Int?,
-  val paddingTop: Int?,
-  val paddingBottom: Int?,
-  val borderLeft: Boolean?,
-  val borderRight: Boolean?,
-  val borderTop: Boolean?,
-  val borderBottom: Boolean?,
-  val alignment: TextAlignment?,
+  public val paddingLeft: Int?,
+  public val paddingRight: Int?,
+  public val paddingTop: Int?,
+  public val paddingBottom: Int?,
+  public val borderLeft: Boolean?,
+  public val borderRight: Boolean?,
+  public val borderTop: Boolean?,
+  public val borderBottom: Boolean?,
+  public val alignment: TextAlignment?,
 ) {
-  override fun toString() =
+  override fun toString(): String =
     "CellStyle(padding(l=$paddingLeft,r=$paddingRight,t=$paddingTop,b=$paddingBottom), " +
       "border(l=$borderLeft,r=$borderRight,t=$borderTop,b=$borderBottom), alignment=$alignment)"
 
-  override fun hashCode() =
+  override fun hashCode(): Int =
     hash(
       paddingLeft,
       paddingRight,
@@ -329,7 +347,7 @@ private constructor(
       alignment,
     )
 
-  override fun equals(other: Any?) =
+  override fun equals(other: Any?): Boolean =
     other is CellStyle &&
       paddingLeft == other.paddingLeft &&
       paddingRight == other.paddingRight &&
@@ -341,28 +359,32 @@ private constructor(
       borderBottom == other.borderBottom &&
       alignment == other.alignment
 
-  class Builder {
+  public class Builder {
     @set:JvmSynthetic // Hide 'void' setter from Java.
-    var paddingLeft: Int? = null
+    public var paddingLeft: Int? = null
 
-    fun setPaddingLeft(paddingLeft: Int?) = apply { this.paddingLeft = paddingLeft }
-
-    @set:JvmSynthetic // Hide 'void' setter from Java.
-    var paddingRight: Int? = null
-
-    fun setPaddingRight(paddingRight: Int?) = apply { this.paddingRight = paddingRight }
+    public fun setPaddingLeft(paddingLeft: Int?): Builder = apply { this.paddingLeft = paddingLeft }
 
     @set:JvmSynthetic // Hide 'void' setter from Java.
-    var paddingTop: Int? = null
+    public var paddingRight: Int? = null
 
-    fun setPaddingTop(paddingTop: Int?) = apply { this.paddingTop = paddingTop }
+    public fun setPaddingRight(paddingRight: Int?): Builder = apply {
+      this.paddingRight = paddingRight
+    }
 
     @set:JvmSynthetic // Hide 'void' setter from Java.
-    var paddingBottom: Int? = null
+    public var paddingTop: Int? = null
 
-    fun setPaddingBottom(paddingBottom: Int?) = apply { this.paddingBottom = paddingBottom }
+    public fun setPaddingTop(paddingTop: Int?): Builder = apply { this.paddingTop = paddingTop }
 
-    fun setPadding(padding: Int?) = apply {
+    @set:JvmSynthetic // Hide 'void' setter from Java.
+    public var paddingBottom: Int? = null
+
+    public fun setPaddingBottom(paddingBottom: Int?): Builder = apply {
+      this.paddingBottom = paddingBottom
+    }
+
+    public fun setPadding(padding: Int?): Builder = apply {
       paddingLeft = padding
       paddingRight = padding
       paddingTop = padding
@@ -370,26 +392,30 @@ private constructor(
     }
 
     @set:JvmSynthetic // Hide 'void' setter from Java.
-    var borderLeft: Boolean? = null
+    public var borderLeft: Boolean? = null
 
-    fun setBorderLeft(borderLeft: Boolean?) = apply { this.borderLeft = borderLeft }
-
-    @set:JvmSynthetic // Hide 'void' setter from Java.
-    var borderRight: Boolean? = null
-
-    fun setBorderRight(borderRight: Boolean?) = apply { this.borderRight = borderRight }
+    public fun setBorderLeft(borderLeft: Boolean?): Builder = apply { this.borderLeft = borderLeft }
 
     @set:JvmSynthetic // Hide 'void' setter from Java.
-    var borderTop: Boolean? = null
+    public var borderRight: Boolean? = null
 
-    fun setBorderTop(borderTop: Boolean?) = apply { this.borderTop = borderTop }
+    public fun setBorderRight(borderRight: Boolean?): Builder = apply {
+      this.borderRight = borderRight
+    }
 
     @set:JvmSynthetic // Hide 'void' setter from Java.
-    var borderBottom: Boolean? = null
+    public var borderTop: Boolean? = null
 
-    fun setBorderBottom(borderBottom: Boolean?) = apply { this.borderBottom = borderBottom }
+    public fun setBorderTop(borderTop: Boolean?): Builder = apply { this.borderTop = borderTop }
 
-    fun setBorder(border: Boolean?) = apply {
+    @set:JvmSynthetic // Hide 'void' setter from Java.
+    public var borderBottom: Boolean? = null
+
+    public fun setBorderBottom(borderBottom: Boolean?): Builder = apply {
+      this.borderBottom = borderBottom
+    }
+
+    public fun setBorder(border: Boolean?): Builder = apply {
       borderLeft = border
       borderRight = border
       borderTop = border
@@ -397,11 +423,13 @@ private constructor(
     }
 
     @set:JvmSynthetic // Hide 'void' setter from Java.
-    var alignment: TextAlignment? = null
+    public var alignment: TextAlignment? = null
 
-    fun setAlignment(alignment: TextAlignment?) = apply { this.alignment = alignment }
+    public fun setAlignment(alignment: TextAlignment?): Builder = apply {
+      this.alignment = alignment
+    }
 
-    fun build() =
+    public fun build(): CellStyle =
       CellStyle(
         paddingLeft,
         paddingRight,
@@ -417,7 +445,7 @@ private constructor(
 }
 
 @JvmSynthetic // Hide from Java callers who should use Builder.
-fun CellStyle(initializer: CellStyle.Builder.() -> Unit): CellStyle {
+public fun CellStyle(initializer: CellStyle.Builder.() -> Unit): CellStyle {
   return CellStyle.Builder().apply(initializer).build()
 }
 
@@ -441,7 +469,7 @@ private operator fun CellStyle?.plus(override: CellStyle?): CellStyle? {
   }
 }
 
-enum class TextAlignment {
+public enum class TextAlignment {
   TopLeft,
   TopCenter,
   TopRight,

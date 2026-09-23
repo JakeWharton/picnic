@@ -14,7 +14,7 @@ private inline fun debug(message: () -> String) {
 
 @JvmOverloads
 @JvmName("render")
-fun Table.renderText(
+public fun Table.renderText(
   layoutFactory: (PositionedCell) -> TextLayout = ::SimpleLayout,
   border: TextBorder = TextBorder.DEFAULT,
 ): String {

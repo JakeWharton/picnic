@@ -2,6 +2,8 @@ apply plugin: 'org.jetbrains.kotlin.multiplatform'
 apply plugin: 'com.vanniktech.maven.publish'
 
 kotlin {
+  explicitApi()
+
   abiValidation {
     enabled = true
   }

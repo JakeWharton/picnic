@@ -2,60 +2,60 @@ package com.jakewharton.picnic
 
 import kotlin.jvm.JvmField
 
-class TextBorder(private val characters: String) {
+public class TextBorder(private val characters: String) {
   init {
     require(characters.length == 16) { "Border string must contain exactly 16 characters" }
   }
 
-  val empty
+  public val empty: Char
     get() = characters[0]
 
-  val down
+  public val down: Char
     get() = characters[1]
 
-  val up
+  public val up: Char
     get() = characters[2]
 
-  val vertical
+  public val vertical: Char
     get() = characters[3]
 
-  val right
+  public val right: Char
     get() = characters[4]
 
-  val downAndRight
+  public val downAndRight: Char
     get() = characters[5]
 
-  val upAndRight
+  public val upAndRight: Char
     get() = characters[6]
 
-  val verticalAndRight
+  public val verticalAndRight: Char
     get() = characters[7]
 
-  val left
+  public val left: Char
     get() = characters[8]
 
-  val downAndLeft
+  public val downAndLeft: Char
     get() = characters[9]
 
-  val upAndLeft
+  public val upAndLeft: Char
     get() = characters[10]
 
-  val verticalAndLeft
+  public val verticalAndLeft: Char
     get() = characters[11]
 
-  val horizontal
+  public val horizontal: Char
     get() = characters[12]
 
-  val downAndHorizontal
+  public val downAndHorizontal: Char
     get() = characters[13]
 
-  val upAndHorizontal
+  public val upAndHorizontal: Char
     get() = characters[14]
 
-  val verticalAndHorizontal
+  public val verticalAndHorizontal: Char
     get() = characters[15]
 
-  fun get(
+  public fun get(
     down: Boolean = false,
     up: Boolean = false,
     right: Boolean = false,
@@ -65,9 +65,9 @@ class TextBorder(private val characters: String) {
       (if (down) 1 else 0) or (if (up) 2 else 0) or (if (right) 4 else 0) or (if (left) 8 else 0)]
   }
 
-  companion object {
-    @JvmField val DEFAULT = TextBorder(" ╷╵│╶┌└├╴┐┘┤─┬┴┼")
-    @JvmField val ROUNDED = TextBorder(" ╷╵│╶╭╰├╴╮╯┤─┬┴┼")
-    @JvmField val ASCII = TextBorder("   | +++ +++-+++")
+  public companion object {
+    @JvmField public val DEFAULT: TextBorder = TextBorder(" ╷╵│╶┌└├╴┐┘┤─┬┴┼")
+    @JvmField public val ROUNDED: TextBorder = TextBorder(" ╷╵│╶╭╰├╴╮╯┤─┬┴┼")
+    @JvmField public val ASCII: TextBorder = TextBorder("   | +++ +++-+++")
   }
 }

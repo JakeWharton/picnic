@@ -2,6 +2,12 @@ apply plugin: 'org.jetbrains.kotlin.multiplatform'
 apply plugin: 'com.vanniktech.maven.publish'
 
 kotlin {
+  explicitApi()
+
+  abiValidation {
+    enabled = true
+  }
+
   androidNativeArm32()
   androidNativeArm64()
   androidNativeX86()
@@ -13,18 +19,14 @@ kotlin {
   jvm()
   linuxArm64()
   linuxX64()
-  macosX64()
   macosArm64()
   mingwX64()
   tvosArm64()
-  tvosX64()
   tvosSimulatorArm64()
   wasmJs().nodejs()
   wasmWasi().nodejs()
-  watchosArm32()
   watchosArm64()
   watchosDeviceArm64()
-  watchosX64()
   watchosSimulatorArm64()
 
   sourceSets {

@@ -1,2 +1,4 @@
+rootProject.name = 'picnic'
+
 include ':picnic'
 include ':sample'
